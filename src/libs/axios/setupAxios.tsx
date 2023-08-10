@@ -1,6 +1,9 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
-const URL_ROOT = `${import.meta.env.VITE_APP_BASE_URL}${
+const URL_ROOT = `${
+  import.meta.env.VITE_APP_BASE_URL ??
+  'https://attorneys-backend-d0ab9abeab26.herokuapp.com'
+}${
   import.meta.env.VITE_APP_BASE_PORT
     ? ':' + import.meta.env.VITE_APP_BASE_PORT
     : ''
