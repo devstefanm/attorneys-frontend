@@ -14,5 +14,6 @@ export const mapApiResponseToTableData = ({
   excerptNumber: excerpt_number,
   paymentDate: payment_date,
   postingMethod: posting_method,
-  type: i18n.t(`entities.${type}`),
+  displayType: i18n.t(`entities.${type}`),
+  type,
 });

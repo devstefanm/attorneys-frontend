@@ -23,7 +23,7 @@ export type TransactionsTableHeader =
   | 'Excerpt Number';
 
 export interface ITransactionsTableData {
-  type: string;
+  displayType: string;
   amount: number;
   postingMethod: string;
   paymentDate: string;
@@ -32,6 +32,7 @@ export interface ITransactionsTableData {
 }
 
 export interface ITransactionsApiResponseData {
+  displayType: string;
   type: string;
   amount: number;
   posting_method: string;

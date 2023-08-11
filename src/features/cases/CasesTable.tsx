@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import useGetCasesListQuery from '../../hooks/queries/cases/useGetCasesListQuery';
 import { useCases } from '../../store/contexts/CasesContext';
 import { mapSearchToQueryParam } from '../../utils/transformData';
+import { mapStatusToBorderColor } from './casesHelpers';
 
 const casesFirstRowHeaders: ICasesTableHeader = {
   name: 'name',
@@ -198,8 +199,10 @@ const CasesTable = () => {
       totalNumber={data?.data.data?.meta.total_number}
       page={page}
       size={size}
+      borderKeyword="status"
       updateState={updateCasesState}
       refetch={refetch}
+      mapBorderColors={mapStatusToBorderColor}
     />
   ) : (
     <>Loading...</>

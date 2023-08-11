@@ -55,10 +55,12 @@ type Props = {
   page: number;
   size: number;
   totalNumber: number | undefined;
+  borderKeyword: string;
   updateState: React.Dispatch<any>;
   refetch: <TPageData>(
     options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined,
   ) => Promise<QueryObserverResult<IApiResponse<any>, unknown>>;
+  mapBorderColors: (status: string) => string;
 };
 
 type CustomColumnDef = ColumnDef<any> & {
@@ -80,8 +82,10 @@ const TableComponent = (props: Props) => {
     page,
     size,
     totalNumber,
+    borderKeyword,
     updateState,
     refetch,
+    mapBorderColors,
   } = props;
 
   const { t } = useTranslation();
@@ -199,7 +203,7 @@ const TableComponent = (props: Props) => {
                       );
                       return (
                         <TableCell
-                          className="cursor-pointer pl-2 pb-1 text-xs text-gray-500 uppercase shadow-sm unselectable"
+                          className="cursor-pointer pl-2 pb-1 text-[10px] 2xl:text-xs text-gray-500 uppercase shadow-sm unselectable"
                           key={header.id}
                           colSpan={header.colSpan}
                           onClick={() =>
@@ -268,20 +272,15 @@ const TableComponent = (props: Props) => {
                   table?.getRowModel().rows?.map((row) => {
                     return (
                       <TableRow
-                        className={`odd:bg-[#EDE9D0]  
-                        ${
-                          row.original?.status &&
-                          row.original?.status === 'active'
-                            ? 'border-l-2 border-l-green-500'
-                            : ''
-                        }
-                        `}
+                        className={`odd:bg-[#EDE9D0] border-l-2 border-l-${mapBorderColors(
+                          row.original[borderKeyword],
+                        )}`}
                         key={row.id}
                       >
                         {row.getVisibleCells().map((cell) => {
                           return (
                             <TableCell
-                              className="py-3 font-semibold text-gray-600"
+                              className="py-3 font-semibold text-gray-600 text-[11px] 2xl:text-sm"
                               key={cell.id}
                             >
                               {cell.column.id.toLowerCase().includes('date')

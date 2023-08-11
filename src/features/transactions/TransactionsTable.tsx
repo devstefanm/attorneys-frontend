@@ -10,9 +10,10 @@ import { useTranslation } from 'react-i18next';
 import useGetTransactionsListQuery from '../../hooks/queries/transactions/useGetTransactionsListQuery';
 import { useTransactions } from '../../store/contexts/TransactionsContext';
 import { mapSearchToQueryParam } from '../../utils/transformData';
+import { mapTypeToBorderColor } from './transactionsHelpers';
 
 const transactionsTableHeaders: ITransactionsTableHeader = {
-  type: 'type',
+  displayType: 'type',
   amount: 'amount',
   postingMethod: 'postingMethod',
   paymentDate: 'paymentDate',
@@ -84,10 +85,10 @@ const TransactionsTable = () => {
         isSortable: true,
       },
       {
-        accessorFn: (row) => row.type,
-        id: transactionsTableHeaders.type,
+        accessorFn: (row) => row.displayType,
+        id: transactionsTableHeaders.displayType,
         header: () => (
-          <span>{t(`entities.${[transactionsTableHeaders.type]}`)}</span>
+          <span>{t(`entities.${[transactionsTableHeaders.displayType]}`)}</span>
         ),
         cell: (info) => info.getValue(),
         isSortable: true,
@@ -127,8 +128,10 @@ const TransactionsTable = () => {
       totalNumber={data?.data.data?.meta.total_number}
       page={page}
       size={size}
+      borderKeyword="type"
       updateState={updateTransactionsState}
       refetch={refetch}
+      mapBorderColors={mapTypeToBorderColor}
     />
   ) : (
     <>Loading...</>

@@ -20,6 +20,12 @@ const Transactions = lazy(() =>
   })),
 );
 
+const Lawyers = lazy(() =>
+  import('../../pages/Lawyers').then(({ Lawyers }) => ({
+    default: Lawyers,
+  })),
+);
+
 // HOC
 export const AuthWithProvider = () => (
   <AuthStateProvider>
@@ -32,7 +38,10 @@ export const routes = (isAuth: boolean, role: string | null) => [
     path: '/',
     element: isAuth ? <Navigate to="/cases" /> : <Navigate to="/auth" />,
   },
-  { path: 'auth', element: <AuthWithProvider /> },
+  {
+    path: 'auth',
+    element: isAuth ? <Navigate to="/cases" /> : <AuthWithProvider />,
+  },
   {
     path: 'cases',
     element:
@@ -47,6 +56,15 @@ export const routes = (isAuth: boolean, role: string | null) => [
     element:
       isAuth && role !== 'visitor' ? (
         <Transactions pageLabel="entities.transactions" />
+      ) : (
+        <Navigate to="/auth" />
+      ),
+  },
+  {
+    path: 'lawyers',
+    element:
+      isAuth && role !== 'visitor' ? (
+        <Lawyers pageLabel="entities.lawyers" />
       ) : (
         <Navigate to="/auth" />
       ),

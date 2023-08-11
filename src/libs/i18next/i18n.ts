@@ -95,6 +95,7 @@ i18n
 
             // Cities
             cities: 'Cities',
+            city: 'City',
 
             // Clients
             client: 'Client',
@@ -132,6 +133,7 @@ i18n
             lawyer: 'Lawyer',
             officeName: 'Office Name',
             address: 'Address',
+            numberOfCases: 'Number of Cases',
 
             // Executors
             executors: 'Executors',
@@ -284,6 +286,7 @@ i18n
 
             // Cities
             cities: 'Gradovi',
+            city: 'Grad',
 
             // Clients
             client: 'Klijent',
@@ -321,6 +324,7 @@ i18n
             lawyer: 'Advokat',
             officeName: 'Naziv kancelarije',
             address: 'Adresa',
+            numberOfCases: 'Broj slučajeva',
 
             // Executors
             executors: 'Izvršitelji',
@@ -342,8 +346,8 @@ i18n
             zipCode: 'Poštanski broj',
 
             // Phone Numbers
-            phoneNumbers: 'Telefonski brojevi',
-            phoneNumber: 'Telefonski broj',
+            phoneNumbers: 'Brojevi telefona',
+            phoneNumber: 'Broj telefona',
             displayNumber: 'Prikazani broj',
 
             // Cases
