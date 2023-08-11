@@ -2,11 +2,13 @@ import * as React from 'react';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { useAuth } from '../../../store/contexts/AuthContext';
 import {
+  Box,
   Button,
   IconButton,
   InputAdornment,
   Stack,
   TextField,
+  Typography,
 } from '@mui/material';
 import useLoginMutation from '../../../hooks/mutations/auth/useLoginMutation';
 import { useNavigate } from 'react-router-dom';
@@ -60,7 +62,8 @@ const Login = (_props: Props) => {
   return (
     <ErrorBoundary>
       <React.Suspense>
-        <Stack component="form" className="mx-14 my-10" onSubmit={handleSubmit}>
+        <Stack component="form" className="mx-14 my-22" onSubmit={handleSubmit}>
+          {/* my-10 */}
           <TextField
             margin="normal"
             required
@@ -107,6 +110,15 @@ const Login = (_props: Props) => {
           >
             {t('login')}
           </Button>
+          <Box className="m-4 p-2 rounded-lg border-2">
+            <Typography className="font-bold text-xs mb-4">
+              Email adresa ili korisničko ime:
+              "admin.creditexpress@mailinator.com" ili "admin.creditexpress"
+            </Typography>
+            <Typography className="font-bold text-xs mb-4 ">
+              Lozinka: "!ASDasd123"
+            </Typography>
+          </Box>
         </Stack>
       </React.Suspense>
     </ErrorBoundary>
