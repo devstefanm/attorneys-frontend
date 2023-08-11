@@ -1,9 +1,9 @@
 export const mapStatusToBorderColor = (status: string): string => {
   switch (status) {
     case 'active':
-      return 'green-500';
+      return '#22c55e';
     case 'closed':
-      return 'gray-400';
+      return '#9ca3af';
     default:
       return '';
   }

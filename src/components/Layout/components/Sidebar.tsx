@@ -1,11 +1,23 @@
 import * as React from 'react';
 import { ErrorBoundary } from '../../ErrorBoundary';
-import { Divider, Drawer, IconButton, List, Toolbar } from '@mui/material';
-import { ChevronLeft } from '@mui/icons-material';
+import {
+  Box,
+  Divider,
+  Drawer,
+  IconButton,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Toolbar,
+} from '@mui/material';
+import { ChevronLeft, Logout } from '@mui/icons-material';
 import { LayoutProps } from '..';
 import { INavItem } from '../../../types/universalTypes';
 import { NavItems } from '../nav/NavItems';
 import { navItems } from '../../../features/protected/sidebarData';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 export type SidebarProps = LayoutProps & {
   navItems: INavItem[];
@@ -13,6 +25,14 @@ export type SidebarProps = LayoutProps & {
 
 const Sidebar = (props: SidebarProps) => {
   const { openSidebar, toggleOpenSidebar } = props;
+
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.removeItem(import.meta.env.VITE_APP_TOKEN_NAME);
+    navigate('/auth');
+  };
 
   return (
     <ErrorBoundary>
@@ -30,9 +50,19 @@ const Sidebar = (props: SidebarProps) => {
             </IconButton>
           </Toolbar>
           <Divider />
-          <List component="nav">
-            <NavItems navItems={navItems} />
-          </List>
+          <Box className="flex flex-col justify-between h-full mb-4">
+            <List component="nav">
+              <NavItems navItems={navItems} />
+            </List>
+            <List>
+              <ListItemButton onClick={logout}>
+                <ListItemIcon>
+                  <Logout />
+                </ListItemIcon>
+                <ListItemText primary={t('logout')} />
+              </ListItemButton>
+            </List>
+          </Box>
         </Drawer>
       </React.Suspense>
     </ErrorBoundary>

@@ -1,12 +1,12 @@
 export const mapTypeToBorderColor = (type: string) => {
   switch (type) {
     case 'payment':
-      return 'blue-300';
+      return '#93c5fd';
     case 'fee':
-      return 'yellow-300';
+      return '#fde047';
     case 'legal_fee':
-      return 'orange-500';
+      return '#f97316';
     default:
-      return 'gray-500';
+      return '#6b7280';
   }
 };

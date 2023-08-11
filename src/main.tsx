@@ -22,7 +22,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <ThemeProvider theme={muiTheme}>
         <QueryClientProvider client={queryClient}>
           <App />
-          <ReactQueryDevtools initialIsOpen={false} />
+          <ReactQueryDevtools position="top-left" initialIsOpen={false} />
         </QueryClientProvider>
       </ThemeProvider>
     </BrowserRouter>

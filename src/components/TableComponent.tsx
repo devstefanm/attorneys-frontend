@@ -272,9 +272,12 @@ const TableComponent = (props: Props) => {
                   table?.getRowModel().rows?.map((row) => {
                     return (
                       <TableRow
-                        className={`odd:bg-[#EDE9D0] border-l-2 border-l-${mapBorderColors(
-                          row.original[borderKeyword],
-                        )}`}
+                        className="odd:bg-[#FBEBE9] border-l-4"
+                        style={{
+                          borderLeftColor: mapBorderColors(
+                            row.original[borderKeyword],
+                          ),
+                        }}
                         key={row.id}
                       >
                         {row.getVisibleCells().map((cell) => {
@@ -324,7 +327,7 @@ const TableComponent = (props: Props) => {
               });
             }}
             onRowsPerPageChange={(event) => {
-              const size = event.target.value ? Number(event.target.value) : 10;
+              const size = event.target.value ? Number(event.target.value) : 25;
               updateState({
                 type: ETableActionType.pageable,
                 payload: {

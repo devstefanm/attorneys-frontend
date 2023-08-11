@@ -15,7 +15,7 @@ const initialState: ITransactionsState = {
   },
   pageable: {
     page: 1,
-    size: 10,
+    size: 25,
     totalNumber: null,
   },
   searchable: [],
