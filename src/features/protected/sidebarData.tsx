@@ -1,4 +1,10 @@
-import { CurrencyExchange, Gavel, Policy } from '@mui/icons-material';
+import {
+  Balance,
+  CurrencyExchange,
+  FolderShared,
+  Gavel,
+  Policy,
+} from '@mui/icons-material';
 import { INavItem } from '../../types/universalTypes';
 
 export const navItems: INavItem[] = [
@@ -17,13 +23,19 @@ export const navItems: INavItem[] = [
   {
     id: 3,
     icon: <Gavel />,
+    name: 'entities.executors',
+    path: '/executors',
+  },
+  {
+    id: 4,
+    icon: <Balance />,
     name: 'entities.lawyers',
     path: '/lawyers',
   },
-  // {
-  //   id: 4,
-  //   icon: <Gavel />,
-  //   name: 'entities.courts',
-  //   path: '/courts',
-  // },
+  {
+    id: 5,
+    icon: <FolderShared />,
+    name: 'entities.ssnNumbersAndPackages',
+    path: '/ssn_numbers-and-packages',
+  },
 ];

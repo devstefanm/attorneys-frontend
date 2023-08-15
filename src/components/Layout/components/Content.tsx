@@ -12,7 +12,9 @@ const Content = (props: ContentProps) => {
   return (
     <ErrorBoundary>
       <React.Suspense>
-        <Box className={`my-20 mx-6 w-full`}>{children}</Box>
+        <Box className={`my-20 mx-6 w-full h-[calc(100vh-80px)] overflow-auto`}>
+          {children}
+        </Box>
       </React.Suspense>
     </ErrorBoundary>
   );

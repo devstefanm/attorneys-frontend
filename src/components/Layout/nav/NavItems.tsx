@@ -21,6 +21,7 @@ const NavItems = (props: Props) => {
       <React.Suspense>
         {navItems.map((item) => (
           <ListItemButton
+            className="max-h-12"
             selected={location.pathname === item.path}
             onClick={() => navigate(item.path)}
             key={item.id}

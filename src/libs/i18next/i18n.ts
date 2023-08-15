@@ -128,6 +128,9 @@ i18n
             ssnNumbers: 'SSN Numbers',
             ssn: 'SSN',
 
+            // SSN Numbers and Packages
+            ssnNumbersAndPackages: 'SSN Numbers and Packages',
+
             // Lawyers
             lawyers: 'Lawyers',
             lawyer: 'Lawyer',
@@ -318,6 +321,9 @@ i18n
             // SSN Numbers
             ssnNumbers: 'SSN brojevi',
             ssn: 'SSN',
+
+            // SSN Numbers and Packages
+            ssnNumbersAndPackages: 'SSN brojevi i Paketi',
 
             // Lawyers
             lawyers: 'Advokati',

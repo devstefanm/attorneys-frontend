@@ -1,1 +1,1 @@
-export const mapLawyersToBorderColors = () => "gray-300";
+export const mapLawyersToBorderColors = () => '#6b7280';

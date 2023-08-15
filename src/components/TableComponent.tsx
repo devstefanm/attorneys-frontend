@@ -188,12 +188,12 @@ const TableComponent = (props: Props) => {
   return (
     <ErrorBoundary>
       <React.Suspense>
-        <Box sx={{ width: '100%' }}>
+        <Box className="w-full">
           <TableContainer
             className="shadow w-full h-[calc(100vh-132px)]"
             component={Paper}
           >
-            <Table sx={{ minWidth: 650 }} aria-label="table">
+            <Table sx={{ minWidth: 400 }} aria-label="table">
               <TableHead>
                 {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow className="h-12" key={headerGroup.id}>
@@ -258,7 +258,7 @@ const TableComponent = (props: Props) => {
                             }, 300)}
                           />
                         ) : (
-                          <Box className="flex justify-center">
+                          <Box className="flex justify-start">
                             <SearchOff color="disabled" />
                           </Box>
                         )}

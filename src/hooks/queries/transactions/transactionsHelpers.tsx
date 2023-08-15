@@ -1,4 +1,7 @@
-import { ITransactionsApiResponseData } from '../../../types/transactionsTypes';
+import {
+  ITransactionsApiResponseData,
+  ITransactionsTableData,
+} from '../../../types/transactionsTypes';
 import i18n from '../../../libs/i18next/i18n';
 
 export const mapApiResponseToTableData = ({
@@ -8,7 +11,7 @@ export const mapApiResponseToTableData = ({
   payment_date,
   posting_method,
   type,
-}: ITransactionsApiResponseData) => ({
+}: ITransactionsApiResponseData): ITransactionsTableData => ({
   amount,
   caseNumber: case_number,
   excerptNumber: excerpt_number,

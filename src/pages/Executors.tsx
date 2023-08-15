@@ -1,21 +1,21 @@
 import * as React from 'react';
 import { IPagesProps } from '../libs/react-router-dom/routes';
 import { ErrorBoundary } from '../components/ErrorBoundary';
-// import { CourtsTable } from '../features/courts/CourtsTable';
-// import { CourtsStateProvider } from '../store/contexts/CourtsContext';
+import { ExecutorsTable } from '../features/executors/ExecutorsTable';
+import { ExecutorsStateProvider } from '../store/contexts/ExecutorsContext';
 
 type Props = IPagesProps & {};
 
-const Courts = (_props: Props) => {
+const Executors = (_props: Props) => {
   return (
     <ErrorBoundary>
       <React.Suspense fallback={'Loading....'}>
-        {/* <CourtsStateProvider>
-          <CourtsTable />
-        </CourtsStateProvider> */}
+        <ExecutorsStateProvider>
+          <ExecutorsTable />
+        </ExecutorsStateProvider>
       </React.Suspense>
     </ErrorBoundary>
   );
 };
 
-export { Courts };
+export { Executors };

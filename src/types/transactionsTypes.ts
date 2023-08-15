@@ -29,6 +29,7 @@ export interface ITransactionsTableData {
   paymentDate: string;
   caseNumber: string;
   excerptNumber: string;
+  type?: string;
 }
 
 export interface ITransactionsApiResponseData {

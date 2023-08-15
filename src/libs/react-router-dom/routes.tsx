@@ -26,6 +26,20 @@ const Lawyers = lazy(() =>
   })),
 );
 
+const Executors = lazy(() =>
+  import('../../pages/Executors').then(({ Executors }) => ({
+    default: Executors,
+  })),
+);
+
+const SSNNumbersAndPackages = lazy(() =>
+  import('../../pages/SSNNumbersAndPackages').then(
+    ({ SSNNumbersAndPackages }) => ({
+      default: SSNNumbersAndPackages,
+    }),
+  ),
+);
+
 // HOC
 export const AuthWithProvider = () => (
   <AuthStateProvider>
@@ -65,6 +79,24 @@ export const routes = (isAuth: boolean, role: string | null) => [
     element:
       isAuth && role !== 'visitor' ? (
         <Lawyers pageLabel="entities.lawyers" />
+      ) : (
+        <Navigate to="/auth" />
+      ),
+  },
+  {
+    path: 'executors',
+    element:
+      isAuth && role !== 'visitor' ? (
+        <Executors pageLabel="entities.executors" />
+      ) : (
+        <Navigate to="/auth" />
+      ),
+  },
+  {
+    path: 'ssn_numbers-and-packages',
+    element:
+      isAuth && role !== 'visitor' ? (
+        <SSNNumbersAndPackages pageLabel="entities.ssnNumbersAndPackages" />
       ) : (
         <Navigate to="/auth" />
       ),

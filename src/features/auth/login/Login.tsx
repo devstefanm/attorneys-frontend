@@ -112,11 +112,11 @@ const Login = (_props: Props) => {
           </Button>
           <Box className="m-4 p-2 rounded-lg border-2">
             <Typography className="font-bold text-xs mb-4">
-              Email adresa ili korisničko ime:
-              "admin.creditexpress@mailinator.com" ili "admin.creditexpress"
+              {t('emailOrUsername')}: "admin.creditexpress@mailinator.com" ili
+              "admin.creditexpress"
             </Typography>
             <Typography className="font-bold text-xs mb-4 ">
-              Lozinka: "!ASDasd123"
+              {t('password')}: "!ASDasd123"
             </Typography>
           </Box>
         </Stack>
