@@ -40,6 +40,18 @@ const SSNNumbersAndPackages = lazy(() =>
   ),
 );
 
+const ClientsAndEmployers = lazy(() =>
+  import('../../pages/ClientsAndEmployers').then(({ ClientsAndEmployers }) => ({
+    default: ClientsAndEmployers,
+  })),
+);
+
+const CourtsAndCities = lazy(() =>
+  import('../../pages/CourtsAndCities').then(({ CourtsAndCities }) => ({
+    default: CourtsAndCities,
+  })),
+);
+
 // HOC
 export const AuthWithProvider = () => (
   <AuthStateProvider>
@@ -97,6 +109,24 @@ export const routes = (isAuth: boolean, role: string | null) => [
     element:
       isAuth && role !== 'visitor' ? (
         <SSNNumbersAndPackages pageLabel="entities.ssnNumbersAndPackages" />
+      ) : (
+        <Navigate to="/auth" />
+      ),
+  },
+  {
+    path: 'clients-and-employers',
+    element:
+      isAuth && role !== 'visitor' ? (
+        <ClientsAndEmployers pageLabel="entities.clientsAndEmployers" />
+      ) : (
+        <Navigate to="/auth" />
+      ),
+  },
+  {
+    path: 'courts-and-cities',
+    element:
+      isAuth && role !== 'visitor' ? (
+        <CourtsAndCities pageLabel="entities.courtsAndCities" />
       ) : (
         <Navigate to="/auth" />
       ),

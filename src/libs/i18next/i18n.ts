@@ -96,6 +96,9 @@ i18n
             // Cities
             cities: 'Cities',
             city: 'City',
+            numberOfDebtors: 'Number of Debtors',
+            numberOfExecutors: 'Number of Executors',
+            numberOfLawyers: 'Number of Lawyers',
 
             // Clients
             client: 'Client',
@@ -105,8 +108,15 @@ i18n
             court: 'Court',
             courts: 'Courts',
 
+            // Courts and Cities
+            courtsAndCities: 'Courts and Cities',
+
             // Employers
             employers: 'Employers',
+            employer: `Employer`,
+
+            // Clients and Employers
+            clientsAndEmployers: 'Clients and Employers',
 
             // Excerpts
             excerpts: 'Excerpts',
@@ -136,7 +146,6 @@ i18n
             lawyer: 'Lawyer',
             officeName: 'Office Name',
             address: 'Address',
-            numberOfCases: 'Number of Cases',
 
             // Executors
             executors: 'Executors',
@@ -187,6 +196,10 @@ i18n
 
             // Case Business Numbers
             caseBusinessNumbers: 'Case Business Numbers',
+
+            // Common
+            numberOfCases: 'Number of Cases',
+            numberOfEmployees: 'Number of Employees',
           },
 
           errors: {
@@ -290,6 +303,9 @@ i18n
             // Cities
             cities: 'Gradovi',
             city: 'Grad',
+            numberOfDebtors: 'Broj dužnika',
+            numberOfExecutors: 'Broj izvršitelja',
+            numberOfLawyers: 'Broj advokata',
 
             // Clients
             client: 'Klijent',
@@ -299,8 +315,15 @@ i18n
             court: 'Sud',
             courts: 'Sudovi',
 
+            // Courts and Cities
+            courtsAndCities: 'Sudovi i Gradovi',
+
             // Employers
             employers: 'Poslodavci',
+            employer: 'Poslodavac',
+
+            // Clients and Employers
+            clientsAndEmployers: 'Klijenti i Poslodavci',
 
             // Excerpts
             excerpts: 'Izvodi',
@@ -330,7 +353,6 @@ i18n
             lawyer: 'Advokat',
             officeName: 'Naziv kancelarije',
             address: 'Adresa',
-            numberOfCases: 'Broj slučajeva',
 
             // Executors
             executors: 'Izvršitelji',
@@ -381,6 +403,10 @@ i18n
 
             // Case Business Numbers
             caseBusinessNumbers: 'Poslovni brojevi predmeta',
+
+            // Common
+            numberOfCases: 'Broj slučajeva',
+            numberOfEmployees: 'Broj zaposlenih',
           },
 
           errors: {

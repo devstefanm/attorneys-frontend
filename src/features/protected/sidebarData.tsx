@@ -1,8 +1,10 @@
 import {
+  AccountBalance,
   Balance,
   CurrencyExchange,
   FolderShared,
   Gavel,
+  Handshake,
   Policy,
 } from '@mui/icons-material';
 import { INavItem } from '../../types/universalTypes';
@@ -37,5 +39,17 @@ export const navItems: INavItem[] = [
     icon: <FolderShared />,
     name: 'entities.ssnNumbersAndPackages',
     path: '/ssn_numbers-and-packages',
+  },
+  {
+    id: 6,
+    icon: <Handshake />,
+    name: 'entities.clientsAndEmployers',
+    path: '/clients-and-employers',
+  },
+  {
+    id: 7,
+    icon: <AccountBalance />,
+    name: 'entities.courtsAndCities',
+    path: '/courts-and-cities',
   },
 ];

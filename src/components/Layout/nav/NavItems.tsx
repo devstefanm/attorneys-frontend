@@ -27,7 +27,7 @@ const NavItems = (props: Props) => {
             key={item.id}
           >
             <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={t(item.name)} />
+            <ListItemText className="[&>span]:text-sm" primary={t(item.name)} />
           </ListItemButton>
         ))}
       </React.Suspense>

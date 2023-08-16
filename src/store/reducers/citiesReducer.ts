@@ -5,22 +5,21 @@ import {
   ITableSortable,
 } from '../../types/universalTypes';
 
-export interface IExecutorsState {
+export interface ICitiesState {
   sortable: ITableSortable;
   pageable: ITablePageable;
   searchable: ITableSearchable[];
 }
 
-interface IExecutorsAction {
+interface ICitiesAction {
   type: ETableActionType;
   payload?: ITableSortable | ITablePageable | ITableSearchable;
 }
 
-const executorsReducer = (
-  state: IExecutorsState,
-  action: IExecutorsAction,
-): IExecutorsState => {
-  console.log('action.payload', action.payload);
+const citiesReducer = (
+  state: ICitiesState,
+  action: ICitiesAction,
+): ICitiesState => {
   switch (action.type) {
     case ETableActionType.sortable:
       return { ...state, sortable: action.payload as ITableSortable };
@@ -45,4 +44,4 @@ const executorsReducer = (
   }
 };
 
-export { executorsReducer };
+export { citiesReducer };

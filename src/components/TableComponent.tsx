@@ -182,6 +182,14 @@ const TableComponent = (props: Props) => {
           value: searchTerm,
         },
       });
+      updateState({
+        type: ETableActionType.pageable,
+        payload: {
+          page: 1,
+          size,
+          totalNumber,
+        },
+      });
     }
   };
 
@@ -193,8 +201,12 @@ const TableComponent = (props: Props) => {
             className="shadow w-full h-[calc(100vh-132px)]"
             component={Paper}
           >
-            <Table sx={{ minWidth: 400 }} aria-label="table">
-              <TableHead>
+            <Table
+              className="relative"
+              sx={{ minWidth: 400 }}
+              aria-label="table"
+            >
+              <TableHead className="sticky top-0 z-10 bg-[rgba(255,255,255,0.9)]">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow className="h-12" key={headerGroup.id}>
                     {headerGroup.headers.map((header) => {
@@ -317,10 +329,11 @@ const TableComponent = (props: Props) => {
             rowsPerPage={size}
             page={page - 1}
             onPageChange={(_, page) => {
+              console.log('page', page);
               updateState({
                 type: ETableActionType.pageable,
                 payload: {
-                  page,
+                  page: page + 1,
                   size,
                   totalNumber,
                 },
@@ -337,7 +350,6 @@ const TableComponent = (props: Props) => {
                 },
               });
             }}
-            // ActionsComponent={TablePaginationActions}
           />
         </Box>
       </React.Suspense>
