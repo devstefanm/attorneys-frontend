@@ -198,7 +198,7 @@ const TableComponent = (props: Props) => {
       <React.Suspense>
         <Box className="w-full">
           <TableContainer
-            className="shadow w-full h-[calc(100vh-132px)]"
+            className="shadow w-full h-[calc(100vh-188.5px)]"
             component={Paper}
           >
             <Table
@@ -329,7 +329,6 @@ const TableComponent = (props: Props) => {
             rowsPerPage={size}
             page={page - 1}
             onPageChange={(_, page) => {
-              console.log('page', page);
               updateState({
                 type: ETableActionType.pageable,
                 payload: {

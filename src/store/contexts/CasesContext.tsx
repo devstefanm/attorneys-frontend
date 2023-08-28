@@ -1,5 +1,9 @@
 import * as React from 'react';
 import { ICasesState, casesReducer } from '../reducers/casesReducer';
+import {
+  addCaseAutocompleteInitialValues,
+  addCasesInitialFormData,
+} from './data/casesInitialData';
 
 interface ICasesStateProviderProps {
   children: React.ReactNode;
@@ -16,6 +20,10 @@ const initialState: ICasesState = {
     totalNumber: null,
   },
   searchable: [],
+  addCaseModalOpen: false,
+  isLegalEntity: false,
+  addCaseForm: addCasesInitialFormData,
+  addCaseAutocompleteValues: addCaseAutocompleteInitialValues,
 };
 
 export const CasesContext = React.createContext<{

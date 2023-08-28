@@ -20,7 +20,6 @@ const executorsReducer = (
   state: IExecutorsState,
   action: IExecutorsAction,
 ): IExecutorsState => {
-  console.log('action.payload', action.payload);
   switch (action.type) {
     case ETableActionType.sortable:
       return { ...state, sortable: action.payload as ITableSortable };

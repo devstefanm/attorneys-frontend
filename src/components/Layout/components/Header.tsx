@@ -55,7 +55,7 @@ const Header = (props: HeaderProps) => {
               variant="standard"
               id="demo-simple-select-standard"
               value={currentLanguage}
-              className={`w-12 flex ${openSidebar ? 'mr-60' : ''}`}
+              className={`w-10 flex ${openSidebar ? 'mr-60' : ''}`}
               onChange={(event) =>
                 i18n.changeLanguage(event.target.value as string)
               }

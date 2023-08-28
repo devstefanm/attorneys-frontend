@@ -26,3 +26,8 @@ export interface ISSNNumbersListApiResponse {
   ssn_numbers: ISSNNumbersApiResponseData[] | ISSNNumbersTableData[];
   meta: IMetaApiResponseData;
 }
+
+export interface ISSNumber {
+  id: number;
+  ssn: string;
+}

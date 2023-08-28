@@ -26,3 +26,8 @@ export interface IPackagesListApiResponse {
   packages: IPackagesApiResponseData[] | IPackagesTableData[];
   meta: IMetaApiResponseData;
 }
+
+export interface IPackageName {
+  id?: number;
+  package_name: string;
+}

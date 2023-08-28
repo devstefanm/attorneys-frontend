@@ -1,3 +1,4 @@
+import { Moment } from 'moment';
 import { IMetaApiResponseData, IMetaQueryParams } from './universalTypes';
 
 export enum EStatus {
@@ -89,4 +90,96 @@ export interface ICasesQueryParams extends IMetaQueryParams {
 export interface ICasesListApiResponse {
   cases: ICaseApiResponseData[] | ICasesFirstRowData[];
   meta: IMetaApiResponseData;
+}
+
+export interface IAutocompleteOption {
+  id: number;
+  name: string;
+}
+
+export interface IAddCaseForm {
+  legalEntity: boolean;
+  firstName: string;
+  lastName: string;
+  jmbg: string;
+  name: string;
+  pib: string;
+  employed: boolean;
+  employer: IAutocompleteOption | string;
+  executor: IAutocompleteOption | string;
+  cession: boolean;
+  phoneNumbers: string[];
+  address: string;
+  email: string;
+  zipCode: string;
+  city: IAutocompleteOption | string;
+  caseNumber: string;
+  contractNumber: string;
+  closingDate: Moment | null;
+  businessNumbers: string[];
+  lawyer: IAutocompleteOption | string;
+  client: IAutocompleteOption | string;
+  court: IAutocompleteOption | string;
+  ssnNumber: IAutocompleteOption | string;
+  package: IAutocompleteOption | string;
+  principal: string;
+  interest: string;
+}
+
+export interface IAddCaseStateUpdate {
+  name: string;
+  fieldValue: string;
+}
+
+export interface IAddCaseAutocompleteInputChange {
+  inputName: string;
+  inputValue: string;
+}
+
+export interface IAddCaseAutocompleteValues {
+  employer: string;
+  executor: string;
+  lawyer: string;
+  client: string;
+  court: string;
+  city: string;
+  ssnNumber: string;
+  package: string;
+}
+
+export interface IResponseObject {
+  id: number;
+  name?: string;
+  package_name?: string;
+  first_name?: string;
+  last_name?: string;
+  ssn?: string;
+}
+
+export interface ICaseRequestData {
+  first_name?: string;
+  last_name?: string;
+  jmbg?: string;
+  name?: string;
+  pib?: string;
+  employed?: boolean;
+  employer_id?: number | null;
+  executor_id: number | null;
+  business_numbers: string[];
+  phone_numbers: string[];
+  cession: boolean;
+  address: string;
+  email: string;
+  zip_code: string;
+  city_id: number | null;
+  case_number: number;
+  contract_number: number;
+  closing_date: string | null;
+  lawyer_id: number | null;
+  client_id: number | null;
+  court_id: number | null;
+  ssn_number_id: number | null;
+  package_id: number | null;
+  principal: number;
+  interest: number;
 }

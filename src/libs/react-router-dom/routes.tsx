@@ -1,6 +1,7 @@
 import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 import { AuthStateProvider } from '../../store/contexts/AuthContext';
+import { CasesStateProvider } from '../../store/contexts/CasesContext';
 
 export interface IPagesProps {
   pageLabel: string;
@@ -59,6 +60,12 @@ export const AuthWithProvider = () => (
   </AuthStateProvider>
 );
 
+export const CasesWithProvider = () => (
+  <CasesStateProvider>
+    <Cases pageLabel="entities.cases" />
+  </CasesStateProvider>
+);
+
 export const routes = (isAuth: boolean, role: string | null) => [
   {
     path: '/',
@@ -72,7 +79,7 @@ export const routes = (isAuth: boolean, role: string | null) => [
     path: 'cases',
     element:
       isAuth && role !== 'visitor' ? (
-        <Cases pageLabel="entities.cases" />
+        <CasesWithProvider />
       ) : (
         <Navigate to="/auth" />
       ),

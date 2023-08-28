@@ -1,19 +1,39 @@
 import {
+  IAddCaseAutocompleteInputChange,
+  IAddCaseAutocompleteValues,
+  IAddCaseForm,
+  IAddCaseStateUpdate,
+} from '../../types/casesTypes';
+import {
   ETableActionType,
   ITablePageable,
   ITableSearchable,
   ITableSortable,
 } from '../../types/universalTypes';
+import {
+  addCaseAutocompleteInitialValues,
+  addCasesInitialFormData,
+} from '../contexts/data/casesInitialData';
 
 export interface ICasesState {
   sortable: ITableSortable;
   pageable: ITablePageable;
   searchable: ITableSearchable[];
+  addCaseModalOpen: boolean;
+  isLegalEntity: boolean;
+  addCaseForm: IAddCaseForm;
+  addCaseAutocompleteValues: IAddCaseAutocompleteValues;
 }
 
 interface ICasesAction {
   type: ETableActionType;
-  payload?: ITableSortable | ITablePageable | ITableSearchable;
+  payload?:
+    | ITableSortable
+    | ITablePageable
+    | ITableSearchable
+    | boolean
+    | IAddCaseStateUpdate
+    | IAddCaseAutocompleteInputChange;
 }
 
 const casesReducer = (
@@ -39,6 +59,35 @@ const casesReducer = (
       }
 
       return { ...state, searchable: newState };
+    case ETableActionType.isLegalEntity:
+      return { ...state, isLegalEntity: action.payload as boolean };
+    case ETableActionType.addCaseModalOpen:
+      return { ...state, addCaseModalOpen: action.payload as boolean };
+    case ETableActionType.addCaseForm:
+      const { name, fieldValue } = action.payload as IAddCaseStateUpdate;
+      return {
+        ...state,
+        addCaseForm: {
+          ...state.addCaseForm,
+          [name]: fieldValue,
+        },
+      };
+    case ETableActionType.addCaseAutocompleteValues:
+      const { inputName, inputValue } =
+        action.payload as IAddCaseAutocompleteInputChange;
+      return {
+        ...state,
+        addCaseAutocompleteValues: {
+          ...state.addCaseAutocompleteValues,
+          [inputName]: inputValue,
+        },
+      };
+    case ETableActionType.resetCaseFormData:
+      return {
+        ...state,
+        addCaseAutocompleteValues: addCaseAutocompleteInitialValues,
+        addCaseForm: addCasesInitialFormData,
+      };
     default:
       return state;
   }

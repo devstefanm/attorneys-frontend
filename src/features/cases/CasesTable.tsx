@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import useGetCasesListQuery from '../../hooks/queries/cases/useGetCasesListQuery';
 import { useCases } from '../../store/contexts/CasesContext';
 import { mapSearchToQueryParam } from '../../utils/transformData';
-import { mapStatusToBorderColor } from './casesHelpers';
+import { mapStatusToBorderColor } from './helpers/casesHelpers';
 
 const casesFirstRowHeaders: ICasesTableHeader = {
   name: 'name',

@@ -97,7 +97,7 @@ i18n
             cities: 'Cities',
             city: 'City',
             numberOfDebtors: 'Number of Debtors',
-            numberOfExecutors: 'Number of Executors',
+            numberOfExecutors: 'Number of Bailiffs',
             numberOfLawyers: 'Number of Lawyers',
 
             // Clients
@@ -136,6 +136,7 @@ i18n
 
             // SSN Numbers
             ssnNumbers: 'SSN Numbers',
+            ssnNumber: 'SSN Number',
             ssn: 'SSN',
 
             // SSN Numbers and Packages
@@ -148,7 +149,8 @@ i18n
             address: 'Address',
 
             // Executors
-            executors: 'Executors',
+            executors: 'Bailiffs',
+            executor: 'Bailiff',
 
             // People
             people: 'People',
@@ -163,6 +165,7 @@ i18n
             debtors: 'Debtors',
             type: 'Type',
             isLegal: 'Is Legal',
+            legalEntity: 'Legal Entity',
             cession: 'Cession',
             zipCode: 'ZIP Code',
 
@@ -181,6 +184,7 @@ i18n
             principal: 'Principal',
             interest: 'Interest',
             jmbg_pib: 'JMBG / PIB',
+            addNewCase: 'Add new Case',
 
             // Transactions
             transactions: 'Transactions',
@@ -192,7 +196,7 @@ i18n
             legal_fee: 'Legal fee',
 
             // Case Executors
-            caseExecutors: 'Case Executors',
+            caseExecutors: 'Case Bailiffs',
 
             // Case Business Numbers
             caseBusinessNumbers: 'Case Business Numbers',
@@ -343,6 +347,7 @@ i18n
 
             // SSN Numbers
             ssnNumbers: 'SSN brojevi',
+            ssnNumber: 'SSN broj',
             ssn: 'SSN',
 
             // SSN Numbers and Packages
@@ -356,6 +361,7 @@ i18n
 
             // Executors
             executors: 'Izvršitelji',
+            executor: 'Izvršitelj',
 
             // People
             people: 'Ljudi',
@@ -370,6 +376,7 @@ i18n
             debtors: 'Dužnici',
             type: 'Tip',
             isLegal: 'Pravno lice',
+            legalEntity: 'Pravno lice',
             cession: 'Cesija',
             zipCode: 'Poštanski broj',
 
@@ -388,6 +395,7 @@ i18n
             principal: 'Glavni iznos',
             interest: 'Kamata',
             jmbg_pib: 'JMBG / PIB',
+            addNewCase: 'Dodaj novi predmet',
 
             // Transactions
             transactions: 'Transakcije',
