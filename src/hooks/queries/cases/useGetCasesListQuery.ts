@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { setupAxios } from '../../../libs/axios/setupAxios';
 import {
+  EState,
   ICaseApiResponseData,
   ICasesListApiResponse,
   ICasesQueryParams,
@@ -17,6 +18,7 @@ const getCasesList = async (
     sort = 'asc',
     page = 1,
     size = 10,
+    filter = 'active',
   } = queryParams;
 
   let response: IApiResponse<ICasesListApiResponse>;
@@ -31,6 +33,7 @@ const getCasesList = async (
         sort: sort === '' ? 'asc' : sort,
         page,
         size,
+        filter: filter === EState.all ? '' : filter,
       },
       withCredentials: true,
     });

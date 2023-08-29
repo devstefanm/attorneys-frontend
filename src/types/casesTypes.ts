@@ -1,9 +1,10 @@
 import { Moment } from 'moment';
 import { IMetaApiResponseData, IMetaQueryParams } from './universalTypes';
 
-export enum EStatus {
+export enum EState {
   active = 'active',
   closed = 'closed',
+  all = 'all',
 }
 
 export type CasesFirstRowName =
@@ -11,10 +12,11 @@ export type CasesFirstRowName =
   | 'jmbg_pib'
   | 'caseNumber'
   | 'contractNumber'
+  | 'executors'
   | 'lawyer'
   | 'ssn'
   | 'package'
-  | 'status'
+  | 'state'
   | 'client'
   | 'court'
   | 'cession'
@@ -26,6 +28,7 @@ export type CasesFirstRowHeader =
   | 'JMBG / PIB'
   | 'Case Number'
   | 'Contract Number'
+  | 'Executors'
   | 'Lawyer'
   | 'SSN'
   | 'Package'
@@ -41,11 +44,12 @@ export interface ICasesFirstRowData {
   jmbg_pib: string;
   caseNumber: string;
   contractNumber: string;
+  executors: string;
   lawyer: string;
   cession: JSX.Element;
   ssn: string;
   package: string;
-  status: EStatus;
+  state: EState;
   client: string;
   court: string;
   principal: string;
@@ -56,7 +60,7 @@ export interface ICaseApiResponseData {
   id: number;
   case_number: string;
   contract_number: string;
-  status: EStatus;
+  state: EState;
   principal: string;
   interest: string;
   is_legal: boolean;
@@ -69,6 +73,7 @@ export interface ICaseApiResponseData {
   lawyer_office_name?: string;
   lawyer_first_name?: string;
   lawyer_last_name?: string;
+  executors: string;
   client_name: string;
   court_name: string;
   ssn: string | null;
@@ -85,6 +90,12 @@ export interface ICasesQueryParams extends IMetaQueryParams {
   case_number?: string;
   contract_number?: string;
   lawyer?: string;
+  executors?: string;
+  ssn?: string;
+  package?: string;
+  client?: string;
+  court?: string;
+  filter?: EState;
 }
 
 export interface ICasesListApiResponse {

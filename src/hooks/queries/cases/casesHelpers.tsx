@@ -13,10 +13,11 @@ export const mapApiResponseToFirstRow = ({
   jmbg,
   pib,
   name,
+  executors,
   lawyer_first_name,
   lawyer_last_name,
   lawyer_office_name,
-  status,
+  state,
   ssn,
   package: packageName,
   client_name,
@@ -30,9 +31,10 @@ export const mapApiResponseToFirstRow = ({
     : `${first_name ? uppercaseFirstLetter(first_name) : ''} ${
         last_name ? uppercaseFirstLetter(last_name) : ''
       }`,
-  jmbg_pib: (jmbg ? jmbg : '') ?? (pib ? pib : ''),
+  jmbg_pib: (jmbg ? jmbg : '') || (pib ? pib : ''),
   caseNumber: case_number,
   contractNumber: contract_number,
+  executors,
   lawyer: lawyer_office_name
     ? uppercaseFirstLetter(lawyer_office_name)
     : `${lawyer_first_name ? uppercaseFirstLetter(lawyer_first_name) : ''} ${
@@ -40,7 +42,7 @@ export const mapApiResponseToFirstRow = ({
       }`,
   ssn: ssn ?? '',
   package: packageName ?? '',
-  status,
+  state,
   client: client_name ?? '',
   cession: cession ? (
     <TaskAlt color="success" />

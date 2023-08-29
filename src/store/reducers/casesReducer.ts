@@ -1,4 +1,5 @@
 import {
+  EState,
   IAddCaseAutocompleteInputChange,
   IAddCaseAutocompleteValues,
   IAddCaseForm,
@@ -19,6 +20,7 @@ export interface ICasesState {
   sortable: ITableSortable;
   pageable: ITablePageable;
   searchable: ITableSearchable[];
+  filterable: EState;
   addCaseModalOpen: boolean;
   isLegalEntity: boolean;
   addCaseForm: IAddCaseForm;
@@ -31,6 +33,7 @@ interface ICasesAction {
     | ITableSortable
     | ITablePageable
     | ITableSearchable
+    | EState
     | boolean
     | IAddCaseStateUpdate
     | IAddCaseAutocompleteInputChange;
@@ -87,6 +90,11 @@ const casesReducer = (
         ...state,
         addCaseAutocompleteValues: addCaseAutocompleteInitialValues,
         addCaseForm: addCasesInitialFormData,
+      };
+    case ETableActionType.filterable:
+      return {
+        ...state,
+        filterable: action.payload as EState,
       };
     default:
       return state;

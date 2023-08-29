@@ -18,10 +18,11 @@ const casesFirstRowHeaders: ICasesTableHeader = {
   caseNumber: 'caseNumber',
   contractNumber: 'contractNumber',
   cession: 'cession',
+  executors: 'executors',
   lawyer: 'lawyer',
   ssn: 'ssn',
   package: 'package',
-  status: 'status',
+  state: 'state',
   client: 'client',
   court: 'court',
   principal: 'principal',
@@ -36,6 +37,7 @@ const CasesTable = () => {
       sortable: { sort, sortBy },
       pageable: { page, size },
       searchable,
+      filterable,
     },
     dispatch: updateCasesState,
   } = useCases();
@@ -55,6 +57,7 @@ const CasesTable = () => {
   const { data, isLoading, refetch } = useGetCasesListQuery({
     ...queryParams,
     ...searchParams,
+    filter: filterable,
   });
 
   const columns = React.useMemo<ColumnDef<ICasesFirstRowData>[]>(
@@ -100,6 +103,36 @@ const CasesTable = () => {
         isSortable: true,
       },
       {
+        accessorFn: (row) => row.ssn,
+        id: casesFirstRowHeaders.ssn,
+        header: () => (
+          <span>{t(`entities.${[casesFirstRowHeaders.ssn]}`)}</span>
+        ),
+        cell: (info) => info.getValue(),
+        isSearchable: true,
+        isSortable: true,
+      },
+      {
+        accessorFn: (row) => row.package,
+        id: casesFirstRowHeaders.package,
+        header: () => (
+          <span>{t(`entities.${[casesFirstRowHeaders.package]}`)}</span>
+        ),
+        cell: (info) => info.getValue(),
+        isSearchable: true,
+        isSortable: true,
+      },
+      {
+        accessorFn: (row) => row.executors,
+        id: casesFirstRowHeaders.executors,
+        header: () => (
+          <span>{t(`entities.${[casesFirstRowHeaders.executors]}`)}</span>
+        ),
+        cell: (info) => info.getValue(),
+        isSearchable: true,
+        isSortable: true,
+      },
+      {
         accessorFn: (row) => row.lawyer,
         id: casesFirstRowHeaders.lawyer,
         header: () => (
@@ -110,43 +143,13 @@ const CasesTable = () => {
         isSortable: true,
       },
       {
-        accessorFn: (row) => row.cession,
-        id: casesFirstRowHeaders.cession,
-        header: () => (
-          <span>{t(`entities.${[casesFirstRowHeaders.cession]}`)}</span>
-        ),
-        cell: (info) => info.getValue(),
-        isSearchable: false,
-        isSortable: true,
-      },
-      {
-        accessorFn: (row) => row.ssn,
-        id: casesFirstRowHeaders.ssn,
-        header: () => (
-          <span>{t(`entities.${[casesFirstRowHeaders.ssn]}`)}</span>
-        ),
-        cell: (info) => info.getValue(),
-        isSearchable: false,
-        isSortable: true,
-      },
-      {
-        accessorFn: (row) => row.package,
-        id: casesFirstRowHeaders.package,
-        header: () => (
-          <span>{t(`entities.${[casesFirstRowHeaders.package]}`)}</span>
-        ),
-        cell: (info) => info.getValue(),
-        isSearchable: false,
-        isSortable: true,
-      },
-      {
         accessorFn: (row) => row.client,
         id: casesFirstRowHeaders.client,
         header: () => (
           <span>{t(`entities.${[casesFirstRowHeaders.client]}`)}</span>
         ),
         cell: (info) => info.getValue(),
-        isSearchable: false,
+        isSearchable: true,
         isSortable: true,
       },
       {
@@ -156,34 +159,8 @@ const CasesTable = () => {
           <span>{t(`entities.${[casesFirstRowHeaders.court]}`)}</span>
         ),
         cell: (info) => info.getValue(),
-        isSearchable: false,
+        isSearchable: true,
         isSortable: true,
-      },
-      {
-        accessorFn: (row) => row.principal,
-        id: casesFirstRowHeaders.principal,
-        header: () => (
-          <span>{t(`entities.${[casesFirstRowHeaders.principal]}`)}</span>
-        ),
-        cell: (info) => info.getValue(),
-        isSearchable: false,
-        isSortable: true,
-        meta: {
-          isNumeric: true,
-        },
-      },
-      {
-        accessorFn: (row) => row.interest,
-        id: casesFirstRowHeaders.interest,
-        header: () => (
-          <span>{t(`entities.${[casesFirstRowHeaders.interest]}`)}</span>
-        ),
-        cell: (info) => info.getValue(),
-        isSearchable: false,
-        isSortable: true,
-        meta: {
-          isNumeric: true,
-        },
       },
     ],
     [],
@@ -199,7 +176,7 @@ const CasesTable = () => {
       totalNumber={data?.data.data?.meta.total_number}
       page={page}
       size={size}
-      borderKeyword="status"
+      borderKeyword="state"
       updateState={updateCasesState}
       refetch={refetch}
       mapBorderColors={mapStatusToBorderColor}

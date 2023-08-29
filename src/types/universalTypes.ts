@@ -43,6 +43,7 @@ export enum ETableActionType {
   sortable = 'SORTABLE',
   pageable = 'PAGEABLE',
   searchable = 'SEARCHABLE',
+  filterable = 'FILTERABLE',
   isLegalEntity = 'IS_LEGAL',
   addCaseModalOpen = 'ADD_CASE_MODAL_OPEN',
   addCaseForm = 'ADD_CASE_FORM',

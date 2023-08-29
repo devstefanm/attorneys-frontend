@@ -4,6 +4,7 @@ import {
   addCaseAutocompleteInitialValues,
   addCasesInitialFormData,
 } from './data/casesInitialData';
+import { EState } from '../../types/casesTypes';
 
 interface ICasesStateProviderProps {
   children: React.ReactNode;
@@ -20,6 +21,7 @@ const initialState: ICasesState = {
     totalNumber: null,
   },
   searchable: [],
+  filterable: EState.active,
   addCaseModalOpen: false,
   isLegalEntity: false,
   addCaseForm: addCasesInitialFormData,

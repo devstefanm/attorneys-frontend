@@ -7,6 +7,7 @@ import AddCaseModal from '../features/cases/AddCaseModal';
 import { Box, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ETableActionType } from '../types/universalTypes';
+import { CasesFilter } from '../features/cases/CasesFilter';
 
 type Props = IPagesProps & {};
 
@@ -21,7 +22,8 @@ const Cases = (_props: Props) => {
     <ErrorBoundary>
       <React.Suspense fallback={'Loading....'}>
         <CasesStateProvider>
-          <Box className="my-2 flex justify-end">
+          <Box className="my-2 flex justify-between">
+            <CasesFilter />
             <Button
               onClick={() =>
                 updateCasesState({

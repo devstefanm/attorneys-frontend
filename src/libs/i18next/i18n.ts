@@ -32,6 +32,9 @@ i18n
           no: 'No',
           error: 'Error',
           loading: 'Loading',
+          active: 'Active',
+          closed: 'Closed',
+          all: 'All',
 
           // Pagination
           rowsPerPage: 'Rows per page',
@@ -185,6 +188,7 @@ i18n
             interest: 'Interest',
             jmbg_pib: 'JMBG / PIB',
             addNewCase: 'Add new Case',
+            stateOfCases: 'State of Cases',
 
             // Transactions
             transactions: 'Transactions',
@@ -243,6 +247,9 @@ i18n
           no: 'Ne',
           error: 'Greška',
           loading: 'Učitavanje',
+          active: 'Aktivni',
+          closed: 'Zatvoreni',
+          all: 'Svi',
 
           // Pagination
           rowsPerPage: 'Broj redova po strani',
@@ -396,6 +403,7 @@ i18n
             interest: 'Kamata',
             jmbg_pib: 'JMBG / PIB',
             addNewCase: 'Dodaj novi predmet',
+            stateOfCases: 'Stanje predmeta',
 
             // Transactions
             transactions: 'Transakcije',
