@@ -13,7 +13,7 @@ type Props = {
   onValuesChange?: (values: string[]) => void;
 };
 
-const DynamicForm: React.FC<Props> = ({
+const DynamicInputs: React.FC<Props> = ({
   label,
   values,
   inputProps,
@@ -82,4 +82,4 @@ const DynamicForm: React.FC<Props> = ({
   );
 };
 
-export { DynamicForm };
+export { DynamicInputs };

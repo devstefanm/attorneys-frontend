@@ -24,7 +24,7 @@ import {
 } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { DynamicForm } from '../../components/DynamicForm';
+import { DynamicInputs } from '../../components/DynamicInputs';
 import useGetCitiesNamesQuery from '../../hooks/queries/cities/useGetCitiesNamesQuery';
 import useGetClientsNamesQuery from '../../hooks/queries/clients/useGetClientsNamesQuery';
 import useGetCourtsNamesQuery from '../../hooks/queries/courts/useCourtsNamesQuery';
@@ -36,6 +36,7 @@ import { mapApiResponseToAutocompleteOptions } from './helpers/casesHelpers';
 import { IResponseObject } from '../../types/casesTypes';
 import debounce from 'lodash.debounce';
 import useGetEmployersNamesQuery from '../../hooks/queries/employers/useGetEmployersNamesQuery';
+import { DynamicAutocompletes } from '../../components/DynamicAutocompletes';
 
 // type Props = {};
 
@@ -59,7 +60,7 @@ const AddCaseForm = () => {
   });
 
   const { data: executorsOptions } = useGetExecutorsNamesQuery({
-    search: addCaseAutocompleteValues.executor,
+    search: addCaseAutocompleteValues.executors,
   });
 
   const { data: lawyersOptions } = useGetLawyersNamesQuery({
@@ -91,7 +92,6 @@ const AddCaseForm = () => {
         | PickerChangeHandlerContext<DateValidationError>
         | IResponseObject,
     ) => {
-      // @ts-ignore
       switch (type) {
         case EFormFieldType.toggle:
           if (name === 'legalEntity') {
@@ -138,7 +138,7 @@ const AddCaseForm = () => {
             payload: { name, fieldValue: event },
           });
           break;
-        case EFormFieldType.dynamicForm:
+        case EFormFieldType.dynamicInputs:
           updateCasesState({
             type: ETableActionType.addCaseForm,
             payload: { name, fieldValue: event },
@@ -154,6 +154,17 @@ const AddCaseForm = () => {
                     checked as IResponseObject,
                   )
                 : '',
+            },
+          });
+          break;
+        case EFormFieldType.dynamicAutocompletes:
+          updateCasesState({
+            type: ETableActionType.addCaseForm,
+            payload: {
+              name,
+              fieldValue: event.map((e: IResponseObject) =>
+                mapApiResponseToAutocompleteOptions(e),
+              ),
             },
           });
           break;
@@ -279,10 +290,10 @@ const AddCaseForm = () => {
             </LocalizationProvider>
           </Grid>
         );
-      case EFormFieldType.dynamicForm:
+      case EFormFieldType.dynamicInputs:
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
-            <DynamicForm
+            <DynamicInputs
               label={t(`entities.${name}`)}
               inputProps={{
                 label: t(`entities.${subfieldName}`),
@@ -292,6 +303,28 @@ const AddCaseForm = () => {
               // @ts-ignore
               values={addCaseForm[name]}
               onValuesChange={handleChange(name, type)}
+            />
+          </Grid>
+        );
+      case EFormFieldType.dynamicAutocompletes:
+        return (
+          <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
+            <DynamicAutocompletes
+              options={options}
+              label={t(`entities.${name}`)}
+              autocompleteProps={{
+                size: 'small',
+                fullWidth: true,
+              }}
+              inputProps={{
+                label: t(`entities.${subfieldName}`),
+              }}
+              // @ts-ignore
+              values={addCaseForm[name]}
+              onValuesChange={handleChange(name, type)}
+              actionType={ETableActionType.addCaseAutocompleteValues}
+              name={name}
+              updateState={updateCasesState}
             />
           </Grid>
         );

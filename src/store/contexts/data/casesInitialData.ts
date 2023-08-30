@@ -12,7 +12,7 @@ export const addCasesInitialFormData: IAddCaseForm = {
   pib: '',
   employed: false,
   employer: '',
-  executor: '',
+  executors: [{ id: null, name: '' }],
   cession: false,
   phoneNumbers: [''],
   address: '',
@@ -34,7 +34,7 @@ export const addCasesInitialFormData: IAddCaseForm = {
 
 export const addCaseAutocompleteInitialValues: IAddCaseAutocompleteValues = {
   employer: '',
-  executor: '',
+  executors: '',
   lawyer: '',
   client: '',
   court: '',

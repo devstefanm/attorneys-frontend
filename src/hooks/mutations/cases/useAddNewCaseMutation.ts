@@ -30,8 +30,10 @@ const useAddNewCaseMutation = (
     (caseRequestData: ICaseRequestData) => addNewCase(caseRequestData),
     {
       onSuccess: (response) => {
-        onClose();
         updateCasesState({ type: ETableActionType.resetCaseFormData });
+        if (!response.data.error) {
+          onClose();
+        }
         return response.data.message;
       },
       onError: (error) => {

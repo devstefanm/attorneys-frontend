@@ -69,7 +69,7 @@ export const formFields = ({
   {
     name: 'phoneNumbers',
     subfieldName: 'phoneNumber',
-    type: EFormFieldType.dynamicForm,
+    type: EFormFieldType.dynamicInputs,
     gridWidth: 12,
   },
   {
@@ -105,15 +105,17 @@ export const formFields = ({
     gridWidth: 6,
   },
   {
-    name: 'closingDate',
-    type: EFormFieldType.datepicker,
+    name: 'businessNumbers',
+    subfieldName: 'businessNumber',
+    type: EFormFieldType.dynamicInputs,
     gridWidth: 12,
   },
   {
-    name: 'businessNumbers',
-    subfieldName: 'businessNumber',
-    type: EFormFieldType.dynamicForm,
+    name: 'executors',
+    subfieldName: 'executor',
+    type: EFormFieldType.dynamicAutocompletes,
     gridWidth: 12,
+    options: executorsOptions,
   },
   {
     name: 'lawyer',
@@ -122,10 +124,10 @@ export const formFields = ({
     options: lawyersOptions,
   },
   {
-    name: 'executor',
+    name: 'court',
     type: EFormFieldType.autocomplete,
     gridWidth: 6,
-    options: executorsOptions,
+    options: courtsOptions,
   },
   {
     name: 'client',
@@ -134,10 +136,9 @@ export const formFields = ({
     options: clientsOptions,
   },
   {
-    name: 'court',
-    type: EFormFieldType.autocomplete,
+    name: 'closingDate',
+    type: EFormFieldType.datepicker,
     gridWidth: 6,
-    options: courtsOptions,
   },
   {
     name: 'ssnNumber',

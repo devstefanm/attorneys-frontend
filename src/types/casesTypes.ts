@@ -17,8 +17,7 @@ export type CasesFirstRowName =
   | 'ssn'
   | 'package'
   | 'state'
-  | 'client'
-  | 'court'
+  | 'businessNumbers'
   | 'cession'
   | 'principal'
   | 'interest';
@@ -33,8 +32,7 @@ export type CasesFirstRowHeader =
   | 'SSN'
   | 'Package'
   | 'Status'
-  | 'Client'
-  | 'Court'
+  | 'Business Numbers'
   | 'Cession'
   | 'Principal'
   | 'Interest';
@@ -50,8 +48,7 @@ export interface ICasesFirstRowData {
   ssn: string;
   package: string;
   state: EState;
-  client: string;
-  court: string;
+  businessNumbers: string;
   principal: string;
   interest: string;
 }
@@ -74,8 +71,7 @@ export interface ICaseApiResponseData {
   lawyer_first_name?: string;
   lawyer_last_name?: string;
   executors: string;
-  client_name: string;
-  court_name: string;
+  business_numbers: string;
   ssn: string | null;
   package: string | null;
 }
@@ -104,7 +100,7 @@ export interface ICasesListApiResponse {
 }
 
 export interface IAutocompleteOption {
-  id: number;
+  id: number | null;
   name: string;
 }
 
@@ -117,7 +113,7 @@ export interface IAddCaseForm {
   pib: string;
   employed: boolean;
   employer: IAutocompleteOption | string;
-  executor: IAutocompleteOption | string;
+  executors: IAutocompleteOption[];
   cession: boolean;
   phoneNumbers: string[];
   address: string;
@@ -149,7 +145,7 @@ export interface IAddCaseAutocompleteInputChange {
 
 export interface IAddCaseAutocompleteValues {
   employer: string;
-  executor: string;
+  executors: string;
   lawyer: string;
   client: string;
   court: string;
@@ -159,7 +155,7 @@ export interface IAddCaseAutocompleteValues {
 }
 
 export interface IResponseObject {
-  id: number;
+  id: number | null;
   name?: string;
   package_name?: string;
   first_name?: string;
@@ -175,7 +171,7 @@ export interface ICaseRequestData {
   pib?: string;
   employed?: boolean;
   employer_id?: number | null;
-  executor_id: number | null;
+  executor_ids: (number | null)[];
   business_numbers: string[];
   phone_numbers: string[];
   cession: boolean;

@@ -23,8 +23,7 @@ const casesFirstRowHeaders: ICasesTableHeader = {
   ssn: 'ssn',
   package: 'package',
   state: 'state',
-  client: 'client',
-  court: 'court',
+  businessNumbers: 'businessNumbers',
   principal: 'principal',
   interest: 'interest',
 };
@@ -103,20 +102,10 @@ const CasesTable = () => {
         isSortable: true,
       },
       {
-        accessorFn: (row) => row.ssn,
-        id: casesFirstRowHeaders.ssn,
+        accessorFn: (row) => row.businessNumbers,
+        id: casesFirstRowHeaders.businessNumbers,
         header: () => (
-          <span>{t(`entities.${[casesFirstRowHeaders.ssn]}`)}</span>
-        ),
-        cell: (info) => info.getValue(),
-        isSearchable: true,
-        isSortable: true,
-      },
-      {
-        accessorFn: (row) => row.package,
-        id: casesFirstRowHeaders.package,
-        header: () => (
-          <span>{t(`entities.${[casesFirstRowHeaders.package]}`)}</span>
+          <span>{t(`entities.${[casesFirstRowHeaders.businessNumbers]}`)}</span>
         ),
         cell: (info) => info.getValue(),
         isSearchable: true,
@@ -143,20 +132,20 @@ const CasesTable = () => {
         isSortable: true,
       },
       {
-        accessorFn: (row) => row.client,
-        id: casesFirstRowHeaders.client,
+        accessorFn: (row) => row.ssn,
+        id: casesFirstRowHeaders.ssn,
         header: () => (
-          <span>{t(`entities.${[casesFirstRowHeaders.client]}`)}</span>
+          <span>{t(`entities.${[casesFirstRowHeaders.ssn]}`)}</span>
         ),
         cell: (info) => info.getValue(),
         isSearchable: true,
         isSortable: true,
       },
       {
-        accessorFn: (row) => row.court,
-        id: casesFirstRowHeaders.court,
+        accessorFn: (row) => row.package,
+        id: casesFirstRowHeaders.package,
         header: () => (
-          <span>{t(`entities.${[casesFirstRowHeaders.court]}`)}</span>
+          <span>{t(`entities.${[casesFirstRowHeaders.package]}`)}</span>
         ),
         cell: (info) => info.getValue(),
         isSearchable: true,

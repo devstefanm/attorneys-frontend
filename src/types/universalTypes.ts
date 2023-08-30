@@ -62,7 +62,8 @@ export enum EFormFieldType {
   checkbox = 'checkbox',
   autocomplete = 'autocomplete',
   datepicker = 'datepicker',
-  dynamicForm = 'dynamic-form',
+  dynamicInputs = 'dynamic-inputs',
+  dynamicAutocompletes = 'dynamic-autocompletes',
 }
 
 export interface IFormField {

@@ -1,5 +1,6 @@
 import {
   IAddCaseForm,
+  IAutocompleteOption,
   ICaseRequestData,
   IResponseObject,
 } from '../../../types/casesTypes';
@@ -18,7 +19,7 @@ export const mapStatusToBorderColor = (status: string): string => {
 
 export const mapApiResponseToAutocompleteOptions = (
   responseObject: IResponseObject,
-) => {
+): IAutocompleteOption => {
   const {
     id,
     first_name,
@@ -52,7 +53,7 @@ export const mapApiResponseToAutocompleteOptions = (
 
 export const mapAddCaseFormToRequestData = ({
   address,
-  businessNumbers: business_numbers,
+  businessNumbers,
   caseNumber,
   cession,
   city,
@@ -63,7 +64,7 @@ export const mapAddCaseFormToRequestData = ({
   email,
   employed,
   employer,
-  executor,
+  executors,
   firstName: first_name,
   interest,
   jmbg,
@@ -72,7 +73,7 @@ export const mapAddCaseFormToRequestData = ({
   legalEntity,
   name,
   package: packageGroup,
-  phoneNumbers: phone_numbers,
+  phoneNumbers,
   pib,
   principal,
   ssnNumber,
@@ -81,7 +82,7 @@ export const mapAddCaseFormToRequestData = ({
   let city_id = null,
     client_id = null,
     court_id = null,
-    executor_id = null,
+    executor_ids: (number | null)[] = [],
     lawyer_id = null,
     ssn_number_id = null,
     package_id = null,
@@ -91,7 +92,10 @@ export const mapAddCaseFormToRequestData = ({
   if (typeof city !== 'string') city_id = city.id;
   if (typeof client !== 'string') client_id = client.id;
   if (typeof court !== 'string') court_id = court.id;
-  if (typeof executor !== 'string') executor_id = executor.id;
+  if (typeof executors !== null)
+    executor_ids = executors
+      .map((executor) => executor.id)
+      .filter((id) => id !== null);
   if (typeof lawyer !== 'string') lawyer_id = lawyer.id;
   if (typeof ssnNumber !== 'string') ssn_number_id = ssnNumber.id;
   if (typeof packageGroup !== 'string') package_id = packageGroup.id;
@@ -101,6 +105,12 @@ export const mapAddCaseFormToRequestData = ({
 
   const case_number = Number(caseNumber);
   const contract_number = Number(contractNumber);
+  const phone_numbers = phoneNumbers.filter(
+    (phoneNumber) => phoneNumber.length > 5,
+  );
+  const business_numbers = businessNumbers.filter(
+    (businessNumber) => businessNumber.length > 0,
+  );
 
   if (legalEntity) {
     return {
@@ -117,7 +127,7 @@ export const mapAddCaseFormToRequestData = ({
       city_id,
       client_id,
       court_id,
-      executor_id,
+      executor_ids,
       lawyer_id,
       ssn_number_id,
       package_id,
@@ -144,7 +154,7 @@ export const mapAddCaseFormToRequestData = ({
     city_id,
     client_id,
     court_id,
-    executor_id,
+    executor_ids,
     lawyer_id,
     ssn_number_id,
     package_id,

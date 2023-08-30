@@ -31,7 +31,7 @@ const ModalDialog = (props: Props) => {
   return (
     <ErrorBoundary>
       <Modal className="py-20 mt-16 h-full fixed overflow-y-auto" open={open}>
-        <Box className="modal-content mx-auto w-[800px] bg-white h-fit rounded border-0">
+        <Box className="modal-content mx-auto w-[900px] bg-white h-fit rounded border-0">
           <Stack className="flex pt-6 pb-2 mx-6 text-gray-500 text-xl">
             {header}
           </Stack>
