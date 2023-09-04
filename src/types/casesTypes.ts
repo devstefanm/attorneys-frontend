@@ -1,10 +1,22 @@
 import { Moment } from 'moment';
-import { IMetaApiResponseData, IMetaQueryParams } from './universalTypes';
+import {
+  IAutocompleteOption,
+  IMetaApiResponseData,
+  IMetaQueryParams,
+} from './universalTypes';
 
 export enum EState {
   active = 'active',
   closed = 'closed',
   all = 'all',
+}
+
+export enum ECasesActionType {
+  isLegalEntity = 'IS_LEGAL',
+  addCaseModalOpen = 'ADD_CASE_MODAL_OPEN',
+  addCaseForm = 'ADD_CASE_FORM',
+  addCaseAutocompleteValues = 'ADD_CASE_AC_VALUES',
+  resetCaseFormData = 'RESET_CASE_FORM_DATA',
 }
 
 export type CasesFirstRowName =
@@ -99,11 +111,6 @@ export interface ICasesListApiResponse {
   meta: IMetaApiResponseData;
 }
 
-export interface IAutocompleteOption {
-  id: number | null;
-  name: string;
-}
-
 export interface IAddCaseForm {
   legalEntity: boolean;
   firstName: string;
@@ -112,23 +119,23 @@ export interface IAddCaseForm {
   name: string;
   pib: string;
   employed: boolean;
-  employer: IAutocompleteOption | string;
-  executors: IAutocompleteOption[];
+  employer: IAutocompleteOption<string> | string;
+  executors: IAutocompleteOption<string>[];
   cession: boolean;
   phoneNumbers: string[];
   address: string;
   email: string;
   zipCode: string;
-  city: IAutocompleteOption | string;
+  city: IAutocompleteOption<string> | string;
   caseNumber: string;
   contractNumber: string;
   closingDate: Moment | null;
   businessNumbers: string[];
-  lawyer: IAutocompleteOption | string;
-  client: IAutocompleteOption | string;
-  court: IAutocompleteOption | string;
-  ssnNumber: IAutocompleteOption | string;
-  package: IAutocompleteOption | string;
+  lawyer: IAutocompleteOption<string> | string;
+  client: IAutocompleteOption<string> | string;
+  court: IAutocompleteOption<string> | string;
+  ssnNumber: IAutocompleteOption<string> | string;
+  package: IAutocompleteOption<string> | string;
   principal: string;
   interest: string;
 }
@@ -154,7 +161,7 @@ export interface IAddCaseAutocompleteValues {
   package: string;
 }
 
-export interface IResponseObject {
+export interface ICaseResponseObject {
   id: number | null;
   name?: string;
   package_name?: string;

@@ -2,6 +2,7 @@ import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 import { AuthStateProvider } from '../../store/contexts/AuthContext';
 import { CasesStateProvider } from '../../store/contexts/CasesContext';
+import { TransactionsStateProvider } from '../../store/contexts/TransactionsContext';
 
 export interface IPagesProps {
   pageLabel: string;
@@ -60,10 +61,20 @@ export const AuthWithProvider = () => (
   </AuthStateProvider>
 );
 
-export const CasesWithProvider = () => (
+export const CasesWithProvider = ({ pageLabel }: { pageLabel: string }) => (
   <CasesStateProvider>
-    <Cases pageLabel="entities.cases" />
+    <Cases pageLabel={pageLabel} />
   </CasesStateProvider>
+);
+
+export const TransactionsWithProvider = ({
+  pageLabel,
+}: {
+  pageLabel: string;
+}) => (
+  <TransactionsStateProvider>
+    <Transactions pageLabel={pageLabel} />
+  </TransactionsStateProvider>
 );
 
 export const routes = (isAuth: boolean, role: string | null) => [
@@ -79,7 +90,7 @@ export const routes = (isAuth: boolean, role: string | null) => [
     path: 'cases',
     element:
       isAuth && role !== 'visitor' ? (
-        <CasesWithProvider />
+        <CasesWithProvider pageLabel="entities.cases" />
       ) : (
         <Navigate to="/auth" />
       ),
@@ -88,7 +99,7 @@ export const routes = (isAuth: boolean, role: string | null) => [
     path: 'transactions',
     element:
       isAuth && role !== 'visitor' ? (
-        <Transactions pageLabel="entities.transactions" />
+        <TransactionsWithProvider pageLabel="entities.transactions" />
       ) : (
         <Navigate to="/auth" />
       ),

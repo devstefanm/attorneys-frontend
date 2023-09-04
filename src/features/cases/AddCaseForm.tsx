@@ -10,11 +10,7 @@ import {
   TextField,
 } from '@mui/material';
 import { formFields } from './data/addCaseFormItemsData';
-import {
-  EFormFieldType,
-  ETableActionType,
-  IFormField,
-} from '../../types/universalTypes';
+import { EFormFieldType, IFormField } from '../../types/universalTypes';
 import { useTranslation } from 'react-i18next';
 import { useCases } from '../../store/contexts/CasesContext';
 import {
@@ -33,12 +29,10 @@ import useGetLawyersNamesQuery from '../../hooks/queries/lawyers/useGetLawyersNa
 import useGetPackagesNamesQuery from '../../hooks/queries/packages/useGetPackagesNamesQuery';
 import useGetSSNNumbersQuery from '../../hooks/queries/ssnNumbers/useGetSSNNumbersQuery';
 import { mapApiResponseToAutocompleteOptions } from './helpers/casesHelpers';
-import { IResponseObject } from '../../types/casesTypes';
+import { ECasesActionType, ICaseResponseObject } from '../../types/casesTypes';
 import debounce from 'lodash.debounce';
 import useGetEmployersNamesQuery from '../../hooks/queries/employers/useGetEmployersNamesQuery';
 import { DynamicAutocompletes } from '../../components/DynamicAutocompletes';
-
-// type Props = {};
 
 const AddCaseForm = () => {
   const { t } = useTranslation();
@@ -50,7 +44,6 @@ const AddCaseForm = () => {
   const { data: citiesOptions } = useGetCitiesNamesQuery({
     search: addCaseAutocompleteValues.city,
   });
-
   const { data: clientsOptions } = useGetClientsNamesQuery({
     search: addCaseAutocompleteValues.client,
   });
@@ -90,22 +83,22 @@ const AddCaseForm = () => {
       checked?:
         | boolean
         | PickerChangeHandlerContext<DateValidationError>
-        | IResponseObject,
+        | ICaseResponseObject,
     ) => {
       switch (type) {
         case EFormFieldType.toggle:
           if (name === 'legalEntity') {
             updateCasesState({
-              type: ETableActionType.isLegalEntity,
+              type: ECasesActionType.isLegalEntity,
               payload: !isLegalEntity,
             });
             updateCasesState({
-              type: ETableActionType.addCaseForm,
+              type: ECasesActionType.addCaseForm,
               payload: { name, fieldValue: checked },
             });
           } else {
             updateCasesState({
-              type: ETableActionType.addCaseForm,
+              type: ECasesActionType.addCaseForm,
               payload: { name, fieldValue: checked },
             });
           }
@@ -116,42 +109,42 @@ const AddCaseForm = () => {
           if (format) {
             fieldValue = value.replace(format, '');
             updateCasesState({
-              type: ETableActionType.addCaseForm,
+              type: ECasesActionType.addCaseForm,
               payload: { name, fieldValue },
             });
           } else {
             updateCasesState({
-              type: ETableActionType.addCaseForm,
+              type: ECasesActionType.addCaseForm,
               payload: { name, fieldValue },
             });
           }
           break;
         case EFormFieldType.checkbox:
           updateCasesState({
-            type: ETableActionType.addCaseForm,
+            type: ECasesActionType.addCaseForm,
             payload: { name, fieldValue: checked },
           });
           break;
         case EFormFieldType.datepicker:
           updateCasesState({
-            type: ETableActionType.addCaseForm,
+            type: ECasesActionType.addCaseForm,
             payload: { name, fieldValue: event },
           });
           break;
         case EFormFieldType.dynamicInputs:
           updateCasesState({
-            type: ETableActionType.addCaseForm,
+            type: ECasesActionType.addCaseForm,
             payload: { name, fieldValue: event },
           });
           break;
         case EFormFieldType.autocomplete:
           updateCasesState({
-            type: ETableActionType.addCaseForm,
+            type: ECasesActionType.addCaseForm,
             payload: {
               name,
               fieldValue: checked
                 ? mapApiResponseToAutocompleteOptions(
-                    checked as IResponseObject,
+                    checked as ICaseResponseObject,
                   )
                 : '',
             },
@@ -159,10 +152,10 @@ const AddCaseForm = () => {
           break;
         case EFormFieldType.dynamicAutocompletes:
           updateCasesState({
-            type: ETableActionType.addCaseForm,
+            type: ECasesActionType.addCaseForm,
             payload: {
               name,
-              fieldValue: event.map((e: IResponseObject) =>
+              fieldValue: event.map((e: ICaseResponseObject) =>
                 mapApiResponseToAutocompleteOptions(e),
               ),
             },
@@ -256,7 +249,7 @@ const AddCaseForm = () => {
                   onChange={debounce(
                     (event) =>
                       updateCasesState({
-                        type: ETableActionType.addCaseAutocompleteValues,
+                        type: ECasesActionType.addCaseAutocompleteValues,
                         payload: {
                           inputName: name,
                           inputValue: event.target.value,
@@ -322,7 +315,7 @@ const AddCaseForm = () => {
               // @ts-ignore
               values={addCaseForm[name]}
               onValuesChange={handleChange(name, type)}
-              actionType={ETableActionType.addCaseAutocompleteValues}
+              actionType={ECasesActionType.addCaseAutocompleteValues}
               name={name}
               updateState={updateCasesState}
             />

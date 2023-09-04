@@ -43,6 +43,7 @@ const AddCaseModal = (props: Props) => {
         hasCancelButton={true}
         onSubmit={() => postNewCase(mapAddCaseFormToRequestData(addCaseForm))}
         isLoading={isLoading}
+        hasCloseIconButton={true}
       />
     </ErrorBoundary>
   );

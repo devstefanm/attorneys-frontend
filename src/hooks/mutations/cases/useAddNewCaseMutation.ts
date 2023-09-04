@@ -1,6 +1,6 @@
 import { setupAxios } from '../../../libs/axios/setupAxios';
-import { ICaseRequestData } from '../../../types/casesTypes';
-import { ETableActionType, IApiResponse } from '../../../types/universalTypes';
+import { ECasesActionType, ICaseRequestData } from '../../../types/casesTypes';
+import { IApiResponse } from '../../../types/universalTypes';
 import { useMutation } from '@tanstack/react-query';
 
 const addNewCase = async (
@@ -30,7 +30,7 @@ const useAddNewCaseMutation = (
     (caseRequestData: ICaseRequestData) => addNewCase(caseRequestData),
     {
       onSuccess: (response) => {
-        updateCasesState({ type: ETableActionType.resetCaseFormData });
+        updateCasesState({ type: ECasesActionType.resetCaseFormData });
         if (!response.data.error) {
           onClose();
         }

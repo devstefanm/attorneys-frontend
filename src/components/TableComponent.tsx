@@ -294,12 +294,9 @@ const TableComponent = (props: Props) => {
                             key={cell.id}
                           >
                             {cell.column.id.toLowerCase().includes('date')
-                              ? moment(
-                                  flexRender(
-                                    cell.column.columnDef.cell,
-                                    cell.getContext(),
-                                  ) as string,
-                                ).format('MMMM D, YYYY HH:MM')
+                              ? moment(cell.getValue() as string).format(
+                                  'MMMM D, YYYY',
+                                )
                               : flexRender(
                                   cell.column.columnDef.cell,
                                   cell.getContext(),

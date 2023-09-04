@@ -1,4 +1,5 @@
 import {
+  ECasesActionType,
   EState,
   IAddCaseAutocompleteInputChange,
   IAddCaseAutocompleteValues,
@@ -28,7 +29,7 @@ export interface ICasesState {
 }
 
 interface ICasesAction {
-  type: ETableActionType;
+  type: ETableActionType | ECasesActionType;
   payload?:
     | ITableSortable
     | ITablePageable
@@ -62,11 +63,11 @@ const casesReducer = (
       }
 
       return { ...state, searchable: newState };
-    case ETableActionType.isLegalEntity:
+    case ECasesActionType.isLegalEntity:
       return { ...state, isLegalEntity: action.payload as boolean };
-    case ETableActionType.addCaseModalOpen:
+    case ECasesActionType.addCaseModalOpen:
       return { ...state, addCaseModalOpen: action.payload as boolean };
-    case ETableActionType.addCaseForm:
+    case ECasesActionType.addCaseForm:
       const { name, fieldValue } = action.payload as IAddCaseStateUpdate;
       return {
         ...state,
@@ -75,7 +76,7 @@ const casesReducer = (
           [name]: fieldValue,
         },
       };
-    case ETableActionType.addCaseAutocompleteValues:
+    case ECasesActionType.addCaseAutocompleteValues:
       const { inputName, inputValue } =
         action.payload as IAddCaseAutocompleteInputChange;
       return {
@@ -85,7 +86,7 @@ const casesReducer = (
           [inputName]: inputValue,
         },
       };
-    case ETableActionType.resetCaseFormData:
+    case ECasesActionType.resetCaseFormData:
       return {
         ...state,
         addCaseAutocompleteValues: addCaseAutocompleteInitialValues,

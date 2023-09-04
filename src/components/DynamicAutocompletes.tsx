@@ -8,13 +8,13 @@ import {
 } from '@mui/material';
 import * as React from 'react';
 import { mapApiResponseToAutocompleteOptions } from '../features/cases/helpers/casesHelpers';
-import { IAutocompleteOption } from '../types/casesTypes';
+import { IAutocompleteOption } from '../types/universalTypes';
 import debounce from 'lodash.debounce';
-import { ETableActionType } from '../types/universalTypes';
+import { ECasesActionType } from '../types/casesTypes';
 
 type Props = {
   label: string;
-  values?: IAutocompleteOption[];
+  values?: IAutocompleteOption<string>[];
   options?: any[];
   autocompleteProps?: {
     size?: any;
@@ -24,8 +24,8 @@ type Props = {
     label: string;
   };
   name?: string;
-  actionType?: ETableActionType;
-  onValuesChange?: (values: IAutocompleteOption[]) => void;
+  actionType?: ECasesActionType;
+  onValuesChange?: (values: IAutocompleteOption<string>[]) => void;
   updateState?: React.Dispatch<any>;
 };
 
@@ -41,7 +41,7 @@ const DynamicAutocompletes: React.FC<Props> = ({
   updateState,
 }) => {
   const [autocompleteFields, setAutocompleteFields] = React.useState<
-    IAutocompleteOption[]
+    IAutocompleteOption<string>[]
   >(values ?? [{ id: null, name: '' }]);
 
   React.useEffect(() => {
@@ -68,7 +68,7 @@ const DynamicAutocompletes: React.FC<Props> = ({
 
   const handleAutocompleteChange = (
     index: number,
-    value: IAutocompleteOption,
+    value: IAutocompleteOption<string>,
   ) => {
     const newAutocompleteFields = [...autocompleteFields];
     newAutocompleteFields[index] = value;

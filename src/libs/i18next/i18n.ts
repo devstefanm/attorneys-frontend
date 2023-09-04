@@ -192,12 +192,20 @@ i18n
 
             // Transactions
             transactions: 'Transactions',
+            debtorsName: "Debtor's name",
             amount: 'Amount',
             postingMethod: 'Posting Method',
             paymentDate: 'Payment Date',
             payment: 'Payment',
             fee: 'Fee',
             legal_fee: 'Legal fee',
+            withdrawal: 'Withdrawal',
+            payments: 'Payments',
+            fees: 'Fees',
+            legal_fees: 'Legal fees',
+            withdrawals: 'Withdrawals',
+            addNewTransaction: 'Add new Transactions',
+            transactionType: 'Transaction Type',
 
             // Case Executors
             caseExecutors: 'Case Bailiffs',
@@ -407,12 +415,20 @@ i18n
 
             // Transactions
             transactions: 'Transakcije',
+            debtorsName: 'Ime dužnika',
             amount: 'Iznos',
             postingMethod: 'Način evidentiranja',
             paymentDate: 'Datum uplate',
             payment: 'Uplata',
             fee: 'Taksa',
             legal_fee: 'Sudska taksa',
+            withdrawal: 'Povlačenje sredstava',
+            payments: 'Uplate',
+            fees: 'Takse',
+            legal_fees: 'Sudske takse',
+            withdrawals: 'Povlačenja sredstava',
+            addNewTransaction: 'Dodaj novu transakciju',
+            transactionType: 'Tip transakcije',
 
             // Case Executors
             caseExecutors: 'Izvršitelji predmeta',

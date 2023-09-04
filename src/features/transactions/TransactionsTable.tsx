@@ -10,9 +10,10 @@ import { useTranslation } from 'react-i18next';
 import useGetTransactionsListQuery from '../../hooks/queries/transactions/useGetTransactionsListQuery';
 import { useTransactions } from '../../store/contexts/TransactionsContext';
 import { mapSearchToQueryParam } from '../../utils/transformData';
-import { mapTypeToBorderColor } from './transactionsHelpers';
+import { mapTypeToBorderColor } from './helpers/transactionsHelpers';
 
 const transactionsTableHeaders: ITransactionsTableHeader = {
+  debtorsName: 'debtorsName',
   displayType: 'type',
   amount: 'amount',
   postingMethod: 'postingMethod',
@@ -29,6 +30,7 @@ const TransactionsTable = () => {
       sortable: { sort, sortBy },
       pageable: { page, size },
       searchable,
+      filterable,
     },
     dispatch: updateTransactionsState,
   } = useTransactions();
@@ -48,10 +50,21 @@ const TransactionsTable = () => {
   const { data, isLoading, refetch } = useGetTransactionsListQuery({
     ...queryParams,
     ...searchParams,
+    filter: filterable,
   });
 
   const columns = React.useMemo<ColumnDef<ITransactionsTableData>[]>(
     () => [
+      {
+        accessorFn: (row) => row.debtorsName,
+        id: transactionsTableHeaders.debtorsName,
+        header: () => (
+          <span>{t(`entities.${[transactionsTableHeaders.debtorsName]}`)}</span>
+        ),
+        cell: (info) => info.getValue(),
+        isSearchable: true,
+        isSortable: true,
+      },
       {
         accessorFn: (row) => row.caseNumber,
         id: transactionsTableHeaders.caseNumber,

@@ -3,6 +3,11 @@ import {
   ITransactionsState,
   transactionsReducer,
 } from '../reducers/transactionsReducer';
+import {
+  addTransactionAutocompleteInitialValues,
+  addTransactionsInitialFormData,
+} from './data/transactionsInitialData';
+import { ETransactionTypeFilter } from '../../types/transactionsTypes';
 
 interface ITransactionsStateProviderProps {
   children: React.ReactNode;
@@ -19,6 +24,10 @@ const initialState: ITransactionsState = {
     totalNumber: null,
   },
   searchable: [],
+  filterable: ETransactionTypeFilter.payment,
+  addTransactionModalOpen: false,
+  addTransactionForm: addTransactionsInitialFormData,
+  addTransactionAutocompleteValues: addTransactionAutocompleteInitialValues,
 };
 
 export const TransactionsContext = React.createContext<{

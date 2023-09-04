@@ -1,9 +1,9 @@
 import {
   IAddCaseForm,
-  IAutocompleteOption,
   ICaseRequestData,
-  IResponseObject,
+  ICaseResponseObject,
 } from '../../../types/casesTypes';
+import { IAutocompleteOption } from '../../../types/universalTypes';
 import { transformDateFormat } from '../../../utils/transformData';
 
 export const mapStatusToBorderColor = (status: string): string => {
@@ -18,8 +18,8 @@ export const mapStatusToBorderColor = (status: string): string => {
 };
 
 export const mapApiResponseToAutocompleteOptions = (
-  responseObject: IResponseObject,
-): IAutocompleteOption => {
+  responseObject: ICaseResponseObject,
+): IAutocompleteOption<string> => {
   const {
     id,
     first_name,

@@ -1,19 +1,42 @@
 import {
+  ETransactionTypeFilter,
+  ETransactionsActionType,
+  IAddTransactionAutocompleteInputChange,
+  IAddTransactionAutocompleteValues,
+  IAddTransactionForm,
+  IAddTransactionStateUpdate,
+} from '../../types/transactionsTypes';
+import {
   ETableActionType,
   ITablePageable,
   ITableSearchable,
   ITableSortable,
 } from '../../types/universalTypes';
+import {
+  addTransactionAutocompleteInitialValues,
+  addTransactionsInitialFormData,
+} from '../contexts/data/transactionsInitialData';
 
 export interface ITransactionsState {
   sortable: ITableSortable;
   pageable: ITablePageable;
   searchable: ITableSearchable[];
+  filterable: ETransactionTypeFilter;
+  addTransactionForm: IAddTransactionForm;
+  addTransactionModalOpen: boolean;
+  addTransactionAutocompleteValues: IAddTransactionAutocompleteValues;
 }
 
 interface ITransactionsAction {
-  type: ETableActionType;
-  payload?: ITableSortable | ITablePageable | ITableSearchable;
+  type: ETableActionType | ETransactionsActionType;
+  payload?:
+    | ITableSortable
+    | ITablePageable
+    | ITableSearchable
+    | ETransactionTypeFilter
+    | boolean
+    | IAddTransactionStateUpdate
+    | IAddTransactionAutocompleteInputChange;
 }
 
 const transactionsReducer = (
@@ -39,6 +62,39 @@ const transactionsReducer = (
       }
 
       return { ...state, searchable: newState };
+    case ETransactionsActionType.addTransactionModalOpen:
+      return { ...state, addTransactionModalOpen: action.payload as boolean };
+    case ETransactionsActionType.addTransactionForm:
+      const { name, fieldValue } = action.payload as IAddTransactionStateUpdate;
+      return {
+        ...state,
+        addTransactionForm: {
+          ...state.addTransactionForm,
+          [name]: fieldValue,
+        },
+      };
+    case ETransactionsActionType.addTransactionAutocompleteValues:
+      const { inputName, inputValue } =
+        action.payload as IAddTransactionAutocompleteInputChange;
+      return {
+        ...state,
+        addTransactionAutocompleteValues: {
+          ...state.addTransactionAutocompleteValues,
+          [inputName]: inputValue,
+        },
+      };
+    case ETransactionsActionType.resetTransactionFormData:
+      return {
+        ...state,
+        addTransactionAutocompleteValues:
+          addTransactionAutocompleteInitialValues,
+        addTransactionForm: addTransactionsInitialFormData,
+      };
+    case ETableActionType.filterable:
+      return {
+        ...state,
+        filterable: action.payload as ETransactionTypeFilter,
+      };
     default:
       return state;
   }

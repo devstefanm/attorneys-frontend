@@ -44,11 +44,6 @@ export enum ETableActionType {
   pageable = 'PAGEABLE',
   searchable = 'SEARCHABLE',
   filterable = 'FILTERABLE',
-  isLegalEntity = 'IS_LEGAL',
-  addCaseModalOpen = 'ADD_CASE_MODAL_OPEN',
-  addCaseForm = 'ADD_CASE_FORM',
-  addCaseAutocompleteValues = 'ADD_CASE_AC_VALUES',
-  resetCaseFormData = 'RESET_CASE_FORM_DATA',
 }
 
 export interface ITableSearchable {
@@ -95,4 +90,9 @@ export interface ILongNamesApiResponse {
   id: number;
   first_name: string;
   last_name: string;
+}
+
+export interface IAutocompleteOption<T> {
+  id: number | null;
+  name: T;
 }

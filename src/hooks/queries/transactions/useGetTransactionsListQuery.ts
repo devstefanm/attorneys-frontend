@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { setupAxios } from '../../../libs/axios/setupAxios';
 import {
+  ETransactionTypeFilter,
   ITransactionsApiResponseData,
   ITransactionsListApiResponse,
   ITransactionsListQueryParams,
@@ -17,6 +18,7 @@ const getTransactionsList = async (
     sort = 'asc',
     page = 1,
     size = 10,
+    filter = 'payment',
   } = queryParams;
 
   let response: IApiResponse<ITransactionsListApiResponse>;
@@ -31,6 +33,7 @@ const getTransactionsList = async (
         sort: sort === '' ? 'asc' : sort,
         page,
         size,
+        filter: filter === ETransactionTypeFilter.all ? '' : filter,
       },
       withCredentials: true,
     });
