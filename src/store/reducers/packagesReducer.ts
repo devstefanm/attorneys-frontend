@@ -1,19 +1,32 @@
 import {
+  EPackagesActionType,
+  IAddPackageForm,
+  IAddPackageStateUpdate,
+} from '../../types/packagesTypes';
+import {
   ETableActionType,
   ITablePageable,
   ITableSearchable,
   ITableSortable,
 } from '../../types/universalTypes';
+import { addPackagesInitialFormData } from '../contexts/data/packagesInitialData';
 
 export interface IPackagesState {
   sortable: ITableSortable;
   pageable: ITablePageable;
   searchable: ITableSearchable[];
+  addPackageForm: IAddPackageForm;
+  addPackageModalOpen: boolean;
 }
 
 interface IPackagesAction {
-  type: ETableActionType;
-  payload?: ITableSortable | ITablePageable | ITableSearchable;
+  type: ETableActionType | EPackagesActionType;
+  payload?:
+    | ITableSortable
+    | ITablePageable
+    | ITableSearchable
+    | boolean
+    | IAddPackageStateUpdate;
 }
 
 const packagesReducer = (
@@ -39,6 +52,22 @@ const packagesReducer = (
       }
 
       return { ...state, searchable: newState };
+    case EPackagesActionType.addPackageModalOpen:
+      return { ...state, addPackageModalOpen: action.payload as boolean };
+    case EPackagesActionType.addPackageForm:
+      const { name, fieldValue } = action.payload as IAddPackageStateUpdate;
+      return {
+        ...state,
+        addPackageForm: {
+          ...state.addPackageForm,
+          [name]: fieldValue,
+        },
+      };
+    case EPackagesActionType.resetPackageFormData:
+      return {
+        ...state,
+        addPackageForm: addPackagesInitialFormData,
+      };
     default:
       return state;
   }

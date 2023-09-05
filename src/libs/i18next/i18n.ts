@@ -136,11 +136,13 @@ i18n
             package: 'Package',
             packages: 'Packages',
             packageName: 'Package Name',
+            addNewPackage: 'Add new Package',
 
             // SSN Numbers
             ssnNumbers: 'SSN Numbers',
             ssnNumber: 'SSN Number',
             ssn: 'SSN',
+            addNewSSNNumber: 'Add new SSN Number',
 
             // SSN Numbers and Packages
             ssnNumbersAndPackages: 'SSN Numbers and Packages',
@@ -150,10 +152,12 @@ i18n
             lawyer: 'Lawyer',
             officeName: 'Office Name',
             address: 'Address',
+            addNewLawyer: 'Add new Lawyer',
 
             // Executors
             executors: 'Bailiffs',
             executor: 'Bailiff',
+            addNewExecutor: 'Add new Bailiff',
 
             // People
             people: 'People',
@@ -359,11 +363,13 @@ i18n
             package: 'Paket',
             packages: 'Paketi',
             packageName: 'Naziv paketa',
+            addNewPackage: 'Dodaj novi Paket',
 
             // SSN Numbers
             ssnNumbers: 'SSN brojevi',
             ssnNumber: 'SSN broj',
             ssn: 'SSN',
+            addNewSSNNumber: 'Dodaj novi SSN broj',
 
             // SSN Numbers and Packages
             ssnNumbersAndPackages: 'SSN brojevi i Paketi',
@@ -373,10 +379,12 @@ i18n
             lawyer: 'Advokat',
             officeName: 'Naziv kancelarije',
             address: 'Adresa',
+            addNewLawyer: 'Dodaj novog advokata',
 
             // Executors
             executors: 'Izvršitelji',
             executor: 'Izvršitelj',
+            addNewExecutor: 'Dodaj novog izvršitelja',
 
             // People
             people: 'Ljudi',

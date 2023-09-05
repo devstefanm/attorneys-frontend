@@ -1,19 +1,39 @@
 import {
+  EExecutorsActionType,
+  IAddExecutorAutocompleteInputChange,
+  IAddExecutorAutocompleteValues,
+  IAddExecutorForm,
+  IAddExecutorStateUpdate,
+} from '../../types/executorsTypes';
+import {
   ETableActionType,
   ITablePageable,
   ITableSearchable,
   ITableSortable,
 } from '../../types/universalTypes';
+import {
+  addExecutorAutocompleteInitialValues,
+  addExecutorsInitialFormData,
+} from '../contexts/data/executorsInitialData';
 
 export interface IExecutorsState {
   sortable: ITableSortable;
   pageable: ITablePageable;
   searchable: ITableSearchable[];
+  addExecutorForm: IAddExecutorForm;
+  addExecutorModalOpen: boolean;
+  addExecutorAutocompleteValues: IAddExecutorAutocompleteValues;
 }
 
 interface IExecutorsAction {
-  type: ETableActionType;
-  payload?: ITableSortable | ITablePageable | ITableSearchable;
+  type: ETableActionType | EExecutorsActionType;
+  payload?:
+    | ITableSortable
+    | ITablePageable
+    | ITableSearchable
+    | boolean
+    | IAddExecutorStateUpdate
+    | IAddExecutorAutocompleteInputChange;
 }
 
 const executorsReducer = (
@@ -39,6 +59,33 @@ const executorsReducer = (
       }
 
       return { ...state, searchable: newState };
+    case EExecutorsActionType.addExecutorModalOpen:
+      return { ...state, addExecutorModalOpen: action.payload as boolean };
+    case EExecutorsActionType.addExecutorForm:
+      const { name, fieldValue } = action.payload as IAddExecutorStateUpdate;
+      return {
+        ...state,
+        addExecutorForm: {
+          ...state.addExecutorForm,
+          [name]: fieldValue,
+        },
+      };
+    case EExecutorsActionType.addExecutorAutocompleteValues:
+      const { inputName, inputValue } =
+        action.payload as IAddExecutorAutocompleteInputChange;
+      return {
+        ...state,
+        addExecutorAutocompleteValues: {
+          ...state.addExecutorAutocompleteValues,
+          [inputName]: inputValue,
+        },
+      };
+    case EExecutorsActionType.resetExecutorFormData:
+      return {
+        ...state,
+        addExecutorAutocompleteValues: addExecutorAutocompleteInitialValues,
+        addExecutorForm: addExecutorsInitialFormData,
+      };
     default:
       return state;
   }

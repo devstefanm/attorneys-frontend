@@ -10,13 +10,14 @@ import { useTranslation } from 'react-i18next';
 import useGetExecutorsListQuery from '../../hooks/queries/executors/useGetExecutorsListQuery';
 import { useExecutors } from '../../store/contexts/ExecutorsContext';
 import { mapSearchToQueryParam } from '../../utils/transformData';
-import { mapExecutorsToBorderColors } from './executorsHelpers';
+import { mapExecutorsToBorderColors } from './helpers/executorsHelpers';
 
 const executorsTableHeaders: IExecutorsTableHeader = {
   name: 'name',
+  email: 'email',
   city: 'city',
-  displayPhoneNumber: 'displayPhoneNumber',
-  phoneNumber: 'phoneNumber',
+  displayPhoneNumbers: 'displayPhoneNumbers',
+  phoneNumbers: 'phoneNumbers',
   numberOfCases: 'numberOfCases',
 };
 
@@ -62,10 +63,20 @@ const ExecutorsTable = () => {
         isSortable: true,
       },
       {
-        accessorFn: (row) => row.displayPhoneNumber,
-        id: executorsTableHeaders.displayPhoneNumber,
+        accessorFn: (row) => row.email,
+        id: executorsTableHeaders.email,
         header: () => (
-          <span>{t(`entities.${[executorsTableHeaders.phoneNumber]}`)}</span>
+          <span>{t(`entities.${[executorsTableHeaders.email]}`)}</span>
+        ),
+        cell: (info) => info.getValue(),
+        isSearchable: true,
+        isSortable: true,
+      },
+      {
+        accessorFn: (row) => row.displayPhoneNumbers,
+        id: executorsTableHeaders.displayPhoneNumbers,
+        header: () => (
+          <span>{t(`entities.${[executorsTableHeaders.phoneNumbers]}`)}</span>
         ),
         cell: (info) => info.getValue(),
         isSortable: true,

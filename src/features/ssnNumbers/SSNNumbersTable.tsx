@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import useGetSSNNumbersListQuery from '../../hooks/queries/ssnNumbers/useGetSSNNumbersListQuery';
 import { useSSNNumbers } from '../../store/contexts/SSNNumbersContext';
 import { mapSearchToQueryParam } from '../../utils/transformData';
-import { mapSSNNumbersToBorderColors } from './ssnNumbersHelpers';
+import { mapSSNNumbersToBorderColors } from './helpers/ssnNumbersHelpers';
 
 const ssnNumbersTableHeaders: ISSNNumbersTableHeader = {
   ssn: 'ssn',

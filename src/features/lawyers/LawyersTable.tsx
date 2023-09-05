@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import useGetLawyersListQuery from '../../hooks/queries/lawyers/useGetLawyersListQuery';
 import { useLawyers } from '../../store/contexts/LawyersContext';
 import { mapSearchToQueryParam } from '../../utils/transformData';
-import { mapLawyersToBorderColors } from './lawyersHelpers';
+import { mapLawyersToBorderColors } from './helpers/lawyersHelpers';
 
 const lawyersTableHeaders: ILawyersTableHeader = {
   name: 'name',
@@ -18,8 +18,8 @@ const lawyersTableHeaders: ILawyersTableHeader = {
   email: 'email',
   address: 'address',
   city: 'city',
-  displayPhoneNumber: 'displayPhoneNumber',
-  phoneNumber: 'phoneNumber',
+  displayPhoneNumbers: 'displayPhoneNumbers',
+  phoneNumbers: 'phoneNumbers',
   numberOfCases: 'numberOfCases',
 };
 
@@ -85,10 +85,10 @@ const LawyersTable = () => {
         isSortable: true,
       },
       {
-        accessorFn: (row) => row.displayPhoneNumber,
-        id: lawyersTableHeaders.displayPhoneNumber,
+        accessorFn: (row) => row.displayPhoneNumbers,
+        id: lawyersTableHeaders.displayPhoneNumbers,
         header: () => (
-          <span>{t(`entities.${[lawyersTableHeaders.phoneNumber]}`)}</span>
+          <span>{t(`entities.${[lawyersTableHeaders.phoneNumbers]}`)}</span>
         ),
         cell: (info) => info.getValue(),
         isSortable: true,

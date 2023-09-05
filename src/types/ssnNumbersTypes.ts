@@ -1,5 +1,12 @@
 import { IMetaApiResponseData, IMetaQueryParams } from './universalTypes';
 
+export enum ESSNNumbersActionType {
+  addSSNNumberModalOpen = 'ADD_SSN_NUMBER_MODAL_OPEN',
+  addSSNNumberForm = 'ADD_SSN_NUMBER_FORM',
+  addSSNNumberAutocompleteValues = 'ADD_SSN_NUMBER_AC_VALUES',
+  resetSSNNumberFormData = 'RESET_SSN_NUMBER_FORM_DATA',
+}
+
 export type SSNNumbersTableName = 'ssn' | 'numberOfCases';
 
 export type SSNNumbersTableHeader = 'SSN Number' | 'Number of Cases';
@@ -29,5 +36,28 @@ export interface ISSNNumbersListApiResponse {
 
 export interface ISSNumber {
   id: number;
+  ssn: string;
+}
+
+export interface IAddSSNNumberForm {
+  ssnNumber: string;
+}
+
+export interface IAddSSNNumberStateUpdate {
+  name: string;
+  fieldValue: string;
+}
+
+export interface IAddSSNNumberAutocompleteInputChange {
+  inputName: string;
+  inputValue: string;
+}
+
+export interface ISSNNumberResponseObject {
+  id: number | null;
+  ssn: string;
+}
+
+export interface ISSNNumberRequestData {
   ssn: string;
 }

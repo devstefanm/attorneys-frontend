@@ -1,5 +1,9 @@
 import * as React from 'react';
 import { ILawyersState, lawyersReducer } from '../reducers/lawyersReducer';
+import {
+  addLawyerAutocompleteInitialValues,
+  addLawyersInitialFormData,
+} from './data/lawyersInitialData';
 
 interface ILawyersStateProviderProps {
   children: React.ReactNode;
@@ -16,6 +20,9 @@ const initialState: ILawyersState = {
     totalNumber: null,
   },
   searchable: [],
+  addLawyerModalOpen: false,
+  addLawyerForm: addLawyersInitialFormData,
+  addLawyerAutocompleteValues: addLawyerAutocompleteInitialValues,
 };
 
 export const LawyersContext = React.createContext<{

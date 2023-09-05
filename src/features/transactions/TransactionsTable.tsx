@@ -76,18 +76,6 @@ const TransactionsTable = () => {
         isSortable: true,
       },
       {
-        accessorFn: (row) => row.excerptNumber,
-        id: transactionsTableHeaders.excerptNumber,
-        header: () => (
-          <span>
-            {t(`entities.${[transactionsTableHeaders.excerptNumber]}`)}
-          </span>
-        ),
-        cell: (info) => info.getValue(),
-        isSearchable: true,
-        isSortable: true,
-      },
-      {
         accessorFn: (row) => row.amount,
         id: transactionsTableHeaders.amount,
         header: () => (

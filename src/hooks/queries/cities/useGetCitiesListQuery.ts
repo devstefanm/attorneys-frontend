@@ -14,9 +14,9 @@ const getCitiesList = async (
 ): Promise<IApiResponse<ICitiesListApiResponse>> => {
   const {
     sortBy = 'created_at',
-    sort = 'asc',
+    sort = 'desc',
     page = 1,
-    size = 10,
+    size = 25,
   } = queryParams;
 
   let response: IApiResponse<ICitiesListApiResponse>;

@@ -3,6 +3,10 @@ import {
   IExecutorsState,
   executorsReducer,
 } from '../reducers/executorsReducer';
+import {
+  addExecutorAutocompleteInitialValues,
+  addExecutorsInitialFormData,
+} from './data/executorsInitialData';
 
 interface IExecutorsStateProviderProps {
   children: React.ReactNode;
@@ -19,6 +23,9 @@ const initialState: IExecutorsState = {
     totalNumber: null,
   },
   searchable: [],
+  addExecutorModalOpen: false,
+  addExecutorForm: addExecutorsInitialFormData,
+  addExecutorAutocompleteValues: addExecutorAutocompleteInitialValues,
 };
 
 export const ExecutorsContext = React.createContext<{

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { IPackagesState, packagesReducer } from '../reducers/packagesReducer';
+import { addPackagesInitialFormData } from './data/packagesInitialData';
 
 interface IPackagesStateProviderProps {
   children: React.ReactNode;
@@ -16,6 +17,8 @@ const initialState: IPackagesState = {
     totalNumber: null,
   },
   searchable: [],
+  addPackageModalOpen: false,
+  addPackageForm: addPackagesInitialFormData,
 };
 
 export const PackagesContext = React.createContext<{

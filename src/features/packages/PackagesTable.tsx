@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import useGetPackagesListQuery from '../../hooks/queries/packages/useGetPackagesListQuery';
 import { usePackages } from '../../store/contexts/PackagesContext';
 import { mapSearchToQueryParam } from '../../utils/transformData';
-import { mapPackagesToBorderColors } from './packagesHelpers';
+import { mapPackagesToBorderColors } from './helpers/packagesHelpers';
 
 const packagesTableHeaders: IPackagesTableHeader = {
   packageName: 'packageName',

@@ -15,9 +15,9 @@ const getTransactionsList = async (
 ): Promise<IApiResponse<ITransactionsListApiResponse>> => {
   const {
     sortBy = 'created_at',
-    sort = 'asc',
+    sort = 'desc',
     page = 1,
-    size = 10,
+    size = 25,
     filter = 'payment',
   } = queryParams;
 

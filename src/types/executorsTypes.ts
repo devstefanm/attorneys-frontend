@@ -1,23 +1,37 @@
-import { IMetaApiResponseData, IMetaQueryParams } from './universalTypes';
+import {
+  IAutocompleteOption,
+  IMetaApiResponseData,
+  IMetaQueryParams,
+} from './universalTypes';
+
+export enum EExecutorsActionType {
+  addExecutorModalOpen = 'ADD_EXECUTOR_MODAL_OPEN',
+  addExecutorForm = 'ADD_EXECUTOR_FORM',
+  addExecutorAutocompleteValues = 'ADD_EXECUTOR_AC_VALUES',
+  resetExecutorFormData = 'RESET_EXECUTOR_FORM_DATA',
+}
 
 export type ExecutorsTableName =
   | 'name'
+  | 'email'
   | 'city'
-  | 'phoneNumber'
-  | 'displayPhoneNumber'
+  | 'phoneNumbers'
+  | 'displayPhoneNumbers'
   | 'numberOfCases';
 
 export type ExecutorsTableHeader =
   | 'Name'
+  | 'Email'
   | 'City'
-  | 'Phone Number'
+  | 'Phone Numbers'
   | 'Number of Cases';
 
 export interface IExecutorsTableData {
   name: string;
   city: string;
-  phoneNumber: string;
-  displayPhoneNumber: string;
+  email: string;
+  phoneNumbers: string;
+  displayPhoneNumbers: string;
   numberOfCases: string;
 }
 
@@ -25,8 +39,9 @@ export interface IExecutorsApiResponseData {
   first_name: string;
   last_name: string;
   city: string;
-  phone_number: string;
-  display_phone_number: string;
+  email: string;
+  phone_numbers: string;
+  display_phone_numbers: string;
   case_count: string;
 }
 
@@ -41,4 +56,44 @@ export interface IExecutorsListQueryParams extends IMetaQueryParams {
 export interface IExecutorsListApiResponse {
   executors: IExecutorsApiResponseData[] | IExecutorsTableData[];
   meta: IMetaApiResponseData;
+}
+
+export interface IAddExecutorForm {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumbers: string[];
+  city: IAutocompleteOption<string> | string;
+}
+
+export interface IAddExecutorStateUpdate {
+  name: string;
+  fieldValue: string;
+}
+
+export interface IAddExecutorAutocompleteInputChange {
+  inputName: string;
+  inputValue: string;
+}
+
+export interface IAddExecutorAutocompleteValues {
+  city: string;
+}
+
+export interface IExecutorResponseObject {
+  id: number | null;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone_numbers: string[];
+  city: IAutocompleteOption<string> | string;
+  name: string;
+}
+
+export interface IExecutorRequestData {
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone_numbers: string[];
+  city_id: number | null;
 }

@@ -3,6 +3,10 @@ import { Navigate } from 'react-router-dom';
 import { AuthStateProvider } from '../../store/contexts/AuthContext';
 import { CasesStateProvider } from '../../store/contexts/CasesContext';
 import { TransactionsStateProvider } from '../../store/contexts/TransactionsContext';
+import { ExecutorsStateProvider } from '../../store/contexts/ExecutorsContext';
+import { LawyersStateProvider } from '../../store/contexts/LawyersContext';
+import { SSNNumbersStateProvider } from '../../store/contexts/SSNNumbersContext';
+import { PackagesStateProvider } from '../../store/contexts/PackagesContext';
 
 export interface IPagesProps {
   pageLabel: string;
@@ -61,20 +65,38 @@ export const AuthWithProvider = () => (
   </AuthStateProvider>
 );
 
-export const CasesWithProvider = ({ pageLabel }: { pageLabel: string }) => (
+export const CasesWithProvider = ({ pageLabel }: IPagesProps) => (
   <CasesStateProvider>
     <Cases pageLabel={pageLabel} />
   </CasesStateProvider>
 );
 
-export const TransactionsWithProvider = ({
-  pageLabel,
-}: {
-  pageLabel: string;
-}) => (
+export const TransactionsWithProvider = ({ pageLabel }: IPagesProps) => (
   <TransactionsStateProvider>
     <Transactions pageLabel={pageLabel} />
   </TransactionsStateProvider>
+);
+
+export const ExecutorsWithProvider = ({ pageLabel }: IPagesProps) => (
+  <ExecutorsStateProvider>
+    <Executors pageLabel={pageLabel} />
+  </ExecutorsStateProvider>
+);
+
+export const LawyersWithProvider = ({ pageLabel }: IPagesProps) => (
+  <LawyersStateProvider>
+    <Lawyers pageLabel={pageLabel} />
+  </LawyersStateProvider>
+);
+
+export const SSNNumbersAndPackagesWithProviders = ({
+  pageLabel,
+}: IPagesProps) => (
+  <SSNNumbersStateProvider>
+    <PackagesStateProvider>
+      <SSNNumbersAndPackages pageLabel={pageLabel} />
+    </PackagesStateProvider>
+  </SSNNumbersStateProvider>
 );
 
 export const routes = (isAuth: boolean, role: string | null) => [
@@ -108,7 +130,7 @@ export const routes = (isAuth: boolean, role: string | null) => [
     path: 'lawyers',
     element:
       isAuth && role !== 'visitor' ? (
-        <Lawyers pageLabel="entities.lawyers" />
+        <LawyersWithProvider pageLabel="entities.lawyers" />
       ) : (
         <Navigate to="/auth" />
       ),
@@ -117,7 +139,7 @@ export const routes = (isAuth: boolean, role: string | null) => [
     path: 'executors',
     element:
       isAuth && role !== 'visitor' ? (
-        <Executors pageLabel="entities.executors" />
+        <ExecutorsWithProvider pageLabel="entities.executors" />
       ) : (
         <Navigate to="/auth" />
       ),
@@ -126,7 +148,7 @@ export const routes = (isAuth: boolean, role: string | null) => [
     path: 'ssn_numbers-and-packages',
     element:
       isAuth && role !== 'visitor' ? (
-        <SSNNumbersAndPackages pageLabel="entities.ssnNumbersAndPackages" />
+        <SSNNumbersAndPackagesWithProviders pageLabel="entities.ssnNumbersAndPackages" />
       ) : (
         <Navigate to="/auth" />
       ),

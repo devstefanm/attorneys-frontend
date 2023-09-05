@@ -1,19 +1,32 @@
 import {
+  ESSNNumbersActionType,
+  IAddSSNNumberForm,
+  IAddSSNNumberStateUpdate,
+} from '../../types/ssnNumbersTypes';
+import {
   ETableActionType,
   ITablePageable,
   ITableSearchable,
   ITableSortable,
 } from '../../types/universalTypes';
+import { addSSNNumbersInitialFormData } from '../contexts/data/ssnNumbersInitialData';
 
 export interface ISSNNumbersState {
   sortable: ITableSortable;
   pageable: ITablePageable;
   searchable: ITableSearchable[];
+  addSSNNumberForm: IAddSSNNumberForm;
+  addSSNNumberModalOpen: boolean;
 }
 
 interface ISSNNumbersAction {
-  type: ETableActionType;
-  payload?: ITableSortable | ITablePageable | ITableSearchable;
+  type: ETableActionType | ESSNNumbersActionType;
+  payload?:
+    | ITableSortable
+    | ITablePageable
+    | ITableSearchable
+    | boolean
+    | IAddSSNNumberStateUpdate;
 }
 
 const ssnNumbersReducer = (
@@ -39,6 +52,22 @@ const ssnNumbersReducer = (
       }
 
       return { ...state, searchable: newState };
+    case ESSNNumbersActionType.addSSNNumberModalOpen:
+      return { ...state, addSSNNumberModalOpen: action.payload as boolean };
+    case ESSNNumbersActionType.addSSNNumberForm:
+      const { name, fieldValue } = action.payload as IAddSSNNumberStateUpdate;
+      return {
+        ...state,
+        addSSNNumberForm: {
+          ...state.addSSNNumberForm,
+          [name]: fieldValue,
+        },
+      };
+    case ESSNNumbersActionType.resetSSNNumberFormData:
+      return {
+        ...state,
+        addSSNNumberForm: addSSNNumbersInitialFormData,
+      };
     default:
       return state;
   }

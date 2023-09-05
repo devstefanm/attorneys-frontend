@@ -1,4 +1,15 @@
-import { IMetaApiResponseData, IMetaQueryParams } from './universalTypes';
+import {
+  IAutocompleteOption,
+  IMetaApiResponseData,
+  IMetaQueryParams,
+} from './universalTypes';
+
+export enum ELawyersActionType {
+  addLawyerModalOpen = 'ADD_LAWYER_MODAL_OPEN',
+  addLawyerForm = 'ADD_LAWYER_FORM',
+  addLawyerAutocompleteValues = 'ADD_LAWYER_AC_VALUES',
+  resetLawyerFormData = 'RESET_LAWYER_FORM_DATA',
+}
 
 export type LawyersTableName =
   | 'name'
@@ -6,8 +17,8 @@ export type LawyersTableName =
   | 'email'
   | 'address'
   | 'city'
-  | 'phoneNumber'
-  | 'displayPhoneNumber'
+  | 'phoneNumbers'
+  | 'displayPhoneNumbers'
   | 'numberOfCases';
 
 export type LawyersTableHeader =
@@ -16,7 +27,7 @@ export type LawyersTableHeader =
   | 'Email'
   | 'Address'
   | 'City'
-  | 'Phone Number'
+  | 'Phone Numbers'
   | 'Number of Cases';
 
 export interface ILawyersTableData {
@@ -25,8 +36,8 @@ export interface ILawyersTableData {
   email: string;
   address: string;
   city: string;
-  phoneNumber: string;
-  displayPhoneNumber: string;
+  phoneNumbers: string;
+  displayPhoneNumbers: string;
   numberOfCases: string;
 }
 
@@ -37,8 +48,8 @@ export interface ILawyersApiResponseData {
   email: string;
   address: string;
   city: string;
-  phone_number: string;
-  display_phone_number: string;
+  phone_numbers: string;
+  display_phone_numbers: string;
   case_count: string;
 }
 
@@ -55,4 +66,50 @@ export interface ILawyersListQueryParams extends IMetaQueryParams {
 export interface ILawyersListApiResponse {
   lawyers: ILawyersApiResponseData[] | ILawyersTableData[];
   meta: IMetaApiResponseData;
+}
+
+export interface IAddLawyerForm {
+  firstName: string;
+  lastName: string;
+  officeName: string;
+  address: string;
+  email: string;
+  phoneNumbers: string[];
+  city: IAutocompleteOption<string> | string;
+}
+
+export interface IAddLawyerStateUpdate {
+  name: string;
+  fieldValue: string;
+}
+
+export interface IAddLawyerAutocompleteInputChange {
+  inputName: string;
+  inputValue: string;
+}
+
+export interface IAddLawyerAutocompleteValues {
+  city: string;
+}
+
+export interface ILawyerResponseObject {
+  id: number | null;
+  first_name: string;
+  last_name: string;
+  office_name: string;
+  address: string;
+  email: string;
+  phone_numbers: string[];
+  city: IAutocompleteOption<string> | string;
+  name: string;
+}
+
+export interface ILawyerRequestData {
+  first_name: string;
+  last_name: string;
+  office_name: string;
+  address: string;
+  email: string;
+  phone_numbers: string[];
+  city_id: number | null;
 }

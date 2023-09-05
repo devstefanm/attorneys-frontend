@@ -41,7 +41,11 @@ export const mapApiResponseToAutocompleteOptions = (
 
   if (case_number) {
     name = `${case_number} ${
-      first_name ? `- (${first_name} ${last_name})` : ''
+      first_name
+        ? `- (${first_name} ${last_name})`
+        : responseName
+        ? `- (${responseName})`
+        : ''
     }`;
   }
 

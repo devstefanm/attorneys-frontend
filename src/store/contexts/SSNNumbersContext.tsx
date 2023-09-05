@@ -3,6 +3,7 @@ import {
   ISSNNumbersState,
   ssnNumbersReducer,
 } from '../reducers/ssnNumbersReducer';
+import { addSSNNumbersInitialFormData } from './data/ssnNumbersInitialData';
 
 interface ISSNNumbersStateProviderProps {
   children: React.ReactNode;
@@ -19,6 +20,8 @@ const initialState: ISSNNumbersState = {
     totalNumber: null,
   },
   searchable: [],
+  addSSNNumberModalOpen: false,
+  addSSNNumberForm: addSSNNumbersInitialFormData,
 };
 
 export const SSNNumbersContext = React.createContext<{
