@@ -43,16 +43,6 @@ export interface IAddSSNNumberForm {
   ssnNumber: string;
 }
 
-export interface IAddSSNNumberStateUpdate {
-  name: string;
-  fieldValue: string;
-}
-
-export interface IAddSSNNumberAutocompleteInputChange {
-  inputName: string;
-  inputValue: string;
-}
-
 export interface ISSNNumberResponseObject {
   id: number | null;
   ssn: string;

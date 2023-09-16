@@ -1,6 +1,8 @@
 import {
   IAddCaseAutocompleteValues,
   IAddCaseForm,
+  IEditCaseAutocompleteValues,
+  IEditCaseForm,
 } from '../../../types/casesTypes';
 
 export const addCasesInitialFormData: IAddCaseForm = {
@@ -33,6 +35,46 @@ export const addCasesInitialFormData: IAddCaseForm = {
 };
 
 export const addCaseAutocompleteInitialValues: IAddCaseAutocompleteValues = {
+  employer: '',
+  executors: '',
+  lawyer: '',
+  client: '',
+  court: '',
+  city: '',
+  ssnNumber: '',
+  package: '',
+};
+
+export const editCasesInitialFormData: IEditCaseForm = {
+  legalEntity: false,
+  firstName: '',
+  lastName: '',
+  jmbg: '',
+  name: '',
+  pib: '',
+  employed: false,
+  employer: '',
+  executors: [{ id: null, name: '' }],
+  cession: false,
+  phoneNumbers: [''],
+  address: '',
+  email: '',
+  zipCode: '',
+  city: '',
+  caseNumber: '',
+  contractNumber: '',
+  closingDate: null,
+  businessNumbers: [''],
+  lawyer: '',
+  client: '',
+  court: '',
+  ssnNumber: '',
+  package: '',
+  principal: '',
+  interest: '',
+};
+
+export const editCaseAutocompleteInitialValues: IEditCaseAutocompleteValues = {
   employer: '',
   executors: '',
   lawyer: '',

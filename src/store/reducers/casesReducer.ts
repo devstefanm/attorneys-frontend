@@ -1,13 +1,18 @@
 import {
   ECasesActionType,
   EState,
-  IAddCaseAutocompleteInputChange,
   IAddCaseAutocompleteValues,
   IAddCaseForm,
-  IAddCaseStateUpdate,
+  IEditCaseAutocompleteValues,
+  IEditCaseForm,
+  IEditedCaseFormData,
 } from '../../types/casesTypes';
 import {
   ETableActionType,
+  IAddEntityAutocompleteInputChange,
+  IAddNewEntityStateUpdate,
+  IEditEntityAutocompleteInputChange,
+  IEditEntityStateUpdate,
   ITablePageable,
   ITableSearchable,
   ITableSortable,
@@ -15,6 +20,8 @@ import {
 import {
   addCaseAutocompleteInitialValues,
   addCasesInitialFormData,
+  editCaseAutocompleteInitialValues,
+  editCasesInitialFormData,
 } from '../contexts/data/casesInitialData';
 
 export interface ICasesState {
@@ -22,10 +29,17 @@ export interface ICasesState {
   pageable: ITablePageable;
   searchable: ITableSearchable[];
   filterable: EState;
+  filterableByClient: number;
   addCaseModalOpen: boolean;
+  editCaseModalOpen: boolean;
   isLegalEntity: boolean;
   addCaseForm: IAddCaseForm;
   addCaseAutocompleteValues: IAddCaseAutocompleteValues;
+  editCaseForm: IEditCaseForm;
+  editCaseAutocompleteValues: IEditCaseAutocompleteValues;
+  editedCaseFormData: IEditedCaseFormData;
+  editCaseId: number | null;
+  confirmationDialogOpen: boolean;
 }
 
 interface ICasesAction {
@@ -36,8 +50,12 @@ interface ICasesAction {
     | ITableSearchable
     | EState
     | boolean
-    | IAddCaseStateUpdate
-    | IAddCaseAutocompleteInputChange;
+    | IAddNewEntityStateUpdate
+    | IAddEntityAutocompleteInputChange
+    | IEditEntityAutocompleteInputChange
+    | IEditEntityStateUpdate
+    | IEditCaseForm
+    | number;
 }
 
 const casesReducer = (
@@ -67,8 +85,10 @@ const casesReducer = (
       return { ...state, isLegalEntity: action.payload as boolean };
     case ECasesActionType.addCaseModalOpen:
       return { ...state, addCaseModalOpen: action.payload as boolean };
+    case ECasesActionType.editCaseModalOpen:
+      return { ...state, editCaseModalOpen: action.payload as boolean };
     case ECasesActionType.addCaseForm:
-      const { name, fieldValue } = action.payload as IAddCaseStateUpdate;
+      const { name, fieldValue } = action.payload as IAddNewEntityStateUpdate;
       return {
         ...state,
         addCaseForm: {
@@ -78,7 +98,7 @@ const casesReducer = (
       };
     case ECasesActionType.addCaseAutocompleteValues:
       const { inputName, inputValue } =
-        action.payload as IAddCaseAutocompleteInputChange;
+        action.payload as IAddEntityAutocompleteInputChange;
       return {
         ...state,
         addCaseAutocompleteValues: {
@@ -91,12 +111,51 @@ const casesReducer = (
         ...state,
         addCaseAutocompleteValues: addCaseAutocompleteInitialValues,
         addCaseForm: addCasesInitialFormData,
+        editCaseForm: editCasesInitialFormData,
+        editCaseAutocompleteValues: editCaseAutocompleteInitialValues,
+        editCaseId: null,
+        editedCaseFormData: {},
+      };
+    case ECasesActionType.setCaseFormData:
+      return {
+        ...state,
+        editCaseForm: action.payload as IEditCaseForm,
       };
     case ETableActionType.filterable:
       return {
         ...state,
         filterable: action.payload as EState,
       };
+    case ECasesActionType.editCaseAutocompleteValues:
+      const { inputName: inputEditName, inputValue: inputEditValue } =
+        action.payload as IEditEntityAutocompleteInputChange;
+      return {
+        ...state,
+        editCaseAutocompleteValues: {
+          ...state.editCaseAutocompleteValues,
+          [inputEditName]: inputEditValue,
+        },
+      };
+    case ECasesActionType.editCaseForm:
+      const { editName, fieldEditValue } =
+        action.payload as IEditEntityStateUpdate;
+      return {
+        ...state,
+        editCaseForm: {
+          ...state.editCaseForm,
+          [editName]: fieldEditValue,
+        },
+        editedCaseFormData: {
+          ...state.editedCaseFormData,
+          [editName]: fieldEditValue,
+        },
+      };
+    case ECasesActionType.editCaseId:
+      return { ...state, editCaseId: action.payload as number };
+    case ECasesActionType.confirmationDialogOpen:
+      return { ...state, confirmationDialogOpen: action.payload as boolean };
+    case ECasesActionType.filterableByClient:
+      return { ...state, filterableByClient: action.payload as number };
     default:
       return state;
   }

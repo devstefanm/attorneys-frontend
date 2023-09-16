@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { IClientsState, clientsReducer } from '../reducers/clientsReducer';
+import { addClientsInitialFormData } from './data/clientsInitialData';
 
 interface IClientsStateProviderProps {
   children: React.ReactNode;
@@ -16,6 +17,8 @@ const initialState: IClientsState = {
     totalNumber: null,
   },
   searchable: [],
+  addClientModalOpen: false,
+  addClientForm: addClientsInitialFormData,
 };
 
 export const ClientsContext = React.createContext<{

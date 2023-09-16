@@ -11,8 +11,11 @@ type Props = {
   hasCancelButton?: boolean;
   hasActionButton?: boolean;
   hasCloseIconButton?: boolean;
+  hasExtraButton?: boolean;
   actionButtonText?: string;
+  extraButtonText?: string;
   onClose: () => void;
+  onExtraButtonClick?: any;
   onSubmit?: any;
   children: React.ReactNode;
 };
@@ -24,11 +27,14 @@ const ModalDialog = (props: Props) => {
     children,
     isLoading,
     actionButtonText,
+    extraButtonText,
     hasActionButton,
     hasCancelButton,
+    hasExtraButton,
     hasCloseIconButton,
     onSubmit,
     onClose,
+    onExtraButtonClick,
   } = props;
 
   return (
@@ -51,14 +57,17 @@ const ModalDialog = (props: Props) => {
           <Stack className="my-8">{children}</Stack>
           <Divider />
           <Stack>
-            {(hasCancelButton || hasActionButton) && (
+            {(hasCancelButton || hasActionButton || hasExtraButton) && (
               <ActionBar
                 onSubmit={onSubmit}
                 isLoading={isLoading}
                 onClose={onClose}
                 actionButtonText={actionButtonText}
+                extraButtonText={extraButtonText}
                 hasCancelButton={hasCancelButton}
                 hasActionButton={hasActionButton}
+                hasExtraButton={hasExtraButton}
+                onExtraButtonClick={onExtraButtonClick}
               />
             )}
           </Stack>

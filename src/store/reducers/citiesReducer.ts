@@ -1,19 +1,29 @@
+import { ECitiesActionType, IAddCityForm } from '../../types/citiesTypes';
 import {
   ETableActionType,
+  IAddNewEntityStateUpdate,
   ITablePageable,
   ITableSearchable,
   ITableSortable,
 } from '../../types/universalTypes';
+import { addCitiesInitialFormData } from '../contexts/data/citiesInitialData';
 
 export interface ICitiesState {
   sortable: ITableSortable;
   pageable: ITablePageable;
   searchable: ITableSearchable[];
+  addCityForm: IAddCityForm;
+  addCityModalOpen: boolean;
 }
 
 interface ICitiesAction {
-  type: ETableActionType;
-  payload?: ITableSortable | ITablePageable | ITableSearchable;
+  type: ETableActionType | ECitiesActionType;
+  payload?:
+    | ITableSortable
+    | ITablePageable
+    | ITableSearchable
+    | boolean
+    | IAddNewEntityStateUpdate;
 }
 
 const citiesReducer = (
@@ -39,6 +49,22 @@ const citiesReducer = (
       }
 
       return { ...state, searchable: newState };
+    case ECitiesActionType.addCityModalOpen:
+      return { ...state, addCityModalOpen: action.payload as boolean };
+    case ECitiesActionType.addCityForm:
+      const { name, fieldValue } = action.payload as IAddNewEntityStateUpdate;
+      return {
+        ...state,
+        addCityForm: {
+          ...state.addCityForm,
+          [name]: fieldValue,
+        },
+      };
+    case ECitiesActionType.resetCityFormData:
+      return {
+        ...state,
+        addCityForm: addCitiesInitialFormData,
+      };
     default:
       return state;
   }

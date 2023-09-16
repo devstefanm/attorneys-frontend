@@ -1,10 +1,17 @@
+import { IOption } from '../../../components/FilterComponent';
 import {
   IAddCaseForm,
   ICaseRequestData,
   ICaseResponseObject,
+  IEditedCaseFormData,
+  IViewCaseApiResponseData,
 } from '../../../types/casesTypes';
+import { IClientResponseObject } from '../../../types/clientsTypes';
 import { IAutocompleteOption } from '../../../types/universalTypes';
-import { transformDateFormat } from '../../../utils/transformData';
+import {
+  reverseDateFormat,
+  transformDateFormat,
+} from '../../../utils/transformData';
 
 export const mapStatusToBorderColor = (status: string): string => {
   switch (status) {
@@ -99,7 +106,7 @@ export const mapAddCaseFormToRequestData = ({
   if (typeof lawyer !== 'string') lawyer_id = lawyer.id;
   if (typeof ssnNumber !== 'string') ssn_number_id = ssnNumber.id;
   if (typeof packageGroup !== 'string') package_id = packageGroup.id;
-  if (typeof employer !== 'string') employer_id = employer.id;
+  if (typeof employer !== 'string') employer_id = employer?.id;
 
   if (closingDate) closing_date = transformDateFormat(closingDate);
 
@@ -162,4 +169,270 @@ export const mapAddCaseFormToRequestData = ({
     business_numbers,
     closing_date,
   };
+};
+
+export const mapCaseApiResponseToEditCaseForm = (
+  data: IViewCaseApiResponseData,
+): IAddCaseForm => {
+  const {
+    is_legal,
+    first_name,
+    last_name,
+    jmbg,
+    name,
+    pib,
+    employed,
+    employer,
+    executors,
+    cession,
+    address,
+    email,
+    zip_code,
+    city,
+    case_number,
+    contract_number,
+    closing_date,
+    business_numbers,
+    lawyer,
+    client,
+    court,
+    ssn_number,
+    package: packageName,
+    principal,
+    interest,
+    phone_numbers,
+  } = data;
+
+  if (is_legal) {
+    return {
+      address,
+      email,
+      cession,
+      name,
+      pib,
+      legalEntity: is_legal,
+      executors:
+        executors && executors.length > 0
+          ? executors.map((executor) => ({
+              id: executor.id,
+              name: `${executor.first_name} ${executor.last_name}`,
+            }))
+          : [{ id: null, name: '' }],
+      phoneNumbers:
+        phone_numbers && phone_numbers.length > 0 ? phone_numbers : [''],
+      zipCode: zip_code,
+      city: city?.id ? { id: city.id, name: city.name } : '',
+      caseNumber: case_number,
+      contractNumber: contract_number,
+      closingDate: closing_date ? reverseDateFormat(closing_date) : null,
+      businessNumbers:
+        business_numbers && business_numbers.length > 0
+          ? business_numbers.map((businessNumber) => businessNumber.number)
+          : [''],
+      lawyer: lawyer?.id
+        ? {
+            id: lawyer.id,
+            name: `${lawyer.first_name} ${lawyer.last_name}`,
+          }
+        : '',
+      client: client?.id ? { id: client.id, name: client.name } : '',
+      court: court?.id ? { id: court.id, name: court.name } : '',
+      ssnNumber: ssn_number?.id
+        ? { id: ssn_number.id, name: String(ssn_number.ssn) }
+        : '',
+      package: packageName?.id
+        ? { id: packageName.id, name: packageName.package_name }
+        : '',
+      principal: principal.toString(),
+      interest: interest.toString(),
+    };
+  }
+
+  return {
+    address,
+    email,
+    cession,
+    jmbg,
+    employed,
+    legalEntity: is_legal,
+    firstName: first_name,
+    lastName: last_name,
+    employer: employer?.id ? { id: employer.id, name: employer.name } : '',
+    executors:
+      executors && executors.length > 0
+        ? executors.map((executor) => ({
+            id: executor.id,
+            name: `${executor.first_name} ${executor.last_name}`,
+          }))
+        : [{ id: null, name: '' }],
+    phoneNumbers:
+      phone_numbers && phone_numbers.length > 0 ? phone_numbers : [''],
+    zipCode: zip_code,
+    city: city?.id ? { id: city.id, name: city.name } : '',
+    caseNumber: case_number,
+    contractNumber: contract_number,
+    closingDate: closing_date ? reverseDateFormat(closing_date) : null,
+    businessNumbers:
+      business_numbers && business_numbers.length > 0
+        ? business_numbers.map((businessNumber) => businessNumber.number)
+        : [''],
+    lawyer: lawyer?.id
+      ? {
+          id: lawyer.id,
+          name: `${lawyer.first_name} ${lawyer.last_name}`,
+        }
+      : '',
+    client: client?.id ? { id: client.id, name: client.name } : '',
+    court: court?.id ? { id: court.id, name: court.name } : '',
+    ssnNumber: ssn_number?.id
+      ? { id: ssn_number.id, name: String(ssn_number.ssn) }
+      : '',
+    package: packageName?.id
+      ? { id: packageName.id, name: packageName.package_name }
+      : '',
+    principal: principal.toString(),
+    interest: interest.toString(),
+  };
+};
+
+export const mapEditCaseFormToRequestData = ({
+  address,
+  businessNumbers,
+  caseNumber,
+  cession,
+  city,
+  client,
+  closingDate,
+  contractNumber,
+  court,
+  email,
+  employed,
+  employer,
+  executors,
+  firstName: first_name,
+  interest,
+  jmbg,
+  lastName: last_name,
+  lawyer,
+  name,
+  package: packageGroup,
+  phoneNumbers,
+  pib,
+  principal,
+  ssnNumber,
+  zipCode: zip_code,
+}: IEditedCaseFormData): Partial<ICaseRequestData> => {
+  const requestData: Partial<ICaseRequestData> = {};
+
+  if (city !== undefined) {
+    if (typeof city !== 'string') {
+      requestData.city_id = city.id || null;
+    } else if (city === '') {
+      requestData.city_id = null;
+    }
+  }
+  if (client !== undefined) {
+    if (typeof client !== 'string') {
+      requestData.client_id = client.id || null;
+    } else if (client === '') {
+      requestData.client_id = null;
+    }
+  }
+  if (court !== undefined) {
+    if (typeof court !== 'string') {
+      requestData.court_id = court.id || null;
+    } else if (court === '') {
+      requestData.court_id = null;
+    }
+  }
+
+  if (executors !== undefined) {
+    if (executors.length > 0) {
+      requestData.executor_ids = executors
+        .filter((executor) => executor.id !== 0)
+        .map((executor) => executor.id);
+    } else {
+      requestData.executor_ids = [];
+    }
+  }
+
+  if (lawyer !== undefined) {
+    if (typeof lawyer !== 'string') {
+      requestData.lawyer_id = lawyer.id || null;
+    } else if (lawyer === '') {
+      requestData.lawyer_id = null;
+    }
+  }
+  if (ssnNumber !== undefined) {
+    if (typeof ssnNumber !== 'string') {
+      requestData.ssn_number_id = ssnNumber.id || null;
+    } else if (ssnNumber === '') {
+      requestData.ssn_number_id = null;
+    }
+  }
+  if (packageGroup !== undefined) {
+    if (typeof packageGroup !== 'string') {
+      requestData.package_id = packageGroup.id || null;
+    } else if (packageGroup === '') {
+      requestData.package_id = null;
+    }
+  }
+  if (employer !== undefined) {
+    if (typeof employer !== 'string') {
+      requestData.employer_id = employer.id || null;
+    } else if (employer === '') {
+      requestData.employer_id = null;
+    }
+  }
+
+  if (closingDate !== undefined)
+    requestData.closing_date = closingDate
+      ? transformDateFormat(closingDate)
+      : null;
+  if (caseNumber !== undefined) requestData.case_number = Number(caseNumber);
+  if (contractNumber) requestData.contract_number = Number(contractNumber);
+
+  if (phoneNumbers !== undefined) {
+    if (phoneNumbers.length > 0) {
+      requestData.phone_numbers = phoneNumbers?.filter(
+        (phoneNumber) => phoneNumber.length > 5,
+      );
+    } else {
+      requestData.phone_numbers = [''];
+    }
+  }
+
+  if (businessNumbers !== undefined) {
+    if (businessNumbers.length > 0) {
+      requestData.business_numbers = businessNumbers?.filter(
+        (businessNumber) => businessNumber.length > 0,
+      );
+    } else {
+      requestData.business_numbers = [''];
+    }
+  }
+
+  if (name !== undefined) requestData.name = name || null;
+  if (pib !== undefined) requestData.pib = pib || null;
+  if (first_name !== undefined) requestData.first_name = first_name || null;
+  if (last_name !== undefined) requestData.last_name = last_name || null;
+  if (employed !== undefined) requestData.employed = employed || null;
+  if (jmbg !== undefined) requestData.jmbg = jmbg || null;
+
+  if (address !== undefined) requestData.address = address || null;
+  if (cession !== undefined) requestData.cession = cession || null;
+  if (email !== undefined) requestData.email = email || null;
+  if (zip_code !== undefined) requestData.zip_code = zip_code || null;
+  if (principal !== undefined)
+    requestData.principal = Number(principal) || null;
+  if (interest !== undefined) requestData.interest = Number(interest) || null;
+
+  return requestData;
+};
+
+export const mapClientToFilterOption = ({
+  id,
+  name,
+}: IClientResponseObject): IOption => {
+  return { id: id as number, label: name, value: id as number };
 };

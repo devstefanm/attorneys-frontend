@@ -3,6 +3,7 @@ import {
   IEmployersState,
   employersReducer,
 } from '../reducers/employersReducer';
+import { addEmployersInitialFormData } from './data/employersInitialData';
 
 interface IEmployersStateProviderProps {
   children: React.ReactNode;
@@ -19,6 +20,8 @@ const initialState: IEmployersState = {
     totalNumber: null,
   },
   searchable: [],
+  addEmployerModalOpen: false,
+  addEmployerForm: addEmployersInitialFormData,
 };
 
 export const EmployersContext = React.createContext<{

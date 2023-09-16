@@ -19,16 +19,24 @@ export interface IOption {
 type Props = SelectProps & {
   options: IOption[];
   onChange: React.Dispatch<any>;
+  actionType?: string;
 };
 
 const FilterComponent = (props: Props) => {
-  const { label, value, onChange, options, size = 'small' } = props;
+  const {
+    label,
+    value,
+    onChange,
+    options,
+    size = 'small',
+    actionType = ETableActionType.filterable,
+  } = props;
 
   const handleChange = (event: SelectChangeEvent<unknown>) => {
     const { value } = event.target;
     onChange &&
       onChange({
-        type: ETableActionType.filterable,
+        type: actionType,
         payload: value,
       });
   };

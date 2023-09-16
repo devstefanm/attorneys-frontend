@@ -5,7 +5,6 @@ import AddLawyerForm from './AddLawyerForm';
 import useAddNewLawyerMutation from '../../hooks/mutations/lawyers/useAddNewLawyerMutation';
 import { useLawyers } from '../../store/contexts/LawyersContext';
 import { mapAddLawyerFormToRequestData } from './helpers/lawyersHelpers';
-import { useQueryClient } from '@tanstack/react-query';
 
 type Props = {
   open: boolean;
@@ -16,20 +15,16 @@ const AddLawyerModal = (props: Props) => {
   const { open, onClose } = props;
 
   const { t } = useTranslation();
-  const queryClient = useQueryClient();
 
   const {
     state: { addLawyerForm },
     dispatch: updateLawyersState,
   } = useLawyers();
 
-  const {
-    mutate: postNewLawyer,
-    isLoading,
-    isSuccess,
-  } = useAddNewLawyerMutation(onClose, updateLawyersState);
-
-  if (isSuccess) queryClient.invalidateQueries({ queryKey: ['lawyersList'] });
+  const { mutate: postNewLawyer, isLoading } = useAddNewLawyerMutation(
+    onClose,
+    updateLawyersState,
+  );
 
   return (
     <ErrorBoundary>

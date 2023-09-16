@@ -4,7 +4,7 @@ import {
   IExecutorRequestData,
 } from '../../../types/executorsTypes';
 import { IApiResponse } from '../../../types/universalTypes';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const addNewExecutor = async (
   executorRequestData: IExecutorRequestData,
@@ -29,16 +29,19 @@ const useAddNewExecutorMutation = (
   onClose: () => void,
   updateExecutorsState: React.Dispatch<any>,
 ) => {
+  const queryClient = useQueryClient();
+
   return useMutation(
     (executorRequestData: IExecutorRequestData) =>
       addNewExecutor(executorRequestData),
     {
       onSuccess: (response) => {
-        updateExecutorsState({
-          type: EExecutorsActionType.resetExecutorFormData,
-        });
         if (!response.data.error) {
+          updateExecutorsState({
+            type: EExecutorsActionType.resetExecutorFormData,
+          });
           onClose();
+          queryClient.invalidateQueries({ queryKey: ['executorsList'] });
         }
         return response.data.message;
       },

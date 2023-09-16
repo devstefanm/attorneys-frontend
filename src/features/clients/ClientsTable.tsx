@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import useGetClientsListQuery from '../../hooks/queries/clients/useGetClientsListQuery';
 import { useClients } from '../../store/contexts/ClientsContext';
 import { mapSearchToQueryParam } from '../../utils/transformData';
-import { mapClientsToBorderColors } from './clientsHelpers';
+import { mapClientsToBorderColors } from './helpers/clientsHelpers';
 
 const clientsTableHeaders: IClientsTableHeader = {
   client: 'client',

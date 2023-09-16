@@ -1,5 +1,12 @@
 import { IMetaApiResponseData, IMetaQueryParams } from './universalTypes';
 
+export enum ECitiesActionType {
+  addCityModalOpen = 'ADD_CITY_MODAL_OPEN',
+  addCityForm = 'ADD_CITY_FORM',
+  addCityAutocompleteValues = 'ADD_CITY_AC_VALUES',
+  resetCityFormData = 'RESET_CITY_FORM_DATA',
+}
+
 export type CitiesTableName =
   | 'city'
   | 'numberOfDebtors'
@@ -37,4 +44,17 @@ export interface ICitiesListQueryParams extends IMetaQueryParams {
 export interface ICitiesListApiResponse {
   cities: ICitiesApiResponseData[] | ICitiesTableData[];
   meta: IMetaApiResponseData;
+}
+
+export interface IAddCityForm {
+  name: string;
+}
+
+export interface ICityResponseObject {
+  id: number | null;
+  name: string;
+}
+
+export interface ICityRequestData {
+  name: string;
 }

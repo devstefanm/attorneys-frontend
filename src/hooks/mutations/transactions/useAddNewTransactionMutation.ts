@@ -4,7 +4,7 @@ import {
   ITransactionRequestData,
 } from '../../../types/transactionsTypes';
 import { IApiResponse } from '../../../types/universalTypes';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const addNewTransaction = async (
   transactionRequestData: ITransactionRequestData,
@@ -29,16 +29,19 @@ const useAddNewTransactionMutation = (
   onClose: () => void,
   updateTransactionsState: React.Dispatch<any>,
 ) => {
+  const queryClient = useQueryClient();
+
   return useMutation(
     (transactionRequestData: ITransactionRequestData) =>
       addNewTransaction(transactionRequestData),
     {
       onSuccess: (response) => {
-        updateTransactionsState({
-          type: ETransactionsActionType.resetTransactionFormData,
-        });
         if (!response.data.error) {
+          updateTransactionsState({
+            type: ETransactionsActionType.resetTransactionFormData,
+          });
           onClose();
+          queryClient.invalidateQueries({ queryKey: ['transactionsList'] });
         }
         return response.data.message;
       },

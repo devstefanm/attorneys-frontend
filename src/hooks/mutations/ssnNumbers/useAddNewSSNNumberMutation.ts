@@ -4,7 +4,7 @@ import {
   ISSNNumberRequestData,
 } from '../../../types/ssnNumbersTypes';
 import { IApiResponse } from '../../../types/universalTypes';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const addNewSSNNumber = async (
   ssnNumberRequestData: ISSNNumberRequestData,
@@ -29,16 +29,19 @@ const useAddNewSSNNumberMutation = (
   onClose: () => void,
   updateSSNNumbersState: React.Dispatch<any>,
 ) => {
+  const queryClient = useQueryClient();
+
   return useMutation(
     (ssnNumberRequestData: ISSNNumberRequestData) =>
       addNewSSNNumber(ssnNumberRequestData),
     {
       onSuccess: (response) => {
-        updateSSNNumbersState({
-          type: ESSNNumbersActionType.resetSSNNumberFormData,
-        });
         if (!response.data.error) {
+          updateSSNNumbersState({
+            type: ESSNNumbersActionType.resetSSNNumberFormData,
+          });
           onClose();
+          queryClient.invalidateQueries({ queryKey: ['ssnNumbersList'] });
         }
         return response.data.message;
       },

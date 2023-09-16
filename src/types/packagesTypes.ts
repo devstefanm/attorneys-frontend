@@ -43,16 +43,6 @@ export interface IAddPackageForm {
   packageName: string;
 }
 
-export interface IAddPackageStateUpdate {
-  name: string;
-  fieldValue: string;
-}
-
-export interface IAddPackageAutocompleteInputChange {
-  inputName: string;
-  inputValue: string;
-}
-
 export interface IPackageResponseObject {
   id: number | null;
   package_name: string;

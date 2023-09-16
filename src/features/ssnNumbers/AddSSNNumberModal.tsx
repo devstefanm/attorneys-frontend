@@ -5,7 +5,6 @@ import AddSSNNumberForm from './AddSSNNumberForm';
 import useAddNewSSNNumberMutation from '../../hooks/mutations/ssnNumbers/useAddNewSSNNumberMutation';
 import { useSSNNumbers } from '../../store/contexts/SSNNumbersContext';
 import { mapAddSSNNumberFormToRequestData } from './helpers/ssnNumbersHelpers';
-import { useQueryClient } from '@tanstack/react-query';
 
 type Props = {
   open: boolean;
@@ -16,21 +15,16 @@ const AddSSNNumberModal = (props: Props) => {
   const { open, onClose } = props;
 
   const { t } = useTranslation();
-  const queryClient = useQueryClient();
 
   const {
     state: { addSSNNumberForm },
     dispatch: updateSSNNumbersState,
   } = useSSNNumbers();
 
-  const {
-    mutate: postNewSSNNumber,
-    isLoading,
-    isSuccess,
-  } = useAddNewSSNNumberMutation(onClose, updateSSNNumbersState);
-
-  if (isSuccess)
-    queryClient.invalidateQueries({ queryKey: ['ssnNumbersList'] });
+  const { mutate: postNewSSNNumber, isLoading } = useAddNewSSNNumberMutation(
+    onClose,
+    updateSSNNumbersState,
+  );
 
   return (
     <ErrorBoundary>

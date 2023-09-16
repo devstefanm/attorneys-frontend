@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { ModalDialog } from '../../components/ModalDialog';
-import { useQueryClient } from '@tanstack/react-query';
 import { useTransactions } from '../../store/contexts/TransactionsContext';
 import useAddNewTransactionMutation from '../../hooks/mutations/transactions/useAddNewTransactionMutation';
 import AddTransactionForm from './AddTransactionForm';
@@ -16,21 +15,14 @@ const AddTransactionModal = (props: Props) => {
   const { open, onClose } = props;
 
   const { t } = useTranslation();
-  const queryClient = useQueryClient();
 
   const {
     state: { addTransactionForm },
     dispatch: updateTransactionsState,
   } = useTransactions();
 
-  const {
-    mutate: postNewTransaction,
-    isLoading,
-    isSuccess,
-  } = useAddNewTransactionMutation(onClose, updateTransactionsState);
-
-  if (isSuccess)
-    queryClient.invalidateQueries({ queryKey: ['transactionsList'] });
+  const { mutate: postNewTransaction, isLoading } =
+    useAddNewTransactionMutation(onClose, updateTransactionsState);
 
   return (
     <ErrorBoundary>

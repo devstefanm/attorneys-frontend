@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import {
   ColumnDef,
+  Row,
   flexRender,
   getCoreRowModel,
   useReactTable,
@@ -61,6 +62,7 @@ type Props = {
     options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined,
   ) => Promise<QueryObserverResult<IApiResponse<any>, unknown>>;
   mapBorderColors: (status: string) => string;
+  onRowClick?: (row: Row<any>) => void;
 };
 
 type CustomColumnDef = ColumnDef<any> & {
@@ -86,6 +88,7 @@ const TableComponent = (props: Props) => {
     updateState,
     refetch,
     mapBorderColors,
+    onRowClick,
   } = props;
 
   const { t } = useTranslation();
@@ -279,7 +282,12 @@ const TableComponent = (props: Props) => {
                 table?.getRowModel().rows?.map((row) => {
                   return (
                     <TableRow
-                      className="odd:bg-[#FBEBE9] border-l-4"
+                      onClick={() => onRowClick && onRowClick(row)}
+                      className={`odd:bg-[#FBEBE9] border-l-4 ${
+                        onRowClick
+                          ? 'cursor-pointer hover:bg-[rgba(225,92,77,0.3)] transition duration-[500ms]'
+                          : ''
+                      }`}
                       style={{
                         borderLeftColor: mapBorderColors(
                           row.original[borderKeyword],

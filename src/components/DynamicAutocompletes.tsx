@@ -76,6 +76,49 @@ const DynamicAutocompletes: React.FC<Props> = ({
     onValuesChange && onValuesChange(newAutocompleteFields);
   };
 
+  const handleTextFieldChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    index: number,
+  ) => {
+    const { value: inputValue } = event.target;
+    const deboundedUpdateState = debounce(
+      (inputValue) =>
+        updateState &&
+        updateState({
+          type: actionType,
+          payload: {
+            inputName: name,
+            inputValue: inputValue,
+          },
+        }),
+      300,
+    );
+    deboundedUpdateState(inputValue);
+
+    if (inputValue === '') {
+      handleAutocompleteChange(index, { id: 0, name: inputValue });
+    }
+  };
+
+  const handleInputChange = (
+    event:
+      | React.SyntheticEvent<Element, Event>
+      | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    index: number,
+  ) => {
+    if (event?.currentTarget?.ariaLabel === 'Clear') {
+      return handleAutocompleteChange(index, { id: 0, name: '' });
+    }
+
+    if (event?.target && 'value' in event.target) {
+      const { value: inputValue } = event.target;
+
+      if (inputValue === '') {
+        return handleAutocompleteChange(index, { id: 0, name: '' });
+      }
+    }
+  };
+
   return (
     <Box className="my-3">
       <Divider textAlign="left">{label}</Divider>
@@ -99,23 +142,13 @@ const DynamicAutocompletes: React.FC<Props> = ({
             }
             value={field}
             onChange={(_, value) => handleAutocompleteChange(index, value)}
+            onInputChange={(event) => handleInputChange(event, index)}
             renderInput={(params) => (
               <TextField
                 {...params}
                 {...inputProps}
                 label={`${inputProps?.label} ${index + 1}`}
-                onChange={debounce(
-                  (event) =>
-                    updateState &&
-                    updateState({
-                      type: actionType,
-                      payload: {
-                        inputName: name,
-                        inputValue: event.target.value,
-                      },
-                    }),
-                  300,
-                )}
+                onChange={(event) => handleTextFieldChange(event, index)}
               />
             )}
           />

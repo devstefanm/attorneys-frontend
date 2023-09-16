@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import useGetEmployersListQuery from '../../hooks/queries/employers/useGetEmployersListQuery';
 import { useEmployers } from '../../store/contexts/EmployersContext';
 import { mapSearchToQueryParam } from '../../utils/transformData';
-import { mapEmployersToBorderColors } from './employersHelpers';
+import { mapEmployersToBorderColors } from './helpers/employersHelpers';
 
 const employersTableHeaders: IEmployersTableHeader = {
   employer: 'employer',

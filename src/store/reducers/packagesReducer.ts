@@ -1,10 +1,10 @@
 import {
   EPackagesActionType,
   IAddPackageForm,
-  IAddPackageStateUpdate,
 } from '../../types/packagesTypes';
 import {
   ETableActionType,
+  IAddNewEntityStateUpdate,
   ITablePageable,
   ITableSearchable,
   ITableSortable,
@@ -26,7 +26,7 @@ interface IPackagesAction {
     | ITablePageable
     | ITableSearchable
     | boolean
-    | IAddPackageStateUpdate;
+    | IAddNewEntityStateUpdate;
 }
 
 const packagesReducer = (
@@ -55,7 +55,7 @@ const packagesReducer = (
     case EPackagesActionType.addPackageModalOpen:
       return { ...state, addPackageModalOpen: action.payload as boolean };
     case EPackagesActionType.addPackageForm:
-      const { name, fieldValue } = action.payload as IAddPackageStateUpdate;
+      const { name, fieldValue } = action.payload as IAddNewEntityStateUpdate;
       return {
         ...state,
         addPackageForm: {

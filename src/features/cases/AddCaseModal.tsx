@@ -5,7 +5,6 @@ import AddCaseForm from './AddCaseForm';
 import useAddNewCaseMutation from '../../hooks/mutations/cases/useAddNewCaseMutation';
 import { useCases } from '../../store/contexts/CasesContext';
 import { mapAddCaseFormToRequestData } from './helpers/casesHelpers';
-import { useQueryClient } from '@tanstack/react-query';
 
 type Props = {
   open: boolean;
@@ -16,20 +15,16 @@ const AddCaseModal = (props: Props) => {
   const { open, onClose } = props;
 
   const { t } = useTranslation();
-  const queryClient = useQueryClient();
 
   const {
     state: { addCaseForm },
     dispatch: updateCasesState,
   } = useCases();
 
-  const {
-    mutate: postNewCase,
-    isLoading,
-    isSuccess,
-  } = useAddNewCaseMutation(onClose, updateCasesState);
-
-  if (isSuccess) queryClient.invalidateQueries({ queryKey: ['casesList'] });
+  const { mutate: postNewCase, isLoading } = useAddNewCaseMutation(
+    onClose,
+    updateCasesState,
+  );
 
   return (
     <ErrorBoundary>

@@ -78,16 +78,6 @@ export interface IAddLawyerForm {
   city: IAutocompleteOption<string> | string;
 }
 
-export interface IAddLawyerStateUpdate {
-  name: string;
-  fieldValue: string;
-}
-
-export interface IAddLawyerAutocompleteInputChange {
-  inputName: string;
-  inputValue: string;
-}
-
 export interface IAddLawyerAutocompleteValues {
   city: string;
 }

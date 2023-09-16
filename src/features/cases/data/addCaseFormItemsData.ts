@@ -67,6 +67,53 @@ export const formFields = ({
     gridWidth: 6,
   },
   {
+    name: 'executors',
+    subfieldName: 'executor',
+    type: EFormFieldType.dynamicAutocompletes,
+    gridWidth: 12,
+    options: executorsOptions,
+  },
+  {
+    name: 'principal',
+    type: EFormFieldType.input,
+    gridWidth: 6,
+    format: /[^0-9.]/g,
+  },
+  {
+    name: 'interest',
+    type: EFormFieldType.input,
+    gridWidth: 6,
+    format: /[^0-9.]/g,
+  },
+  {
+    name: 'businessNumbers',
+    subfieldName: 'businessNumber',
+    type: EFormFieldType.dynamicInputs,
+    gridWidth: 12,
+  },
+  {
+    name: 'caseNumber',
+    type: EFormFieldType.input,
+    gridWidth: 6,
+  },
+  {
+    name: 'contractNumber',
+    type: EFormFieldType.input,
+    gridWidth: 6,
+  },
+  {
+    name: 'ssnNumber',
+    type: EFormFieldType.autocomplete,
+    gridWidth: 6,
+    options: ssnNumbersOptions,
+  },
+  {
+    name: 'package',
+    type: EFormFieldType.autocomplete,
+    gridWidth: 6,
+    options: packagesOptions,
+  },
+  {
     name: 'phoneNumbers',
     subfieldName: 'phoneNumber',
     type: EFormFieldType.dynamicInputs,
@@ -95,29 +142,6 @@ export const formFields = ({
     options: citiesOptions,
   },
   {
-    name: 'caseNumber',
-    type: EFormFieldType.input,
-    gridWidth: 6,
-  },
-  {
-    name: 'contractNumber',
-    type: EFormFieldType.input,
-    gridWidth: 6,
-  },
-  {
-    name: 'businessNumbers',
-    subfieldName: 'businessNumber',
-    type: EFormFieldType.dynamicInputs,
-    gridWidth: 12,
-  },
-  {
-    name: 'executors',
-    subfieldName: 'executor',
-    type: EFormFieldType.dynamicAutocompletes,
-    gridWidth: 12,
-    options: executorsOptions,
-  },
-  {
     name: 'lawyer',
     type: EFormFieldType.autocomplete,
     gridWidth: 6,
@@ -139,29 +163,5 @@ export const formFields = ({
     name: 'closingDate',
     type: EFormFieldType.datepicker,
     gridWidth: 6,
-  },
-  {
-    name: 'ssnNumber',
-    type: EFormFieldType.autocomplete,
-    gridWidth: 6,
-    options: ssnNumbersOptions,
-  },
-  {
-    name: 'package',
-    type: EFormFieldType.autocomplete,
-    gridWidth: 6,
-    options: packagesOptions,
-  },
-  {
-    name: 'principal',
-    type: EFormFieldType.input,
-    gridWidth: 6,
-    format: /[^0-9.]/g,
-  },
-  {
-    name: 'interest',
-    type: EFormFieldType.input,
-    gridWidth: 6,
-    format: /[^0-9.]/g,
   },
 ];

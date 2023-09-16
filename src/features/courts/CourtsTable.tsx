@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import useGetCourtsListQuery from '../../hooks/queries/courts/useGetCourtsListQuery';
 import { useCourts } from '../../store/contexts/CourtsContext';
 import { mapSearchToQueryParam } from '../../utils/transformData';
-import { mapCourtsToBorderColors } from './courtsHelpers';
+import { mapCourtsToBorderColors } from './helpers/courtsHelpers';
 
 const courtsTableHeaders: ICourtsTableHeader = {
   court: 'court',

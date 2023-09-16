@@ -5,7 +5,6 @@ import AddExecutorForm from './AddExecutorForm';
 import useAddNewExecutorMutation from '../../hooks/mutations/executors/useAddNewExecutorMutation';
 import { useExecutors } from '../../store/contexts/ExecutorsContext';
 import { mapAddExecutorFormToRequestData } from './helpers/executorsHelpers';
-import { useQueryClient } from '@tanstack/react-query';
 
 type Props = {
   open: boolean;
@@ -16,20 +15,16 @@ const AddExecutorModal = (props: Props) => {
   const { open, onClose } = props;
 
   const { t } = useTranslation();
-  const queryClient = useQueryClient();
 
   const {
     state: { addExecutorForm },
     dispatch: updateExecutorsState,
   } = useExecutors();
 
-  const {
-    mutate: postNewExecutor,
-    isLoading,
-    isSuccess,
-  } = useAddNewExecutorMutation(onClose, updateExecutorsState);
-
-  if (isSuccess) queryClient.invalidateQueries({ queryKey: ['executorsList'] });
+  const { mutate: postNewExecutor, isLoading } = useAddNewExecutorMutation(
+    onClose,
+    updateExecutorsState,
+  );
 
   return (
     <ErrorBoundary>

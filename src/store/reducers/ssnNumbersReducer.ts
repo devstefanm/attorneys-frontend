@@ -1,10 +1,10 @@
 import {
   ESSNNumbersActionType,
   IAddSSNNumberForm,
-  IAddSSNNumberStateUpdate,
 } from '../../types/ssnNumbersTypes';
 import {
   ETableActionType,
+  IAddNewEntityStateUpdate,
   ITablePageable,
   ITableSearchable,
   ITableSortable,
@@ -26,7 +26,7 @@ interface ISSNNumbersAction {
     | ITablePageable
     | ITableSearchable
     | boolean
-    | IAddSSNNumberStateUpdate;
+    | IAddNewEntityStateUpdate;
 }
 
 const ssnNumbersReducer = (
@@ -55,7 +55,7 @@ const ssnNumbersReducer = (
     case ESSNNumbersActionType.addSSNNumberModalOpen:
       return { ...state, addSSNNumberModalOpen: action.payload as boolean };
     case ESSNNumbersActionType.addSSNNumberForm:
-      const { name, fieldValue } = action.payload as IAddSSNNumberStateUpdate;
+      const { name, fieldValue } = action.payload as IAddNewEntityStateUpdate;
       return {
         ...state,
         addSSNNumberForm: {

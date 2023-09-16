@@ -66,16 +66,6 @@ export interface IAddExecutorForm {
   city: IAutocompleteOption<string> | string;
 }
 
-export interface IAddExecutorStateUpdate {
-  name: string;
-  fieldValue: string;
-}
-
-export interface IAddExecutorAutocompleteInputChange {
-  inputName: string;
-  inputValue: string;
-}
-
 export interface IAddExecutorAutocompleteValues {
   city: string;
 }

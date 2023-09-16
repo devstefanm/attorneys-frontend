@@ -1,12 +1,12 @@
 import {
   ELawyersActionType,
-  IAddLawyerAutocompleteInputChange,
   IAddLawyerAutocompleteValues,
   IAddLawyerForm,
-  IAddLawyerStateUpdate,
 } from '../../types/lawyersTypes';
 import {
   ETableActionType,
+  IAddEntityAutocompleteInputChange,
+  IAddNewEntityStateUpdate,
   ITablePageable,
   ITableSearchable,
   ITableSortable,
@@ -32,8 +32,8 @@ interface ILawyersAction {
     | ITablePageable
     | ITableSearchable
     | boolean
-    | IAddLawyerStateUpdate
-    | IAddLawyerAutocompleteInputChange;
+    | IAddNewEntityStateUpdate
+    | IAddEntityAutocompleteInputChange;
 }
 
 const lawyersReducer = (
@@ -62,7 +62,7 @@ const lawyersReducer = (
     case ELawyersActionType.addLawyerModalOpen:
       return { ...state, addLawyerModalOpen: action.payload as boolean };
     case ELawyersActionType.addLawyerForm:
-      const { name, fieldValue } = action.payload as IAddLawyerStateUpdate;
+      const { name, fieldValue } = action.payload as IAddNewEntityStateUpdate;
       return {
         ...state,
         addLawyerForm: {
@@ -72,7 +72,7 @@ const lawyersReducer = (
       };
     case ELawyersActionType.addLawyerAutocompleteValues:
       const { inputName, inputValue } =
-        action.payload as IAddLawyerAutocompleteInputChange;
+        action.payload as IAddEntityAutocompleteInputChange;
       return {
         ...state,
         addLawyerAutocompleteValues: {

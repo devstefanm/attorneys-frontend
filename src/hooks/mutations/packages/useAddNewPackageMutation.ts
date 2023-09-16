@@ -4,7 +4,7 @@ import {
   IPackageRequestData,
 } from '../../../types/packagesTypes';
 import { IApiResponse } from '../../../types/universalTypes';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const addNewPackage = async (
   packageRequestData: IPackageRequestData,
@@ -29,16 +29,19 @@ const useAddNewPackageMutation = (
   onClose: () => void,
   updatePackagesState: React.Dispatch<any>,
 ) => {
+  const queryClient = useQueryClient();
+
   return useMutation(
     (packageRequestData: IPackageRequestData) =>
       addNewPackage(packageRequestData),
     {
       onSuccess: (response) => {
-        updatePackagesState({
-          type: EPackagesActionType.resetPackageFormData,
-        });
         if (!response.data.error) {
+          updatePackagesState({
+            type: EPackagesActionType.resetPackageFormData,
+          });
           onClose();
+          queryClient.invalidateQueries({ queryKey: ['packagesList'] });
         }
         return response.data.message;
       },

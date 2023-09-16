@@ -19,6 +19,7 @@ const getCasesList = async (
     page = 1,
     size = 25,
     filter = 'active',
+    clientsFilter = 9999,
   } = queryParams;
 
   let response: IApiResponse<ICasesListApiResponse>;
@@ -34,6 +35,7 @@ const getCasesList = async (
         page,
         size,
         filter: filter === EState.all ? '' : filter,
+        clientsFilter: clientsFilter === 9999 ? '' : clientsFilter,
       },
       withCredentials: true,
     });

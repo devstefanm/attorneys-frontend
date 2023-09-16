@@ -19,7 +19,7 @@ export const mapSearchToQueryParam = (search: ITableSearchable) => {
 
 export const transformDateFormat = (
   inputDate: string | Date | moment.Moment,
-) => {
+): string | null => {
   // Parse the input date using Moment.js with the expected input format
   const parsedDate = moment(inputDate, 'DD. MM. YYYY');
 
@@ -31,5 +31,25 @@ export const transformDateFormat = (
   }
 
   // Return null if the input date is not in the expected format or is invalid
+  return null;
+};
+
+export const reverseDateFormat = (
+  inputDate: string | null,
+): moment.Moment | null => {
+  if (inputDate === null) {
+    return null;
+  }
+
+  // Parse the input date using Moment.js with the expected input format
+  const parsedDate = moment(inputDate, 'YYYY-MM-DD');
+
+  // Check if the parsed date is valid
+  if (parsedDate.isValid()) {
+    // Return the parsed date as a moment.Moment object
+    return parsedDate;
+  }
+
+  // Return the input date as a string if it's not in the expected format or is invalid
   return null;
 };

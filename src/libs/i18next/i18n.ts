@@ -35,6 +35,7 @@ i18n
           active: 'Active',
           closed: 'Closed',
           all: 'All',
+          delete: 'Delete',
 
           // Pagination
           rowsPerPage: 'Rows per page',
@@ -74,6 +75,7 @@ i18n
           thankYouMessage: 'Thank you for using our app!',
           successMessage: 'Success!',
           errorMessage: 'Oops! Something went wrong.',
+          areYouSure: 'Are you sure?',
 
           entities: {
             // Roles
@@ -102,14 +104,17 @@ i18n
             numberOfDebtors: 'Number of Debtors',
             numberOfExecutors: 'Number of Bailiffs',
             numberOfLawyers: 'Number of Lawyers',
+            addNewCity: 'Add new City',
 
             // Clients
             client: 'Client',
             clients: 'Clients',
+            addNewClient: 'Add new Client',
 
             // Courts
             court: 'Court',
             courts: 'Courts',
+            addNewCourt: 'Add new Court',
 
             // Courts and Cities
             courtsAndCities: 'Courts and Cities',
@@ -117,6 +122,7 @@ i18n
             // Employers
             employers: 'Employers',
             employer: `Employer`,
+            addNewEmployer: 'Add new Employer',
 
             // Clients and Employers
             clientsAndEmployers: 'Clients and Employers',
@@ -193,6 +199,8 @@ i18n
             jmbg_pib: 'JMBG / PIB',
             addNewCase: 'Add new Case',
             stateOfCases: 'State of Cases',
+            editCase: 'Edit Case',
+            deleteCase: 'Delete Case',
 
             // Transactions
             transactions: 'Transactions',
@@ -219,7 +227,7 @@ i18n
 
             // Common
             numberOfCases: 'Number of Cases',
-            numberOfEmployees: 'Number of Employees',
+            numberOfEmployees: 'Number of employed Debtors',
           },
 
           errors: {
@@ -262,6 +270,7 @@ i18n
           active: 'Aktivni',
           closed: 'Zatvoreni',
           all: 'Svi',
+          delete: 'Obriši',
 
           // Pagination
           rowsPerPage: 'Broj redova po strani',
@@ -301,6 +310,7 @@ i18n
           thankYouMessage: 'Hvala vam što koristite našu aplikaciju!',
           successMessage: 'Uspešno!',
           errorMessage: 'Ups! Nešto je pošlo po zlu.',
+          areYouSure: 'Da li ste sigurni?',
 
           entities: {
             // Roles
@@ -329,14 +339,17 @@ i18n
             numberOfDebtors: 'Broj dužnika',
             numberOfExecutors: 'Broj izvršitelja',
             numberOfLawyers: 'Broj advokata',
+            addNewCity: 'Dodaj novi grad',
 
             // Clients
             client: 'Klijent',
             clients: 'Klijenti',
+            addNewClient: 'Dodaj novog klijenta',
 
             // Courts
             court: 'Sud',
             courts: 'Sudovi',
+            addNewCourt: 'Dodaj novi sud',
 
             // Courts and Cities
             courtsAndCities: 'Sudovi i Gradovi',
@@ -344,6 +357,7 @@ i18n
             // Employers
             employers: 'Poslodavci',
             employer: 'Poslodavac',
+            addNewEmployer: 'Dodaj novog Poslodavca',
 
             // Clients and Employers
             clientsAndEmployers: 'Klijenti i Poslodavci',
@@ -420,6 +434,8 @@ i18n
             jmbg_pib: 'JMBG / PIB',
             addNewCase: 'Dodaj novi predmet',
             stateOfCases: 'Stanje predmeta',
+            editCase: 'Izmeni predmet',
+            deleteCase: 'Izbriši predmet',
 
             // Transactions
             transactions: 'Transakcije',
@@ -446,7 +462,7 @@ i18n
 
             // Common
             numberOfCases: 'Broj slučajeva',
-            numberOfEmployees: 'Broj zaposlenih',
+            numberOfEmployees: 'Broj zaposlenih dužnika',
           },
 
           errors: {

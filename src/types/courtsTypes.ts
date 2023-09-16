@@ -1,5 +1,12 @@
 import { IMetaApiResponseData, IMetaQueryParams } from './universalTypes';
 
+export enum ECourtsActionType {
+  addCourtModalOpen = 'ADD_COURT_MODAL_OPEN',
+  addCourtForm = 'ADD_COURT_FORM',
+  addCourtAutocompleteValues = 'ADD_COURT_AC_VALUES',
+  resetCourtFormData = 'RESET_COURT_FORM_DATA',
+}
+
 export type CourtsTableName = 'court' | 'numberOfCases';
 
 export type CourtsTableHeader = `Court` | 'Number of Cases';
@@ -25,4 +32,17 @@ export interface ICourtsListQueryParams extends IMetaQueryParams {
 export interface ICourtsListApiResponse {
   courts: ICourtsApiResponseData[] | ICourtsTableData[];
   meta: IMetaApiResponseData;
+}
+
+export interface IAddCourtForm {
+  name: string;
+}
+
+export interface ICourtResponseObject {
+  id: number | null;
+  name: string;
+}
+
+export interface ICourtRequestData {
+  name: string;
 }

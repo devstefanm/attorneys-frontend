@@ -78,7 +78,7 @@ export interface IFormField {
 }
 
 export interface IAutocompleteParams {
-  search: string;
+  search?: string;
 }
 
 export interface IShortNamesApiResponse {
@@ -95,4 +95,24 @@ export interface ILongNamesApiResponse {
 export interface IAutocompleteOption<T> {
   id: number | null;
   name: T;
+}
+
+export interface IAddNewEntityStateUpdate {
+  name: string;
+  fieldValue: string;
+}
+
+export interface IAddEntityAutocompleteInputChange {
+  inputName: string;
+  inputValue: string;
+}
+
+export interface IEditEntityAutocompleteInputChange {
+  inputName: string;
+  inputValue: string;
+}
+
+export interface IEditEntityStateUpdate {
+  editName: string;
+  fieldEditValue: string;
 }

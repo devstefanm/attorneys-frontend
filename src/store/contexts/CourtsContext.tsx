@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ICourtsState, courtsReducer } from '../reducers/courtsReducer';
+import { addCourtsInitialFormData } from './data/courtsInitialData';
 
 interface ICourtsStateProviderProps {
   children: React.ReactNode;
@@ -16,6 +17,8 @@ const initialState: ICourtsState = {
     totalNumber: null,
   },
   searchable: [],
+  addCourtModalOpen: false,
+  addCourtForm: addCourtsInitialFormData,
 };
 
 export const CourtsContext = React.createContext<{

@@ -9,8 +9,11 @@ type Props = {
   onClose?: () => void;
   isLoading?: boolean;
   actionButtonText?: string;
+  extraButtonText?: string;
   hasActionButton?: boolean;
   hasCancelButton?: boolean;
+  hasExtraButton?: boolean;
+  onExtraButtonClick?: any;
 };
 
 const ActionBar = (props: Props) => {
@@ -19,34 +22,52 @@ const ActionBar = (props: Props) => {
     onClose,
     onSubmit,
     actionButtonText = 'submit',
+    extraButtonText = 'delete',
     hasActionButton,
     hasCancelButton = true,
+    hasExtraButton = false,
+    onExtraButtonClick,
   } = props;
 
   const { t } = useTranslation();
 
   return (
     <ErrorBoundary>
-      <Box className="flex justify-end my-3 mx-5">
-        {hasCancelButton && (
-          <Button className="text-base" color="inherit" onClick={onClose}>
-            {t('cancel')}
-          </Button>
-        )}
-        {hasActionButton && (
+      <Box
+        className={`flex ${
+          hasExtraButton ? 'justify-between' : 'justify-end'
+        } my-3 mx-5`}
+      >
+        {hasExtraButton && (
           <Button
-            className="ml-4 text-base"
-            color="primary"
-            onClick={onSubmit}
-            disabled={isLoading}
+            className="text-base"
+            color="error"
+            onClick={onExtraButtonClick}
           >
-            {isLoading ? (
-              <CircularProgress size={24} thickness={4} />
-            ) : (
-              t(actionButtonText)
-            )}
+            {t(extraButtonText)}
           </Button>
         )}
+        <Box>
+          {hasCancelButton && (
+            <Button className="text-base" color="inherit" onClick={onClose}>
+              {t('cancel')}
+            </Button>
+          )}
+          {hasActionButton && (
+            <Button
+              className="ml-4 text-base"
+              color="primary"
+              onClick={onSubmit}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <CircularProgress size={24} thickness={4} />
+              ) : (
+                t(actionButtonText)
+              )}
+            </Button>
+          )}
+        </Box>
       </Box>
     </ErrorBoundary>
   );

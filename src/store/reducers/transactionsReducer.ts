@@ -1,13 +1,13 @@
 import {
   ETransactionTypeFilter,
   ETransactionsActionType,
-  IAddTransactionAutocompleteInputChange,
   IAddTransactionAutocompleteValues,
   IAddTransactionForm,
-  IAddTransactionStateUpdate,
 } from '../../types/transactionsTypes';
 import {
   ETableActionType,
+  IAddEntityAutocompleteInputChange,
+  IAddNewEntityStateUpdate,
   ITablePageable,
   ITableSearchable,
   ITableSortable,
@@ -35,8 +35,8 @@ interface ITransactionsAction {
     | ITableSearchable
     | ETransactionTypeFilter
     | boolean
-    | IAddTransactionStateUpdate
-    | IAddTransactionAutocompleteInputChange;
+    | IAddNewEntityStateUpdate
+    | IAddEntityAutocompleteInputChange;
 }
 
 const transactionsReducer = (
@@ -65,7 +65,7 @@ const transactionsReducer = (
     case ETransactionsActionType.addTransactionModalOpen:
       return { ...state, addTransactionModalOpen: action.payload as boolean };
     case ETransactionsActionType.addTransactionForm:
-      const { name, fieldValue } = action.payload as IAddTransactionStateUpdate;
+      const { name, fieldValue } = action.payload as IAddNewEntityStateUpdate;
       return {
         ...state,
         addTransactionForm: {
@@ -75,7 +75,7 @@ const transactionsReducer = (
       };
     case ETransactionsActionType.addTransactionAutocompleteValues:
       const { inputName, inputValue } =
-        action.payload as IAddTransactionAutocompleteInputChange;
+        action.payload as IAddEntityAutocompleteInputChange;
       return {
         ...state,
         addTransactionAutocompleteValues: {

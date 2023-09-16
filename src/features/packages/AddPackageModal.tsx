@@ -5,7 +5,6 @@ import AddPackageForm from './AddPackageForm';
 import useAddNewPackageMutation from '../../hooks/mutations/packages/useAddNewPackageMutation';
 import { usePackages } from '../../store/contexts/PackagesContext';
 import { mapAddPackageFormToRequestData } from './helpers/packagesHelpers';
-import { useQueryClient } from '@tanstack/react-query';
 
 type Props = {
   open: boolean;
@@ -16,20 +15,16 @@ const AddPackageModal = (props: Props) => {
   const { open, onClose } = props;
 
   const { t } = useTranslation();
-  const queryClient = useQueryClient();
 
   const {
     state: { addPackageForm },
     dispatch: updatePackagesState,
   } = usePackages();
 
-  const {
-    mutate: postNewPackage,
-    isLoading,
-    isSuccess,
-  } = useAddNewPackageMutation(onClose, updatePackagesState);
-
-  if (isSuccess) queryClient.invalidateQueries({ queryKey: ['packagesList'] });
+  const { mutate: postNewPackage, isLoading } = useAddNewPackageMutation(
+    onClose,
+    updatePackagesState,
+  );
 
   return (
     <ErrorBoundary>

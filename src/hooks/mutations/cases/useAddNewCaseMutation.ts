@@ -1,7 +1,7 @@
 import { setupAxios } from '../../../libs/axios/setupAxios';
 import { ECasesActionType, ICaseRequestData } from '../../../types/casesTypes';
 import { IApiResponse } from '../../../types/universalTypes';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const addNewCase = async (
   caseRequestData: ICaseRequestData,
@@ -26,13 +26,16 @@ const useAddNewCaseMutation = (
   onClose: () => void,
   updateCasesState: React.Dispatch<any>,
 ) => {
+  const queryClient = useQueryClient();
+
   return useMutation(
     (caseRequestData: ICaseRequestData) => addNewCase(caseRequestData),
     {
       onSuccess: (response) => {
-        updateCasesState({ type: ECasesActionType.resetCaseFormData });
         if (!response.data.error) {
+          updateCasesState({ type: ECasesActionType.resetCaseFormData });
           onClose();
+          queryClient.invalidateQueries({ queryKey: ['casesList'] });
         }
         return response.data.message;
       },

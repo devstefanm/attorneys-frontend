@@ -6,6 +6,7 @@ import {
 import { uppercaseFirstLetter } from '../../../utils/transformData';
 
 export const mapApiResponseToFirstRow = ({
+  id,
   first_name,
   last_name,
   case_number,
@@ -25,6 +26,7 @@ export const mapApiResponseToFirstRow = ({
   principal,
   interest,
 }: ICaseApiResponseData): ICasesFirstRowData => ({
+  id,
   name: name
     ? uppercaseFirstLetter(name)
     : `${first_name ? uppercaseFirstLetter(first_name) : ''} ${

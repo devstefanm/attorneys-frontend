@@ -95,16 +95,6 @@ export interface IAddTransactionForm {
   paymentDate?: Moment | null;
 }
 
-export interface IAddTransactionStateUpdate {
-  name: string;
-  fieldValue: string;
-}
-
-export interface IAddTransactionAutocompleteInputChange {
-  inputName: string;
-  inputValue: string;
-}
-
 export interface IAddTransactionAutocompleteValues {
   caseNumber: string;
   type: ETransactionType | '';

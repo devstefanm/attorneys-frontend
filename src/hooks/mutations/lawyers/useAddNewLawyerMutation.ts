@@ -4,7 +4,7 @@ import {
   ILawyerRequestData,
 } from '../../../types/lawyersTypes';
 import { IApiResponse } from '../../../types/universalTypes';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const addNewLawyer = async (
   lawyerRequestData: ILawyerRequestData,
@@ -29,15 +29,18 @@ const useAddNewLawyerMutation = (
   onClose: () => void,
   updateLawyersState: React.Dispatch<any>,
 ) => {
+  const queryClient = useQueryClient();
+
   return useMutation(
     (lawyerRequestData: ILawyerRequestData) => addNewLawyer(lawyerRequestData),
     {
       onSuccess: (response) => {
-        updateLawyersState({
-          type: ELawyersActionType.resetLawyerFormData,
-        });
         if (!response.data.error) {
+          updateLawyersState({
+            type: ELawyersActionType.resetLawyerFormData,
+          });
           onClose();
+          queryClient.invalidateQueries({ queryKey: ['lawyersList'] });
         }
         return response.data.message;
       },

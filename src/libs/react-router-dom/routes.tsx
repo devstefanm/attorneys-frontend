@@ -7,6 +7,10 @@ import { ExecutorsStateProvider } from '../../store/contexts/ExecutorsContext';
 import { LawyersStateProvider } from '../../store/contexts/LawyersContext';
 import { SSNNumbersStateProvider } from '../../store/contexts/SSNNumbersContext';
 import { PackagesStateProvider } from '../../store/contexts/PackagesContext';
+import { ClientsStateProvider } from '../../store/contexts/ClientsContext';
+import { EmployersStateProvider } from '../../store/contexts/EmployersContext';
+import { CourtsStateProvider } from '../../store/contexts/CourtsContext';
+import { CitiesStateProvider } from '../../store/contexts/CitiesContext';
 
 export interface IPagesProps {
   pageLabel: string;
@@ -99,6 +103,24 @@ export const SSNNumbersAndPackagesWithProviders = ({
   </SSNNumbersStateProvider>
 );
 
+export const ClientsAndEmployersWithProviders = ({
+  pageLabel,
+}: IPagesProps) => (
+  <ClientsStateProvider>
+    <EmployersStateProvider>
+      <ClientsAndEmployers pageLabel={pageLabel} />
+    </EmployersStateProvider>
+  </ClientsStateProvider>
+);
+
+export const CourtsAndCitiesWithProviders = ({ pageLabel }: IPagesProps) => (
+  <CourtsStateProvider>
+    <CitiesStateProvider>
+      <CourtsAndCities pageLabel={pageLabel} />
+    </CitiesStateProvider>
+  </CourtsStateProvider>
+);
+
 export const routes = (isAuth: boolean, role: string | null) => [
   {
     path: '/',
@@ -157,7 +179,7 @@ export const routes = (isAuth: boolean, role: string | null) => [
     path: 'clients-and-employers',
     element:
       isAuth && role !== 'visitor' ? (
-        <ClientsAndEmployers pageLabel="entities.clientsAndEmployers" />
+        <ClientsAndEmployersWithProviders pageLabel="entities.clientsAndEmployers" />
       ) : (
         <Navigate to="/auth" />
       ),
@@ -166,7 +188,7 @@ export const routes = (isAuth: boolean, role: string | null) => [
     path: 'courts-and-cities',
     element:
       isAuth && role !== 'visitor' ? (
-        <CourtsAndCities pageLabel="entities.courtsAndCities" />
+        <CourtsAndCitiesWithProviders pageLabel="entities.courtsAndCities" />
       ) : (
         <Navigate to="/auth" />
       ),

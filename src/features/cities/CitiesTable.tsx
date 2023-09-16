@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import useGetCitiesListQuery from '../../hooks/queries/cities/useGetCitiesListQuery';
 import { useCities } from '../../store/contexts/CitiesContext';
 import { mapSearchToQueryParam } from '../../utils/transformData';
-import { mapCitiesToBorderColors } from './citiesHelpers';
+import { mapCitiesToBorderColors } from './helpers/citiesHelpers';
 
 const citiesTableHeaders: ICitiesTableHeader = {
   city: 'city',

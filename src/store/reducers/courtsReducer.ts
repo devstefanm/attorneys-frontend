@@ -1,19 +1,29 @@
+import { ECourtsActionType, IAddCourtForm } from '../../types/courtsTypes';
 import {
   ETableActionType,
+  IAddNewEntityStateUpdate,
   ITablePageable,
   ITableSearchable,
   ITableSortable,
 } from '../../types/universalTypes';
+import { addCourtsInitialFormData } from '../contexts/data/courtsInitialData';
 
 export interface ICourtsState {
   sortable: ITableSortable;
   pageable: ITablePageable;
   searchable: ITableSearchable[];
+  addCourtForm: IAddCourtForm;
+  addCourtModalOpen: boolean;
 }
 
 interface ICourtsAction {
-  type: ETableActionType;
-  payload?: ITableSortable | ITablePageable | ITableSearchable;
+  type: ETableActionType | ECourtsActionType;
+  payload?:
+    | ITableSortable
+    | ITablePageable
+    | ITableSearchable
+    | boolean
+    | IAddNewEntityStateUpdate;
 }
 
 const courtsReducer = (
@@ -39,6 +49,22 @@ const courtsReducer = (
       }
 
       return { ...state, searchable: newState };
+    case ECourtsActionType.addCourtModalOpen:
+      return { ...state, addCourtModalOpen: action.payload as boolean };
+    case ECourtsActionType.addCourtForm:
+      const { name, fieldValue } = action.payload as IAddNewEntityStateUpdate;
+      return {
+        ...state,
+        addCourtForm: {
+          ...state.addCourtForm,
+          [name]: fieldValue,
+        },
+      };
+    case ECourtsActionType.resetCourtFormData:
+      return {
+        ...state,
+        addCourtForm: addCourtsInitialFormData,
+      };
     default:
       return state;
   }

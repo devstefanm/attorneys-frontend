@@ -8,13 +8,15 @@ import { Box, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { CasesFilter } from '../features/cases/CasesFilter';
 import { ECasesActionType } from '../types/casesTypes';
+import EditCaseModal from '../features/cases/EditCaseModal';
+import { CasesFilterByClient } from '../features/cases/CasesFilterByClient';
 
 type Props = IPagesProps & {};
 
 const Cases = (_props: Props) => {
   const { t } = useTranslation();
   const {
-    state: { addCaseModalOpen },
+    state: { addCaseModalOpen, editCaseModalOpen },
     dispatch: updateCasesState,
   } = useCases();
 
@@ -22,7 +24,10 @@ const Cases = (_props: Props) => {
     <ErrorBoundary>
       <React.Suspense fallback={'Loading....'}>
         <Box className="my-2 flex justify-between">
-          <CasesFilter />
+          <Box className="grid grid-flow-col gap-2">
+            <CasesFilter />
+            <CasesFilterByClient />
+          </Box>
           <Button
             onClick={() =>
               updateCasesState({
@@ -43,6 +48,18 @@ const Cases = (_props: Props) => {
               payload: false,
             })
           }
+        />
+        <EditCaseModal
+          open={editCaseModalOpen}
+          onClose={() => {
+            updateCasesState({
+              type: ECasesActionType.editCaseModalOpen,
+              payload: false,
+            });
+            updateCasesState({
+              type: ECasesActionType.resetCaseFormData,
+            });
+          }}
         />
       </React.Suspense>
     </ErrorBoundary>

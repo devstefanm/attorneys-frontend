@@ -1,12 +1,12 @@
 import {
   EExecutorsActionType,
-  IAddExecutorAutocompleteInputChange,
   IAddExecutorAutocompleteValues,
   IAddExecutorForm,
-  IAddExecutorStateUpdate,
 } from '../../types/executorsTypes';
 import {
   ETableActionType,
+  IAddEntityAutocompleteInputChange,
+  IAddNewEntityStateUpdate,
   ITablePageable,
   ITableSearchable,
   ITableSortable,
@@ -32,8 +32,8 @@ interface IExecutorsAction {
     | ITablePageable
     | ITableSearchable
     | boolean
-    | IAddExecutorStateUpdate
-    | IAddExecutorAutocompleteInputChange;
+    | IAddNewEntityStateUpdate
+    | IAddEntityAutocompleteInputChange;
 }
 
 const executorsReducer = (
@@ -62,7 +62,7 @@ const executorsReducer = (
     case EExecutorsActionType.addExecutorModalOpen:
       return { ...state, addExecutorModalOpen: action.payload as boolean };
     case EExecutorsActionType.addExecutorForm:
-      const { name, fieldValue } = action.payload as IAddExecutorStateUpdate;
+      const { name, fieldValue } = action.payload as IAddNewEntityStateUpdate;
       return {
         ...state,
         addExecutorForm: {
@@ -72,7 +72,7 @@ const executorsReducer = (
       };
     case EExecutorsActionType.addExecutorAutocompleteValues:
       const { inputName, inputValue } =
-        action.payload as IAddExecutorAutocompleteInputChange;
+        action.payload as IAddEntityAutocompleteInputChange;
       return {
         ...state,
         addExecutorAutocompleteValues: {

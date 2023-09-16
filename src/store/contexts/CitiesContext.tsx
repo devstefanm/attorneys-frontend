@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ICitiesState, citiesReducer } from '../reducers/citiesReducer';
+import { addCitiesInitialFormData } from './data/citiesInitialData';
 
 interface ICitiesStateProviderProps {
   children: React.ReactNode;
@@ -16,6 +17,8 @@ const initialState: ICitiesState = {
     totalNumber: null,
   },
   searchable: [],
+  addCityModalOpen: false,
+  addCityForm: addCitiesInitialFormData,
 };
 
 export const CitiesContext = React.createContext<{

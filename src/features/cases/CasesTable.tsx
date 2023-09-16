@@ -1,10 +1,11 @@
 import { TableComponent } from '../../components/TableComponent';
 import {
+  ECasesActionType,
   ICasesFirstRowData,
   ICasesQueryParams,
   ICasesTableHeader,
 } from '../../types/casesTypes';
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, Row } from '@tanstack/react-table';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import useGetCasesListQuery from '../../hooks/queries/cases/useGetCasesListQuery';
@@ -37,6 +38,7 @@ const CasesTable = () => {
       pageable: { page, size },
       searchable,
       filterable,
+      filterableByClient,
     },
     dispatch: updateCasesState,
   } = useCases();
@@ -57,7 +59,24 @@ const CasesTable = () => {
     ...queryParams,
     ...searchParams,
     filter: filterable,
+    clientsFilter: filterableByClient,
   });
+
+  const handleRowClick = (row: Row<ICasesFirstRowData>) => {
+    const { id } = row.original;
+
+    if (id) {
+      updateCasesState({
+        type: ECasesActionType.editCaseId,
+        payload: id,
+      });
+
+      updateCasesState({
+        type: ECasesActionType.editCaseModalOpen,
+        payload: true,
+      });
+    }
+  };
 
   const columns = React.useMemo<ColumnDef<ICasesFirstRowData>[]>(
     () => [
@@ -169,6 +188,7 @@ const CasesTable = () => {
       updateState={updateCasesState}
       refetch={refetch}
       mapBorderColors={mapStatusToBorderColor}
+      onRowClick={handleRowClick}
     />
   ) : (
     <>Loading...</>

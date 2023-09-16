@@ -3,6 +3,8 @@ import { ICasesState, casesReducer } from '../reducers/casesReducer';
 import {
   addCaseAutocompleteInitialValues,
   addCasesInitialFormData,
+  editCaseAutocompleteInitialValues,
+  editCasesInitialFormData,
 } from './data/casesInitialData';
 import { EState } from '../../types/casesTypes';
 
@@ -22,10 +24,17 @@ const initialState: ICasesState = {
   },
   searchable: [],
   filterable: EState.active,
+  filterableByClient: 9999,
   addCaseModalOpen: false,
+  editCaseModalOpen: false,
   isLegalEntity: false,
   addCaseForm: addCasesInitialFormData,
   addCaseAutocompleteValues: addCaseAutocompleteInitialValues,
+  editCaseForm: editCasesInitialFormData,
+  editCaseAutocompleteValues: editCaseAutocompleteInitialValues,
+  editCaseId: null,
+  editedCaseFormData: {},
+  confirmationDialogOpen: false,
 };
 
 export const CasesContext = React.createContext<{
