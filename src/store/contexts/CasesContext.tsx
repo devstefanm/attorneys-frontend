@@ -27,6 +27,7 @@ const initialState: ICasesState = {
   filterableByClient: 9999,
   addCaseModalOpen: false,
   editCaseModalOpen: false,
+  exportCasesDialogOpen: false,
   isLegalEntity: false,
   addCaseForm: addCasesInitialFormData,
   addCaseAutocompleteValues: addCaseAutocompleteInitialValues,
@@ -35,6 +36,8 @@ const initialState: ICasesState = {
   editCaseId: null,
   editedCaseFormData: {},
   confirmationDialogOpen: false,
+  exportFileType: 'excel',
+  downloadFile: false,
 };
 
 export const CasesContext = React.createContext<{

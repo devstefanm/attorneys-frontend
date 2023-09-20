@@ -32,6 +32,7 @@ export interface ICasesState {
   filterableByClient: number;
   addCaseModalOpen: boolean;
   editCaseModalOpen: boolean;
+  exportCasesDialogOpen: boolean;
   isLegalEntity: boolean;
   addCaseForm: IAddCaseForm;
   addCaseAutocompleteValues: IAddCaseAutocompleteValues;
@@ -40,6 +41,8 @@ export interface ICasesState {
   editedCaseFormData: IEditedCaseFormData;
   editCaseId: number | null;
   confirmationDialogOpen: boolean;
+  exportFileType: 'excel' | 'csv';
+  downloadFile: boolean;
 }
 
 interface ICasesAction {
@@ -55,7 +58,9 @@ interface ICasesAction {
     | IEditEntityAutocompleteInputChange
     | IEditEntityStateUpdate
     | IEditCaseForm
-    | number;
+    | number
+    | 'excel'
+    | 'csv';
 }
 
 const casesReducer = (
@@ -154,8 +159,14 @@ const casesReducer = (
       return { ...state, editCaseId: action.payload as number };
     case ECasesActionType.confirmationDialogOpen:
       return { ...state, confirmationDialogOpen: action.payload as boolean };
+    case ECasesActionType.exportCasesDialogOpen:
+      return { ...state, exportCasesDialogOpen: action.payload as boolean };
     case ECasesActionType.filterableByClient:
       return { ...state, filterableByClient: action.payload as number };
+    case ECasesActionType.exportFileType:
+      return { ...state, exportFileType: action.payload as 'excel' | 'csv' };
+    case ECasesActionType.downloadFile:
+      return { ...state, downloadFile: action.payload as boolean };
     default:
       return state;
   }

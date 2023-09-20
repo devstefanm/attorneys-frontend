@@ -55,13 +55,13 @@ const EditCaseForm = () => {
   } = useGetCaseByCaseIdQuery(editCaseId as number);
 
   React.useEffect(() => {
-    if (isSuccess && editCaseFormData) {
+    if (isSuccess && editCaseFormData?.caseNumber) {
       updateCasesState({
         type: ECasesActionType.setCaseFormData,
         payload: editCaseFormData,
       });
     }
-  }, [editCaseFormData]);
+  }, [editCaseFormData?.caseNumber]);
 
   const { data: citiesOptions } = useGetCitiesNamesQuery({
     search: editCaseAutocompleteValues.city,

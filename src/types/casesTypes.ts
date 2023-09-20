@@ -15,6 +15,7 @@ export enum ECasesActionType {
   isLegalEntity = 'IS_LEGAL',
   addCaseModalOpen = 'ADD_CASE_MODAL_OPEN',
   editCaseModalOpen = 'EDIT_CASE_MODAL_OPEN',
+  exportCasesDialogOpen = 'EXPORT_CASES_DIALOG_OPEN',
   addCaseForm = 'ADD_CASE_FORM',
   addCaseAutocompleteValues = 'ADD_CASE_AC_VALUES',
   resetCaseFormData = 'RESET_CASE_FORM_DATA',
@@ -24,6 +25,8 @@ export enum ECasesActionType {
   editCaseId = 'EDIT_CASE_ID',
   confirmationDialogOpen = 'DIALOG_OPEN',
   filterableByClient = 'FILTERABLE_BY_CLIENT',
+  exportFileType = 'EXPORT_FILE_TYPE',
+  downloadFile = 'DOWNLOAD_FILE',
 }
 
 export type CasesFirstRowName =
@@ -100,7 +103,24 @@ export interface ICasesTableHeader {
   [key: string]: CasesFirstRowName;
 }
 
-export interface ICasesQueryParams extends IMetaQueryParams {
+export interface ICasesFiltersData {
+  name?: string;
+  jmbg_pib?: string;
+  case_number?: string;
+  contract_number?: string;
+  lawyer?: string;
+  executors?: string;
+  ssn?: string;
+  package?: string;
+  client?: string;
+  court?: string;
+  filter?: EState;
+  clientsFilter?: number;
+  fileType?: 'excel' | 'csv';
+  downloadFile?: boolean;
+}
+
+export interface ICasesQueryParams extends ICasesFiltersData, IMetaQueryParams {
   name?: string;
   jmbg_pib?: string;
   case_number?: string;

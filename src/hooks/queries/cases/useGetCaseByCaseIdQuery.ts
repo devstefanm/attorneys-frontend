@@ -8,18 +8,20 @@ const getCaseNumbersWithNames = async (
   caseId: number,
 ): Promise<IApiResponse<IViewCaseApiResponseData>> => {
   let response: IApiResponse<IViewCaseApiResponseData>;
+  if (caseId) {
+    try {
+      response = await setupAxios({
+        method: 'get',
+        url: `api/case/${caseId}`,
+        withCredentials: true,
+      });
+    } catch (error) {
+      response = { data: { error: 500, message: 'Connection problem' } };
+    }
 
-  try {
-    response = await setupAxios({
-      method: 'get',
-      url: `api/case/${caseId}`,
-      withCredentials: true,
-    });
-  } catch (error) {
-    response = { data: { error: 500, message: 'Connection problem' } };
+    return response;
   }
-
-  return response;
+  return { data: { error: 400, message: 'No Case has been passed' } };
 };
 
 const useGetCaseByCaseIdQuery = (caseId: number) => {

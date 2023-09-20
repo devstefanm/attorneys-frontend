@@ -3,20 +3,21 @@ import { IPagesProps } from '../libs/react-router-dom/routes';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 import { CasesTable } from '../features/cases/CasesTable';
 import { useCases } from '../store/contexts/CasesContext';
-import AddCaseModal from '../features/cases/AddCaseModal';
+import { AddCaseModal } from '../features/cases/AddCaseModal';
 import { Box, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { CasesFilter } from '../features/cases/CasesFilter';
 import { ECasesActionType } from '../types/casesTypes';
-import EditCaseModal from '../features/cases/EditCaseModal';
+import { EditCaseModal } from '../features/cases/EditCaseModal';
 import { CasesFilterByClient } from '../features/cases/CasesFilterByClient';
+import { ExportCasesDialog } from '../features/cases/ExportCasesDialog';
 
 type Props = IPagesProps & {};
 
 const Cases = (_props: Props) => {
   const { t } = useTranslation();
   const {
-    state: { addCaseModalOpen, editCaseModalOpen },
+    state: { addCaseModalOpen, editCaseModalOpen, exportCasesDialogOpen },
     dispatch: updateCasesState,
   } = useCases();
 
@@ -28,16 +29,29 @@ const Cases = (_props: Props) => {
             <CasesFilter />
             <CasesFilterByClient />
           </Box>
-          <Button
-            onClick={() =>
-              updateCasesState({
-                type: ECasesActionType.addCaseModalOpen,
-                payload: !addCaseModalOpen,
-              })
-            }
-          >
-            {t('entities.addNewCase')}
-          </Button>
+          <Box>
+            <Button
+              color="info"
+              onClick={() =>
+                updateCasesState({
+                  type: ECasesActionType.exportCasesDialogOpen,
+                  payload: !exportCasesDialogOpen,
+                })
+              }
+            >
+              {t('entities.exportCases')}
+            </Button>
+            <Button
+              onClick={() =>
+                updateCasesState({
+                  type: ECasesActionType.addCaseModalOpen,
+                  payload: !addCaseModalOpen,
+                })
+              }
+            >
+              {t('entities.addNewCase')}
+            </Button>
+          </Box>
         </Box>
         <CasesTable />
         <AddCaseModal
@@ -61,6 +75,23 @@ const Cases = (_props: Props) => {
             });
           }}
         />
+        {exportCasesDialogOpen ? (
+          <ExportCasesDialog
+            open={exportCasesDialogOpen}
+            onClose={() => {
+              updateCasesState({
+                type: ECasesActionType.exportCasesDialogOpen,
+                payload: false,
+              });
+              updateCasesState({
+                type: ECasesActionType.downloadFile,
+                payload: false,
+              });
+            }}
+          />
+        ) : (
+          ''
+        )}
       </React.Suspense>
     </ErrorBoundary>
   );

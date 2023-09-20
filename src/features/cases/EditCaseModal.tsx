@@ -80,4 +80,4 @@ const EditCaseModal = (props: Props) => {
   );
 };
 
-export default EditCaseModal;
+export { EditCaseModal };

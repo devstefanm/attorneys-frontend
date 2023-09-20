@@ -70,6 +70,10 @@ i18n
           confirmPassword: 'Confirm Password',
           message: 'Message',
 
+          // Files
+          exportCSV: 'Export CSV file',
+          exportExcel: 'Export Excel file',
+
           // Messages
           welcomeMessage: 'Welcome to our website!',
           thankYouMessage: 'Thank you for using our app!',
@@ -201,6 +205,7 @@ i18n
             stateOfCases: 'State of Cases',
             editCase: 'Edit Case',
             deleteCase: 'Delete Case',
+            exportCases: 'Export Cases',
 
             // Transactions
             transactions: 'Transactions',
@@ -304,6 +309,10 @@ i18n
           password: 'Lozinka',
           confirmPassword: 'Potvrdite lozinku',
           message: 'Poruka',
+
+          // Files
+          exportCSV: 'Izvezi CSV datoteku',
+          exportExcel: 'Izvezi Excel datoteku',
 
           // Messages
           welcomeMessage: 'Dobrodošli na naš sajt!',
@@ -436,6 +445,7 @@ i18n
             stateOfCases: 'Stanje predmeta',
             editCase: 'Izmeni predmet',
             deleteCase: 'Izbriši predmet',
+            exportCases: 'Izvezi predmete',
 
             // Transactions
             transactions: 'Transakcije',

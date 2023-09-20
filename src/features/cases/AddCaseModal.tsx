@@ -44,4 +44,4 @@ const AddCaseModal = (props: Props) => {
   );
 };
 
-export default AddCaseModal;
+export { AddCaseModal };
