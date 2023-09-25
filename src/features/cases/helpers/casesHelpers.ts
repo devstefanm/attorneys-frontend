@@ -9,6 +9,7 @@ import {
 import { IClientResponseObject } from '../../../types/clientsTypes';
 import { IAutocompleteOption } from '../../../types/universalTypes';
 import {
+  camelToSnake,
   reverseDateFormat,
   transformDateFormat,
 } from '../../../utils/transformData';
@@ -85,6 +86,14 @@ export const mapAddCaseFormToRequestData = ({
   principal,
   ssnNumber,
   zipCode: zip_code,
+  status,
+  oldPayment,
+  ourTaxes,
+  warningPrice,
+  enteringDate,
+  lawyerHandOverDate,
+  comment,
+  limitationObjection: limitation_objection,
 }: IAddCaseForm): ICaseRequestData => {
   let city_id = null,
     client_id = null,
@@ -94,7 +103,9 @@ export const mapAddCaseFormToRequestData = ({
     ssn_number_id = null,
     package_id = null,
     closing_date = null,
-    employer_id = null;
+    employer_id = null,
+    entering_date = null,
+    lawyer_hand_over_date = null;
 
   if (typeof city !== 'string') city_id = city.id;
   if (typeof client !== 'string') client_id = client.id;
@@ -109,9 +120,12 @@ export const mapAddCaseFormToRequestData = ({
   if (typeof employer !== 'string') employer_id = employer?.id;
 
   if (closingDate) closing_date = transformDateFormat(closingDate);
+  if (enteringDate) entering_date = transformDateFormat(enteringDate);
+  if (lawyerHandOverDate)
+    lawyer_hand_over_date = transformDateFormat(lawyerHandOverDate);
 
-  const case_number = Number(caseNumber);
-  const contract_number = Number(contractNumber);
+  const case_number = caseNumber;
+  const contract_number = contractNumber;
   const phone_numbers = phoneNumbers.filter(
     (phoneNumber) => phoneNumber.length > 5,
   );
@@ -141,6 +155,14 @@ export const mapAddCaseFormToRequestData = ({
       phone_numbers,
       business_numbers,
       closing_date,
+      status,
+      old_payment: oldPayment ? Number(oldPayment) : null,
+      our_taxes: ourTaxes ? Number(ourTaxes) : null,
+      warning_price: warningPrice ? Number(warningPrice) : null,
+      entering_date,
+      lawyer_hand_over_date,
+      comment,
+      limitation_objection,
     };
   }
 
@@ -168,6 +190,14 @@ export const mapAddCaseFormToRequestData = ({
     phone_numbers,
     business_numbers,
     closing_date,
+    status,
+    old_payment: oldPayment ? Number(oldPayment) : null,
+    our_taxes: ourTaxes ? Number(ourTaxes) : null,
+    warning_price: warningPrice ? Number(warningPrice) : null,
+    entering_date,
+    lawyer_hand_over_date,
+    comment,
+    limitation_objection,
   };
 };
 
@@ -201,6 +231,15 @@ export const mapCaseApiResponseToEditCaseForm = (
     principal,
     interest,
     phone_numbers,
+    state,
+    status,
+    old_payment,
+    our_taxes,
+    warning_price,
+    entering_date,
+    lawyer_hand_over_date,
+    comment,
+    limitation_objection,
   } = data;
 
   if (is_legal) {
@@ -245,6 +284,17 @@ export const mapCaseApiResponseToEditCaseForm = (
         : '',
       principal: principal.toString(),
       interest: interest.toString(),
+      state: state || 'active',
+      status,
+      comment,
+      oldPayment: old_payment ? old_payment.toString() : '',
+      ourTaxes: our_taxes ? our_taxes.toString() : '',
+      warningPrice: warning_price ? warning_price.toString() : '',
+      enteringDate: entering_date ? reverseDateFormat(entering_date) : null,
+      lawyerHandOverDate: lawyer_hand_over_date
+        ? reverseDateFormat(lawyer_hand_over_date)
+        : null,
+      limitationObjection: limitation_objection || false,
     };
   }
 
@@ -292,6 +342,17 @@ export const mapCaseApiResponseToEditCaseForm = (
       : '',
     principal: principal.toString(),
     interest: interest.toString(),
+    state: state || 'active',
+    status,
+    comment,
+    oldPayment: old_payment ? old_payment.toString() : '',
+    ourTaxes: our_taxes ? our_taxes.toString() : '',
+    warningPrice: warning_price ? warning_price.toString() : '',
+    enteringDate: entering_date ? reverseDateFormat(entering_date) : null,
+    lawyerHandOverDate: lawyer_hand_over_date
+      ? reverseDateFormat(lawyer_hand_over_date)
+      : null,
+    limitationObjection: limitation_objection || false,
   };
 };
 
@@ -321,6 +382,15 @@ export const mapEditCaseFormToRequestData = ({
   principal,
   ssnNumber,
   zipCode: zip_code,
+  state,
+  status,
+  oldPayment,
+  ourTaxes,
+  warningPrice,
+  enteringDate,
+  lawyerHandOverDate,
+  comment,
+  limitationObjection,
 }: IEditedCaseFormData): Partial<ICaseRequestData> => {
   const requestData: Partial<ICaseRequestData> = {};
 
@@ -349,7 +419,7 @@ export const mapEditCaseFormToRequestData = ({
   if (executors !== undefined) {
     if (executors.length > 0) {
       requestData.executor_ids = executors
-        .filter((executor) => executor.id !== 0)
+        .filter((executor) => executor.id !== 0 && executor.id !== null)
         .map((executor) => executor.id);
     } else {
       requestData.executor_ids = [];
@@ -389,8 +459,17 @@ export const mapEditCaseFormToRequestData = ({
     requestData.closing_date = closingDate
       ? transformDateFormat(closingDate)
       : null;
-  if (caseNumber !== undefined) requestData.case_number = Number(caseNumber);
-  if (contractNumber) requestData.contract_number = Number(contractNumber);
+  if (enteringDate !== undefined)
+    requestData.entering_date = enteringDate
+      ? transformDateFormat(enteringDate)
+      : null;
+  if (lawyerHandOverDate !== undefined)
+    requestData.lawyer_hand_over_date = lawyerHandOverDate
+      ? transformDateFormat(lawyerHandOverDate)
+      : null;
+
+  if (caseNumber !== undefined) requestData.case_number = caseNumber;
+  if (contractNumber) requestData.contract_number = contractNumber;
 
   if (phoneNumbers !== undefined) {
     if (phoneNumbers.length > 0) {
@@ -416,16 +495,25 @@ export const mapEditCaseFormToRequestData = ({
   if (pib !== undefined) requestData.pib = pib || null;
   if (first_name !== undefined) requestData.first_name = first_name || null;
   if (last_name !== undefined) requestData.last_name = last_name || null;
-  if (employed !== undefined) requestData.employed = employed || null;
+  if (employed !== undefined) requestData.employed = employed;
   if (jmbg !== undefined) requestData.jmbg = jmbg || null;
-
+  if (state !== undefined) requestData.state = state || null;
+  if (comment !== undefined) requestData.comment = comment || null;
+  if (status !== undefined) requestData.status = status || null;
+  if (limitationObjection !== undefined)
+    requestData.limitation_objection = limitationObjection || null;
   if (address !== undefined) requestData.address = address || null;
-  if (cession !== undefined) requestData.cession = cession || null;
+  if (cession !== undefined) requestData.cession = cession;
   if (email !== undefined) requestData.email = email || null;
   if (zip_code !== undefined) requestData.zip_code = zip_code || null;
   if (principal !== undefined)
     requestData.principal = Number(principal) || null;
   if (interest !== undefined) requestData.interest = Number(interest) || null;
+  if (oldPayment !== undefined)
+    requestData.old_payment = Number(oldPayment) || null;
+  if (ourTaxes !== undefined) requestData.our_taxes = Number(ourTaxes) || null;
+  if (warningPrice !== undefined)
+    requestData.warning_price = Number(warningPrice) || null;
 
   return requestData;
 };
@@ -435,4 +523,12 @@ export const mapClientToFilterOption = ({
   name,
 }: IClientResponseObject): IOption => {
   return { id: id as number, label: name, value: id as number };
+};
+
+export const mapChecklistTrueFieldsToReqProps = (
+  checklistValues: any,
+): string[] => {
+  return Object.keys(checklistValues)
+    .filter((key) => checklistValues[key] === true)
+    .map((key) => camelToSnake(key));
 };

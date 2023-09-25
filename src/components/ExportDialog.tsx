@@ -4,6 +4,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Divider,
   Stack,
 } from '@mui/material';
 import * as React from 'react';
@@ -15,6 +16,7 @@ type Props = {
   title: string;
   exportCSVButton: React.ReactNode;
   exportExcelButton: React.ReactNode;
+  exportChecklist?: React.ReactNode;
   onClose: () => void;
   className?: string;
 };
@@ -26,6 +28,7 @@ const ExportDialog = (props: Props) => {
     title,
     exportCSVButton,
     exportExcelButton,
+    exportChecklist,
     className,
   } = props;
 
@@ -43,9 +46,19 @@ const ExportDialog = (props: Props) => {
       >
         <DialogTitle>{t(title)}</DialogTitle>
         <DialogContent>
+          <Box>
+            {exportChecklist ? (
+              <>
+                {exportChecklist}
+                <Divider />
+              </>
+            ) : (
+              ''
+            )}
+          </Box>
           <DialogContentText id="alert-dialog-slide-description">
             <Stack
-              className="m-10"
+              className="mx-10 mt-6 mb-2"
               direction="row"
               justifyContent="space-between"
             >

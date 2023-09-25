@@ -69,10 +69,18 @@ i18n
           password: 'Password',
           confirmPassword: 'Confirm Password',
           message: 'Message',
+          selectAll: 'Select All',
+          unselectAll: 'Unselect All',
 
           // Files
           exportCSV: 'Export CSV file',
           exportExcel: 'Export Excel file',
+          acceptedFormats: 'Accepted formats',
+          dropFileHere: 'Drop the file here',
+          dragNDropFileHere:
+            'Drag and drop an Excel or CSV file here, or click to select one',
+          wrongFileFormat: 'Wrong file format!',
+          submitFile: 'Submit file',
 
           // Messages
           welcomeMessage: 'Welcome to our website!',
@@ -206,6 +214,14 @@ i18n
             editCase: 'Edit Case',
             deleteCase: 'Delete Case',
             exportCases: 'Export Cases',
+            state: 'State of Cases',
+            importCases: 'Import Cases',
+            oldPayment: 'Payed before lawsuit',
+            ourTaxes: 'Additional taxes',
+            warningPrice: 'Cost of warning',
+            enteringDate: 'Date of entering Creditexpress',
+            lawyerHandOverDate: 'Lawyer hand-over date',
+            comment: 'Comment',
 
             // Transactions
             transactions: 'Transactions',
@@ -309,10 +325,18 @@ i18n
           password: 'Lozinka',
           confirmPassword: 'Potvrdite lozinku',
           message: 'Poruka',
+          selectAll: 'Čekiraj sve',
+          unselectAll: 'Odčekiraj sve',
 
           // Files
           exportCSV: 'Izvezi CSV datoteku',
           exportExcel: 'Izvezi Excel datoteku',
+          acceptedFormats: 'Prihvatljivi formati',
+          dropFileHere: 'Ispustite datoteku ovde',
+          dragNDropFileHere:
+            'Prevucite i ispustite Excel ili CSV datoteku ovde, ili selektujte polje kako bi je dodali',
+          wrongFileFormat: 'Pogrešan format datoteke!',
+          submitFile: 'Prosledi datoteku',
 
           // Messages
           welcomeMessage: 'Dobrodošli na naš sajt!',
@@ -446,6 +470,14 @@ i18n
             editCase: 'Izmeni predmet',
             deleteCase: 'Izbriši predmet',
             exportCases: 'Izvezi predmete',
+            state: 'Stanje predmeta',
+            importCases: 'Uvezi predmete',
+            oldPayment: 'Otplaćeno pre utuženja',
+            ourTaxes: 'Dodatne takse',
+            warningPrice: 'Trošak opomene',
+            enteringDate: 'Datum ulaska u Creditexpress',
+            lawyerHandOverDate: 'Datum predaje advokatima',
+            comment: 'Komentar',
 
             // Transactions
             transactions: 'Transakcije',

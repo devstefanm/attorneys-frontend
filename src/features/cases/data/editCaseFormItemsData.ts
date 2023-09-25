@@ -153,8 +153,43 @@ export const formFields = ({
     options: clientsOptions,
   },
   {
+    name: 'enteringDate',
+    type: EFormFieldType.datepicker,
+    gridWidth: 6,
+  },
+  {
+    name: 'lawyerHandOverDate',
+    type: EFormFieldType.datepicker,
+    gridWidth: 6,
+  },
+  {
     name: 'closingDate',
     type: EFormFieldType.datepicker,
     gridWidth: 6,
+  },
+  {
+    name: 'status',
+    type: EFormFieldType.input,
+    gridWidth: 6,
+  },
+  {
+    name: 'oldPayment',
+    type: EFormFieldType.input,
+    gridWidth: 6,
+  },
+  {
+    name: 'ourTaxes',
+    type: EFormFieldType.input,
+    gridWidth: 6,
+  },
+  {
+    name: 'warningPrice',
+    type: EFormFieldType.input,
+    gridWidth: 6,
+  },
+  {
+    name: 'comment',
+    type: EFormFieldType.textArea,
+    gridWidth: 12,
   },
 ];

@@ -16,6 +16,7 @@ export enum ECasesActionType {
   addCaseModalOpen = 'ADD_CASE_MODAL_OPEN',
   editCaseModalOpen = 'EDIT_CASE_MODAL_OPEN',
   exportCasesDialogOpen = 'EXPORT_CASES_DIALOG_OPEN',
+  importCasesDialogOpen = 'IMPORT_CASES_DIALOG_OPEN',
   addCaseForm = 'ADD_CASE_FORM',
   addCaseAutocompleteValues = 'ADD_CASE_AC_VALUES',
   resetCaseFormData = 'RESET_CASE_FORM_DATA',
@@ -27,6 +28,9 @@ export enum ECasesActionType {
   filterableByClient = 'FILTERABLE_BY_CLIENT',
   exportFileType = 'EXPORT_FILE_TYPE',
   downloadFile = 'DOWNLOAD_FILE',
+  casesExportChecklistValues = 'CASES_EXPORT_CHECKLIST',
+  casesCheckUncheckAll = 'CASES_CHECK_UNCHECK_ALL',
+  casesFileForUpload = 'CASES_FILE',
 }
 
 export type CasesFirstRowName =
@@ -118,6 +122,7 @@ export interface ICasesFiltersData {
   clientsFilter?: number;
   fileType?: 'excel' | 'csv';
   downloadFile?: boolean;
+  checkedProps?: string[];
 }
 
 export interface ICasesQueryParams extends ICasesFiltersData, IMetaQueryParams {
@@ -167,6 +172,15 @@ export interface IAddCaseForm {
   package: IAutocompleteOption<string> | string;
   principal: string;
   interest: string;
+  status: string;
+  oldPayment: string;
+  ourTaxes: string;
+  warningPrice: string;
+  enteringDate: Moment | null;
+  lawyerHandOverDate: Moment | null;
+  comment: string;
+  limitationObjection: boolean;
+  state?: string;
 }
 
 export interface IAddCaseAutocompleteValues {
@@ -205,8 +219,8 @@ export interface ICaseRequestData {
   email?: string | null;
   zip_code?: string | null;
   city_id?: number | null;
-  case_number?: number | null;
-  contract_number?: number | null;
+  case_number?: string | null;
+  contract_number?: string | null;
   closing_date?: string | null;
   lawyer_id?: number | null;
   client_id?: number | null;
@@ -215,6 +229,15 @@ export interface ICaseRequestData {
   package_id?: number | null;
   principal?: number | null;
   interest?: number | null;
+  state?: string | null;
+  status?: string | null;
+  old_payment?: number | null;
+  our_taxes?: number | null;
+  warning_price?: number | null;
+  entering_date?: string | null;
+  lawyer_hand_over_date?: string | null;
+  comment?: string | null;
+  limitation_objection?: boolean | null;
 }
 
 export interface IEditCaseAutocompleteValues
@@ -249,6 +272,15 @@ export interface IEditedCaseFormData {
   package?: IAutocompleteOption<string> | string;
   principal?: string;
   interest?: string;
+  status?: string;
+  oldPayment?: string;
+  ourTaxes?: string;
+  warningPrice?: string;
+  enteringDate?: Moment | null;
+  lawyerHandOverDate?: Moment | null;
+  comment?: string;
+  limitationObjection?: boolean;
+  state?: string;
 }
 
 export interface IViewCaseApiResponseData {
@@ -270,6 +302,14 @@ export interface IViewCaseApiResponseData {
   employed: boolean;
   name: string;
   pib: string;
+  status: string;
+  old_payment: number;
+  our_taxes: number;
+  warning_price: number;
+  entering_date: string;
+  lawyer_hand_over_date: string;
+  comment: string;
+  limitation_objection: boolean;
   lawyer: {
     id: number;
     office_name: string;
@@ -283,10 +323,6 @@ export interface IViewCaseApiResponseData {
   package: {
     id: number;
     package_name: string;
-  };
-  status: {
-    id: number;
-    name: string;
   };
   client: {
     id: number;
@@ -314,4 +350,38 @@ export interface IViewCaseApiResponseData {
     number: string;
   }[];
   phone_numbers: string[];
+}
+
+export interface ICasesExportChecklistValues {
+  caseNumber: boolean;
+  contractNumber: boolean;
+  name: boolean;
+  isLegal: boolean;
+  package: boolean;
+  principal: boolean;
+  interest: boolean;
+  cession: boolean;
+  state: boolean;
+  phoneNumbers: boolean;
+  zipCode: boolean;
+  city: boolean;
+  address: boolean;
+  employed: boolean;
+  employer: boolean;
+  jmbg_pib: boolean;
+  lawyer: boolean;
+  ssn: boolean;
+  executors: boolean;
+  businessNumbers: boolean;
+  client: boolean;
+  court: boolean;
+  status: boolean;
+  oldPayment: boolean;
+  ourTaxes: boolean;
+  warningPrice: boolean;
+  enteringDate: boolean;
+  lawyerHandOverDate: boolean;
+  comment: boolean;
+  limitationObjection: boolean;
+  closingDate: boolean;
 }

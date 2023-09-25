@@ -8,6 +8,8 @@ import { useTranslation } from 'react-i18next';
 import { ECasesActionType } from '../../types/casesTypes';
 import useExportCasesListMutation from '../../hooks/mutations/cases/useExportCasesListMutation';
 import moment from 'moment';
+import { ExportCasesChecklist } from './ExportCasesChecklist';
+import { mapChecklistTrueFieldsToReqProps } from './helpers/casesHelpers';
 
 type Props = {
   open: boolean;
@@ -25,6 +27,7 @@ const ExportCasesDialog = (props: Props) => {
       filterableByClient,
       downloadFile,
       exportFileType,
+      casesExportChecklistValues,
     },
     dispatch: updateCasesState,
   } = useCases();
@@ -60,10 +63,15 @@ const ExportCasesDialog = (props: Props) => {
         title={'entities.exportCases'}
         open={open}
         onClose={onClose}
+        exportChecklist={<ExportCasesChecklist />}
         exportCSVButton={
           <ExportButton
             text={'exportCSV'}
             isLoading={isLoading}
+            disabled={
+              mapChecklistTrueFieldsToReqProps(casesExportChecklistValues)
+                .length === 0
+            }
             onClick={async () => {
               updateCasesState({
                 type: ECasesActionType.exportFileType,
@@ -79,6 +87,9 @@ const ExportCasesDialog = (props: Props) => {
                 clientsFilter: filterableByClient,
                 fileType: 'csv',
                 downloadFile,
+                checkedProps: mapChecklistTrueFieldsToReqProps(
+                  casesExportChecklistValues,
+                ),
               });
               onClose();
             }}
@@ -88,6 +99,10 @@ const ExportCasesDialog = (props: Props) => {
           <ExportButton
             text={'exportExcel'}
             isLoading={isLoading}
+            disabled={
+              mapChecklistTrueFieldsToReqProps(casesExportChecklistValues)
+                .length === 0
+            }
             onClick={async () => {
               updateCasesState({
                 type: ECasesActionType.exportFileType,
@@ -103,6 +118,9 @@ const ExportCasesDialog = (props: Props) => {
                 clientsFilter: filterableByClient,
                 fileType: 'excel',
                 downloadFile,
+                checkedProps: mapChecklistTrueFieldsToReqProps(
+                  casesExportChecklistValues,
+                ),
               });
               onClose();
             }}

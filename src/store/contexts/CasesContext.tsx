@@ -5,6 +5,7 @@ import {
   addCasesInitialFormData,
   editCaseAutocompleteInitialValues,
   editCasesInitialFormData,
+  initialCasesExportChecklistValues,
 } from './data/casesInitialData';
 import { EState } from '../../types/casesTypes';
 
@@ -28,6 +29,7 @@ const initialState: ICasesState = {
   addCaseModalOpen: false,
   editCaseModalOpen: false,
   exportCasesDialogOpen: false,
+  importCasesDialogOpen: false,
   isLegalEntity: false,
   addCaseForm: addCasesInitialFormData,
   addCaseAutocompleteValues: addCaseAutocompleteInitialValues,
@@ -38,6 +40,8 @@ const initialState: ICasesState = {
   confirmationDialogOpen: false,
   exportFileType: 'excel',
   downloadFile: false,
+  casesExportChecklistValues: initialCasesExportChecklistValues,
+  casesFileForUpload: null,
 };
 
 export const CasesContext = React.createContext<{

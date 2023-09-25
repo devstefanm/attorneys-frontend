@@ -19,6 +19,7 @@ export const setupAxios = ({
   data,
   params,
   withCredentials,
+  headers,
 }: AxiosRequestConfig) => {
   const token = localStorage.getItem(import.meta.env.VITE_APP_TOKEN_NAME);
   return api({
@@ -28,6 +29,7 @@ export const setupAxios = ({
       'Content-Type': 'application/json',
       Accept: 'application/json',
       ...(withCredentials && { Authorization: `Bearer ${token}` }),
+      ...(headers && headers),
     },
     data: data,
     params: params,

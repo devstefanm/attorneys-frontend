@@ -57,6 +57,7 @@ export enum EFormFieldType {
   checkbox = 'checkbox',
   autocomplete = 'autocomplete',
   datepicker = 'datepicker',
+  textArea = 'textarea',
   dynamicInputs = 'dynamic-inputs',
   dynamicAutocompletes = 'dynamic-autocompletes',
 }
@@ -115,4 +116,9 @@ export interface IEditEntityAutocompleteInputChange {
 export interface IEditEntityStateUpdate {
   editName: string;
   fieldEditValue: string;
+}
+
+export interface ICasesExportChecklistStateUpdate {
+  checkboxName: string;
+  checkboxValue: boolean;
 }

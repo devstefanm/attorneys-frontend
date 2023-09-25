@@ -38,11 +38,12 @@ const useEditCaseMutation = (
           updateCasesState({ type: ECasesActionType.resetCaseFormData });
           onClose();
           queryClient.invalidateQueries({ queryKey: ['casesList'] });
+          queryClient.invalidateQueries({ queryKey: ['case'] });
         }
         return response.data.message;
       },
       onError: (error) => {
-        return { error: error, message: 'Connection problem' };
+        return { error, message: 'Connection problem' };
       },
     },
   );

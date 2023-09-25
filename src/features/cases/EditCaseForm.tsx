@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import {
   Autocomplete,
+  Box,
   Checkbox,
   CircularProgress,
   Container,
@@ -115,6 +116,7 @@ const EditCaseForm = () => {
           });
           break;
         case EFormFieldType.input:
+        case EFormFieldType.textArea:
           const { value } = event?.target as HTMLTextAreaElement;
           let fieldEditValue = value;
           if (format) {
@@ -243,6 +245,7 @@ const EditCaseForm = () => {
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <Autocomplete
+              isOptionEqualToValue={(option, value) => option.id === value.id}
               fullWidth
               className={formFieldClassName}
               options={options ?? []}
@@ -251,7 +254,7 @@ const EditCaseForm = () => {
               }
               size={size ?? 'small'}
               //  @ts-ignore
-              value={editCaseForm[name]}
+              value={editCaseForm[name]?.id ? editCaseForm[name] : null}
               onChange={handleChange(name, type)}
               renderInput={(params) => (
                 <TextField
@@ -332,13 +335,34 @@ const EditCaseForm = () => {
             />
           </Grid>
         );
+      case EFormFieldType.textArea:
+        return (
+          <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
+            <TextField
+              fullWidth
+              multiline
+              className={formFieldClassName}
+              size={size ?? 'small'}
+              label={t(`entities.${name}`)}
+              name={name}
+              rows={2}
+              //  @ts-ignore
+              value={editCaseForm[name]}
+              onChange={handleChange(name, type, format)}
+            />
+          </Grid>
+        );
       default:
         return '';
     }
   };
 
   if (isLoading) {
-    return <CircularProgress />;
+    return (
+      <Box className="flex justify-center items-center h-[1300px]">
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (

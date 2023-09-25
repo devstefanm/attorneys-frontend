@@ -9,10 +9,11 @@ type Props = {
   text: string;
   onClick: () => void;
   icon?: React.ReactNode;
+  disabled?: boolean;
 };
 
 const ExportButton = (props: Props) => {
-  const { icon, isLoading, text, onClick } = props;
+  const { icon, isLoading, text, disabled, onClick } = props;
 
   const { t } = useTranslation();
 
@@ -23,7 +24,7 @@ const ExportButton = (props: Props) => {
         variant="contained"
         color="info"
         startIcon={icon || <GetApp />}
-        disabled={isLoading}
+        disabled={isLoading || disabled}
         onClick={() => onClick && onClick()}
       >
         <Box className="w-full flex items-center justify-center">

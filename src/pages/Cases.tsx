@@ -11,13 +11,19 @@ import { ECasesActionType } from '../types/casesTypes';
 import { EditCaseModal } from '../features/cases/EditCaseModal';
 import { CasesFilterByClient } from '../features/cases/CasesFilterByClient';
 import { ExportCasesDialog } from '../features/cases/ExportCasesDialog';
+import { ImportCasesDialog } from '../features/cases/ImportCasesDialog';
 
 type Props = IPagesProps & {};
 
 const Cases = (_props: Props) => {
   const { t } = useTranslation();
   const {
-    state: { addCaseModalOpen, editCaseModalOpen, exportCasesDialogOpen },
+    state: {
+      addCaseModalOpen,
+      editCaseModalOpen,
+      exportCasesDialogOpen,
+      importCasesDialogOpen,
+    },
     dispatch: updateCasesState,
   } = useCases();
 
@@ -30,6 +36,17 @@ const Cases = (_props: Props) => {
             <CasesFilterByClient />
           </Box>
           <Box>
+            <Button
+              color="success"
+              onClick={() =>
+                updateCasesState({
+                  type: ECasesActionType.importCasesDialogOpen,
+                  payload: !importCasesDialogOpen,
+                })
+              }
+            >
+              {t('entities.importCases')}
+            </Button>
             <Button
               color="info"
               onClick={() =>
@@ -86,6 +103,22 @@ const Cases = (_props: Props) => {
               updateCasesState({
                 type: ECasesActionType.downloadFile,
                 payload: false,
+              });
+            }}
+          />
+        ) : (
+          ''
+        )}
+        {importCasesDialogOpen ? (
+          <ImportCasesDialog
+            open={importCasesDialogOpen}
+            onClose={() => {
+              updateCasesState({
+                type: ECasesActionType.importCasesDialogOpen,
+                payload: false,
+              });
+              updateCasesState({
+                type: ECasesActionType.resetCaseFormData,
               });
             }}
           />

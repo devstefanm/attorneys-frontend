@@ -126,6 +126,7 @@ const DynamicAutocompletes: React.FC<Props> = ({
         <Box className="flex my-3" key={index}>
           <Autocomplete
             {...autocompleteProps}
+            isOptionEqualToValue={(option, value) => option.id === value.id}
             options={options ?? []}
             getOptionLabel={(option) =>
               mapApiResponseToAutocompleteOptions(option).name
@@ -140,7 +141,7 @@ const DynamicAutocompletes: React.FC<Props> = ({
                 },
               })
             }
-            value={field}
+            value={field?.id ? field : null}
             onChange={(_, value) => handleAutocompleteChange(index, value)}
             onInputChange={(event) => handleInputChange(event, index)}
             renderInput={(params) => (

@@ -3,6 +3,7 @@ import {
   EState,
   IAddCaseAutocompleteValues,
   IAddCaseForm,
+  ICasesExportChecklistValues,
   IEditCaseAutocompleteValues,
   IEditCaseForm,
   IEditedCaseFormData,
@@ -11,6 +12,7 @@ import {
   ETableActionType,
   IAddEntityAutocompleteInputChange,
   IAddNewEntityStateUpdate,
+  ICasesExportChecklistStateUpdate,
   IEditEntityAutocompleteInputChange,
   IEditEntityStateUpdate,
   ITablePageable,
@@ -20,6 +22,7 @@ import {
 import {
   addCaseAutocompleteInitialValues,
   addCasesInitialFormData,
+  allCasesExportChecklistCheckedUnchecked,
   editCaseAutocompleteInitialValues,
   editCasesInitialFormData,
 } from '../contexts/data/casesInitialData';
@@ -33,6 +36,7 @@ export interface ICasesState {
   addCaseModalOpen: boolean;
   editCaseModalOpen: boolean;
   exportCasesDialogOpen: boolean;
+  importCasesDialogOpen: boolean;
   isLegalEntity: boolean;
   addCaseForm: IAddCaseForm;
   addCaseAutocompleteValues: IAddCaseAutocompleteValues;
@@ -43,6 +47,8 @@ export interface ICasesState {
   confirmationDialogOpen: boolean;
   exportFileType: 'excel' | 'csv';
   downloadFile: boolean;
+  casesExportChecklistValues: ICasesExportChecklistValues;
+  casesFileForUpload: File | null;
 }
 
 interface ICasesAction {
@@ -60,7 +66,9 @@ interface ICasesAction {
     | IEditCaseForm
     | number
     | 'excel'
-    | 'csv';
+    | 'csv'
+    | ICasesExportChecklistStateUpdate
+    | File;
 }
 
 const casesReducer = (
@@ -120,6 +128,7 @@ const casesReducer = (
         editCaseAutocompleteValues: editCaseAutocompleteInitialValues,
         editCaseId: null,
         editedCaseFormData: {},
+        casesFileForUpload: null,
       };
     case ECasesActionType.setCaseFormData:
       return {
@@ -161,12 +170,36 @@ const casesReducer = (
       return { ...state, confirmationDialogOpen: action.payload as boolean };
     case ECasesActionType.exportCasesDialogOpen:
       return { ...state, exportCasesDialogOpen: action.payload as boolean };
+    case ECasesActionType.importCasesDialogOpen:
+      return { ...state, importCasesDialogOpen: action.payload as boolean };
     case ECasesActionType.filterableByClient:
       return { ...state, filterableByClient: action.payload as number };
     case ECasesActionType.exportFileType:
       return { ...state, exportFileType: action.payload as 'excel' | 'csv' };
     case ECasesActionType.downloadFile:
       return { ...state, downloadFile: action.payload as boolean };
+    case ECasesActionType.casesExportChecklistValues:
+      const { checkboxName, checkboxValue } =
+        action.payload as ICasesExportChecklistStateUpdate;
+      return {
+        ...state,
+        casesExportChecklistValues: {
+          ...state.casesExportChecklistValues,
+          [checkboxName]: checkboxValue,
+        },
+      };
+    case ECasesActionType.casesCheckUncheckAll:
+      return {
+        ...state,
+        casesExportChecklistValues: allCasesExportChecklistCheckedUnchecked(
+          action.payload as boolean,
+        ),
+      };
+    case ECasesActionType.casesFileForUpload:
+      return {
+        ...state,
+        casesFileForUpload: action.payload as File,
+      };
     default:
       return state;
   }

@@ -104,6 +104,7 @@ const AddCaseForm = () => {
           }
           break;
         case EFormFieldType.input:
+        case EFormFieldType.textArea:
           const { value } = event?.target as HTMLTextAreaElement;
           let fieldValue = value;
           if (format) {
@@ -232,6 +233,7 @@ const AddCaseForm = () => {
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <Autocomplete
+              isOptionEqualToValue={(option, value) => option.id === value.id}
               fullWidth
               className={formFieldClassName}
               options={options ?? []}
@@ -240,7 +242,7 @@ const AddCaseForm = () => {
               }
               size={size ?? 'small'}
               //  @ts-ignore
-              value={addCaseForm[name]}
+              value={addCaseForm[name]?.id ? addCaseForm[name] : null}
               onChange={handleChange(name, type)}
               renderInput={(params) => (
                 <TextField
@@ -313,11 +315,28 @@ const AddCaseForm = () => {
                 label: t(`entities.${subfieldName}`),
               }}
               // @ts-ignore
-              values={addCaseForm[name]}
+              value={addCaseForm[name]}
               onValuesChange={handleChange(name, type)}
               actionType={ECasesActionType.addCaseAutocompleteValues}
               name={name}
               updateState={updateCasesState}
+            />
+          </Grid>
+        );
+      case EFormFieldType.textArea:
+        return (
+          <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
+            <TextField
+              fullWidth
+              multiline
+              className={formFieldClassName}
+              size={size ?? 'small'}
+              label={t(`entities.${name}`)}
+              name={name}
+              rows={2}
+              //  @ts-ignore
+              value={addCaseForm[name]}
+              onChange={handleChange(name, type, format)}
             />
           </Grid>
         );
