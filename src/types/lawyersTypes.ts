@@ -9,6 +9,8 @@ export enum ELawyersActionType {
   addLawyerForm = 'ADD_LAWYER_FORM',
   addLawyerAutocompleteValues = 'ADD_LAWYER_AC_VALUES',
   resetLawyerFormData = 'RESET_LAWYER_FORM_DATA',
+  openSuccessSnackbar = 'SUCCESS_SNACKBAR',
+  openErrorSnackbar = 'ERROR_SNACKBAR',
 }
 
 export type LawyersTableName =

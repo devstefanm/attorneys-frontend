@@ -25,6 +25,8 @@ export interface ITransactionsState {
   addTransactionForm: IAddTransactionForm;
   addTransactionModalOpen: boolean;
   addTransactionAutocompleteValues: IAddTransactionAutocompleteValues;
+  openSuccessSnackbar: boolean;
+  openErrorSnackbar: boolean;
 }
 
 interface ITransactionsAction {
@@ -95,6 +97,10 @@ const transactionsReducer = (
         ...state,
         filterable: action.payload as ETransactionTypeFilter,
       };
+    case ETransactionsActionType.openErrorSnackbar:
+      return { ...state, openErrorSnackbar: action.payload as boolean };
+    case ETransactionsActionType.openSuccessSnackbar:
+      return { ...state, openSuccessSnackbar: action.payload as boolean };
     default:
       return state;
   }

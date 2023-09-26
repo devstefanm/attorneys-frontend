@@ -1,4 +1,5 @@
 import { setupAxios } from '../../../libs/axios/setupAxios';
+import { ECasesActionType } from '../../../types/casesTypes';
 import { IApiResponse } from '../../../types/universalTypes';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -10,36 +11,50 @@ const importCasesList = async (
   const formData = new FormData();
   formData.append('file', file);
 
-  try {
-    response = await setupAxios({
-      method: 'post',
-      url: 'api/import-cases-list',
-      data: formData,
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-  } catch (error) {
-    response = { data: { error: 500, message: 'Connection problem' } };
-  }
+  response = await setupAxios({
+    method: 'post',
+    url: 'api/import-cases-list',
+    data: formData,
+    withCredentials: true,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 
   return response;
 };
 
-const useImportCasesListMutation = (onClose: () => void) => {
+const useImportCasesListMutation = (
+  onClose: () => void,
+  updateCasesState: React.Dispatch<any>,
+) => {
   const queryClient = useQueryClient();
 
   return useMutation((file: File) => importCasesList(file), {
     onSuccess: (response) => {
       if (!response.data.error) {
-        onClose();
+        updateCasesState({
+          type: ECasesActionType.openSuccessSnackbar,
+          payload: true,
+        });
+        updateCasesState({ type: ECasesActionType.resetCaseFormData });
         queryClient.invalidateQueries({ queryKey: ['casesList'] });
+        onClose();
       }
       return response.data.message;
     },
-    onError: (error) => {
-      return { error, message: 'Connection problem' };
+    onError: (error: any) => {
+      console.error(error);
+      if (error?.response?.data?.message) {
+        updateCasesState({
+          type: ECasesActionType.openErrorSnackbar,
+          payload: true,
+        });
+      }
+      return {
+        error,
+        message: error?.response?.data?.message || 'Error has occured',
+      };
     },
   });
 };

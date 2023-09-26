@@ -5,6 +5,8 @@ export enum ECitiesActionType {
   addCityForm = 'ADD_CITY_FORM',
   addCityAutocompleteValues = 'ADD_CITY_AC_VALUES',
   resetCityFormData = 'RESET_CITY_FORM_DATA',
+  openSuccessSnackbar = 'SUCCESS_SNACKBAR',
+  openErrorSnackbar = 'ERROR_SNACKBAR',
 }
 
 export type CitiesTableName =

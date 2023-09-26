@@ -49,6 +49,8 @@ export interface ICasesState {
   downloadFile: boolean;
   casesExportChecklistValues: ICasesExportChecklistValues;
   casesFileForUpload: File | null;
+  openSuccessSnackbar: boolean;
+  openErrorSnackbar: boolean;
 }
 
 interface ICasesAction {
@@ -200,6 +202,10 @@ const casesReducer = (
         ...state,
         casesFileForUpload: action.payload as File,
       };
+    case ECasesActionType.openErrorSnackbar:
+      return { ...state, openErrorSnackbar: action.payload as boolean };
+    case ECasesActionType.openSuccessSnackbar:
+      return { ...state, openSuccessSnackbar: action.payload as boolean };
     default:
       return state;
   }

@@ -11,16 +11,12 @@ const addNewSSNNumber = async (
 ): Promise<IApiResponse<ISSNNumberRequestData>> => {
   let response: IApiResponse<ISSNNumberRequestData>;
 
-  try {
-    response = await setupAxios({
-      method: 'post',
-      url: 'api/ssn',
-      data: ssnNumberRequestData,
-      withCredentials: true,
-    });
-  } catch {
-    response = { data: { error: 500, message: 'Connection problem' } };
-  }
+  response = await setupAxios({
+    method: 'post',
+    url: 'api/ssn',
+    data: ssnNumberRequestData,
+    withCredentials: true,
+  });
 
   return response;
 };
@@ -40,13 +36,25 @@ const useAddNewSSNNumberMutation = (
           updateSSNNumbersState({
             type: ESSNNumbersActionType.resetSSNNumberFormData,
           });
+          updateSSNNumbersState({
+            type: ESSNNumbersActionType.openSuccessSnackbar,
+            payload: true,
+          });
           onClose();
           queryClient.invalidateQueries({ queryKey: ['ssnNumbersList'] });
         }
         return response.data.message;
       },
-      onError: (error) => {
-        return { error: error, message: 'Connection problem' };
+      onError: (error: any) => {
+        console.error(error);
+        updateSSNNumbersState({
+          type: ESSNNumbersActionType.openErrorSnackbar,
+          payload: true,
+        });
+        return {
+          error,
+          message: error?.response?.data?.message || 'Error has occured',
+        };
       },
     },
   );

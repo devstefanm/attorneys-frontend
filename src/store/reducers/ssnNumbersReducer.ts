@@ -17,6 +17,8 @@ export interface ISSNNumbersState {
   searchable: ITableSearchable[];
   addSSNNumberForm: IAddSSNNumberForm;
   addSSNNumberModalOpen: boolean;
+  openSuccessSnackbar: boolean;
+  openErrorSnackbar: boolean;
 }
 
 interface ISSNNumbersAction {
@@ -68,6 +70,10 @@ const ssnNumbersReducer = (
         ...state,
         addSSNNumberForm: addSSNNumbersInitialFormData,
       };
+    case ESSNNumbersActionType.openErrorSnackbar:
+      return { ...state, openErrorSnackbar: action.payload as boolean };
+    case ESSNNumbersActionType.openSuccessSnackbar:
+      return { ...state, openSuccessSnackbar: action.payload as boolean };
     default:
       return state;
   }

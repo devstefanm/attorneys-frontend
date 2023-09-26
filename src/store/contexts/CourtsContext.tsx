@@ -19,6 +19,8 @@ const initialState: ICourtsState = {
   searchable: [],
   addCourtModalOpen: false,
   addCourtForm: addCourtsInitialFormData,
+  openSuccessSnackbar: false,
+  openErrorSnackbar: false,
 };
 
 export const CourtsContext = React.createContext<{

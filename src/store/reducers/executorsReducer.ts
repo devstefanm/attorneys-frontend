@@ -23,6 +23,8 @@ export interface IExecutorsState {
   addExecutorForm: IAddExecutorForm;
   addExecutorModalOpen: boolean;
   addExecutorAutocompleteValues: IAddExecutorAutocompleteValues;
+  openSuccessSnackbar: boolean;
+  openErrorSnackbar: boolean;
 }
 
 interface IExecutorsAction {
@@ -86,6 +88,10 @@ const executorsReducer = (
         addExecutorAutocompleteValues: addExecutorAutocompleteInitialValues,
         addExecutorForm: addExecutorsInitialFormData,
       };
+    case EExecutorsActionType.openErrorSnackbar:
+      return { ...state, openErrorSnackbar: action.payload as boolean };
+    case EExecutorsActionType.openSuccessSnackbar:
+      return { ...state, openSuccessSnackbar: action.payload as boolean };
     default:
       return state;
   }

@@ -19,6 +19,8 @@ const initialState: ICitiesState = {
   searchable: [],
   addCityModalOpen: false,
   addCityForm: addCitiesInitialFormData,
+  openSuccessSnackbar: false,
+  openErrorSnackbar: false,
 };
 
 export const CitiesContext = React.createContext<{

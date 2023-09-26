@@ -10,6 +10,7 @@ import useExportCasesListMutation from '../../hooks/mutations/cases/useExportCas
 import moment from 'moment';
 import { ExportCasesChecklist } from './ExportCasesChecklist';
 import { mapChecklistTrueFieldsToReqProps } from './helpers/casesHelpers';
+import { SnackbarNotification } from '../../components/SnackbarNotification';
 
 type Props = {
   open: boolean;
@@ -28,6 +29,8 @@ const ExportCasesDialog = (props: Props) => {
       downloadFile,
       exportFileType,
       casesExportChecklistValues,
+      openSuccessSnackbar,
+      openErrorSnackbar,
     },
     dispatch: updateCasesState,
   } = useCases();
@@ -41,7 +44,10 @@ const ExportCasesDialog = (props: Props) => {
     data,
     isLoading,
     mutateAsync: exportFile,
-  } = useExportCasesListMutation();
+    error,
+    isSuccess,
+    isError,
+  } = useExportCasesListMutation(updateCasesState);
 
   React.useEffect(() => {
     if (!isLoading && data) {
@@ -54,6 +60,16 @@ const ExportCasesDialog = (props: Props) => {
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
+      if (isSuccess) {
+        updateCasesState({
+          type: ECasesActionType.openSuccessSnackbar,
+          payload: true,
+        });
+
+        setTimeout(() => {
+          onClose();
+        }, 2000);
+      }
     }
   }, [isLoading, data]);
 
@@ -91,7 +107,6 @@ const ExportCasesDialog = (props: Props) => {
                   casesExportChecklistValues,
                 ),
               });
-              onClose();
             }}
           />
         }
@@ -122,11 +137,40 @@ const ExportCasesDialog = (props: Props) => {
                   casesExportChecklistValues,
                 ),
               });
-              onClose();
             }}
           />
         }
       />
+      {isSuccess && data ? (
+        <SnackbarNotification
+          open={openSuccessSnackbar}
+          onClose={() =>
+            updateCasesState({
+              type: ECasesActionType.openSuccessSnackbar,
+              payload: false,
+            })
+          }
+          severity="success"
+          content={'messages.fileExportSuccess'}
+        />
+      ) : (
+        ''
+      )}
+      {isError && error?.response?.data?.message ? (
+        <SnackbarNotification
+          open={openErrorSnackbar}
+          onClose={() =>
+            updateCasesState({
+              type: ECasesActionType.openErrorSnackbar,
+              payload: false,
+            })
+          }
+          severity="error"
+          content={error?.response?.data?.message}
+        />
+      ) : (
+        ''
+      )}
     </ErrorBoundary>
   );
 };

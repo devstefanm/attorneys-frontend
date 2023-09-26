@@ -25,6 +25,8 @@ export enum ETransactionsActionType {
   addTransactionForm = 'ADD_TRANSACTION_FORM',
   addTransactionAutocompleteValues = 'ADD_TRANSACTION_AC_VALUES',
   resetTransactionFormData = 'RESET_TRANSACTION_FORM_DATA',
+  openSuccessSnackbar = 'SUCCESS_SNACKBAR',
+  openErrorSnackbar = 'ERROR_SNACKBAR',
 }
 
 export type TransactionsTableName =

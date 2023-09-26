@@ -5,6 +5,8 @@ import AddEmployerForm from './AddEmployerForm';
 import useAddNewEmployerMutation from '../../hooks/mutations/employers/useAddNewEmployerMutation';
 import { useEmployers } from '../../store/contexts/EmployersContext';
 import { mapAddEmployerFormToRequestData } from './helpers/employersHelpers';
+import { SnackbarNotification } from '../../components/SnackbarNotification';
+import { EEmployersActionType } from '../../types/employersTypes';
 
 type Props = {
   open: boolean;
@@ -17,14 +19,18 @@ const AddEmployerModal = (props: Props) => {
   const { t } = useTranslation();
 
   const {
-    state: { addEmployerForm },
+    state: { addEmployerForm, openSuccessSnackbar, openErrorSnackbar },
     dispatch: updateEmployersState,
   } = useEmployers();
 
-  const { mutate: postNewEmployer, isLoading } = useAddNewEmployerMutation(
-    onClose,
-    updateEmployersState,
-  );
+  const {
+    mutate: postNewEmployer,
+    isLoading,
+    data,
+    error,
+    isSuccess,
+    isError,
+  } = useAddNewEmployerMutation(onClose, updateEmployersState);
 
   return (
     <ErrorBoundary>
@@ -42,6 +48,36 @@ const AddEmployerModal = (props: Props) => {
         isLoading={isLoading}
         hasCloseIconButton={true}
       />
+      {isSuccess && data?.data.message ? (
+        <SnackbarNotification
+          open={openSuccessSnackbar}
+          onClose={() =>
+            updateEmployersState({
+              type: EEmployersActionType.openSuccessSnackbar,
+              payload: false,
+            })
+          }
+          severity="success"
+          content={data?.data.message}
+        />
+      ) : (
+        ''
+      )}
+      {isError && error?.response?.data?.message ? (
+        <SnackbarNotification
+          open={openErrorSnackbar}
+          onClose={() =>
+            updateEmployersState({
+              type: EEmployersActionType.openErrorSnackbar,
+              payload: false,
+            })
+          }
+          severity="error"
+          content={error?.response?.data?.message}
+        />
+      ) : (
+        ''
+      )}
     </ErrorBoundary>
   );
 };

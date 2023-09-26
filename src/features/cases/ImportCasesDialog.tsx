@@ -4,6 +4,7 @@ import { FileUpload } from '../../components/FileUpload';
 import useImportCasesListMutation from '../../hooks/mutations/cases/useImportCasesListMutation';
 import { useCases } from '../../store/contexts/CasesContext';
 import { ECasesActionType } from '../../types/casesTypes';
+import { SnackbarNotification } from '../../components/SnackbarNotification';
 
 type Props = {
   open: boolean;
@@ -14,12 +15,18 @@ const ImportCasesDialog = (props: Props) => {
   const { open, onClose } = props;
 
   const {
-    state: { casesFileForUpload },
+    state: { casesFileForUpload, openSuccessSnackbar, openErrorSnackbar },
     dispatch: updateCasesState,
   } = useCases();
 
-  const { isLoading, mutateAsync: importFile } =
-    useImportCasesListMutation(onClose);
+  const {
+    isLoading,
+    mutateAsync: importFile,
+    data,
+    error,
+    isError,
+    isSuccess,
+  } = useImportCasesListMutation(onClose, updateCasesState);
 
   return (
     <ErrorBoundary>
@@ -46,6 +53,36 @@ const ImportCasesDialog = (props: Props) => {
           casesFileForUpload && importFile(casesFileForUpload)
         }
       />
+      {isSuccess && data?.data.message ? (
+        <SnackbarNotification
+          open={openSuccessSnackbar}
+          onClose={() =>
+            updateCasesState({
+              type: ECasesActionType.openSuccessSnackbar,
+              payload: false,
+            })
+          }
+          severity="success"
+          content={data?.data.message}
+        />
+      ) : (
+        ''
+      )}
+      {isError && error?.response?.data?.message ? (
+        <SnackbarNotification
+          open={openErrorSnackbar}
+          onClose={() =>
+            updateCasesState({
+              type: ECasesActionType.openErrorSnackbar,
+              payload: false,
+            })
+          }
+          severity="error"
+          content={error?.response?.data?.message}
+        />
+      ) : (
+        ''
+      )}
     </ErrorBoundary>
   );
 };

@@ -17,6 +17,8 @@ export interface IPackagesState {
   searchable: ITableSearchable[];
   addPackageForm: IAddPackageForm;
   addPackageModalOpen: boolean;
+  openSuccessSnackbar: boolean;
+  openErrorSnackbar: boolean;
 }
 
 interface IPackagesAction {
@@ -68,6 +70,10 @@ const packagesReducer = (
         ...state,
         addPackageForm: addPackagesInitialFormData,
       };
+    case EPackagesActionType.openErrorSnackbar:
+      return { ...state, openErrorSnackbar: action.payload as boolean };
+    case EPackagesActionType.openSuccessSnackbar:
+      return { ...state, openSuccessSnackbar: action.payload as boolean };
     default:
       return state;
   }

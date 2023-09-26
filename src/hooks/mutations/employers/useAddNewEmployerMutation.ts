@@ -11,16 +11,12 @@ const addNewEmployer = async (
 ): Promise<IApiResponse<IEmployerRequestData>> => {
   let response: IApiResponse<IEmployerRequestData>;
 
-  try {
-    response = await setupAxios({
-      method: 'post',
-      url: 'api/employers',
-      data: employerRequestData,
-      withCredentials: true,
-    });
-  } catch {
-    response = { data: { error: 500, message: 'Connection problem' } };
-  }
+  response = await setupAxios({
+    method: 'post',
+    url: 'api/employers',
+    data: employerRequestData,
+    withCredentials: true,
+  });
 
   return response;
 };
@@ -40,13 +36,25 @@ const useAddNewEmployerMutation = (
           updateEmployersState({
             type: EEmployersActionType.resetEmployerFormData,
           });
+          updateEmployersState({
+            type: EEmployersActionType.openSuccessSnackbar,
+            payload: true,
+          });
           onClose();
           queryClient.invalidateQueries({ queryKey: ['employersList'] });
         }
         return response.data.message;
       },
-      onError: (error) => {
-        return { error: error, message: 'Connection problem' };
+      onError: (error: any) => {
+        console.error(error);
+        updateEmployersState({
+          type: EEmployersActionType.openErrorSnackbar,
+          payload: true,
+        });
+        return {
+          error,
+          message: error?.response?.data?.message || 'Error has occured',
+        };
       },
     },
   );

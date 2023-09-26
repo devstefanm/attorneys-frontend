@@ -8,16 +8,12 @@ const addNewCase = async (
 ): Promise<IApiResponse<ICaseRequestData>> => {
   let response: IApiResponse<ICaseRequestData>;
 
-  try {
-    response = await setupAxios({
-      method: 'post',
-      url: 'api/cases',
-      data: caseRequestData,
-      withCredentials: true,
-    });
-  } catch {
-    response = { data: { error: 500, message: 'Connection problem' } };
-  }
+  response = await setupAxios({
+    method: 'post',
+    url: 'api/cases',
+    data: caseRequestData,
+    withCredentials: true,
+  });
 
   return response;
 };
@@ -34,13 +30,25 @@ const useAddNewCaseMutation = (
       onSuccess: (response) => {
         if (!response.data.error) {
           updateCasesState({ type: ECasesActionType.resetCaseFormData });
+          updateCasesState({
+            type: ECasesActionType.openSuccessSnackbar,
+            payload: true,
+          });
           onClose();
           queryClient.invalidateQueries({ queryKey: ['casesList'] });
         }
         return response.data.message;
       },
-      onError: (error) => {
-        return { error: error, message: 'Connection problem' };
+      onError: (error: any) => {
+        console.error(error);
+        updateCasesState({
+          type: ECasesActionType.openErrorSnackbar,
+          payload: true,
+        });
+        return {
+          error,
+          message: error?.response?.data?.message || 'Error has occured',
+        };
       },
     },
   );

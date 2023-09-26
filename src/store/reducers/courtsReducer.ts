@@ -14,6 +14,8 @@ export interface ICourtsState {
   searchable: ITableSearchable[];
   addCourtForm: IAddCourtForm;
   addCourtModalOpen: boolean;
+  openSuccessSnackbar: boolean;
+  openErrorSnackbar: boolean;
 }
 
 interface ICourtsAction {
@@ -65,6 +67,10 @@ const courtsReducer = (
         ...state,
         addCourtForm: addCourtsInitialFormData,
       };
+    case ECourtsActionType.openErrorSnackbar:
+      return { ...state, openErrorSnackbar: action.payload as boolean };
+    case ECourtsActionType.openSuccessSnackbar:
+      return { ...state, openSuccessSnackbar: action.payload as boolean };
     default:
       return state;
   }

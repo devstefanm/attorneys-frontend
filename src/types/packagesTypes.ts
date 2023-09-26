@@ -5,6 +5,8 @@ export enum EPackagesActionType {
   addPackageForm = 'ADD_PACKAGE_FORM',
   addPackageAutocompleteValues = 'ADD_PACKAGE_AC_VALUES',
   resetPackageFormData = 'RESET_PACKAGE_FORM_DATA',
+  openSuccessSnackbar = 'SUCCESS_SNACKBAR',
+  openErrorSnackbar = 'ERROR_SNACKBAR',
 }
 
 export type PackagesTableName = 'packageName' | 'numberOfCases';

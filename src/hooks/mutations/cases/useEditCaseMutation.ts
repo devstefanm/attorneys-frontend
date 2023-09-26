@@ -9,16 +9,12 @@ const editCase = async (
 ): Promise<IApiResponse<ICaseRequestData>> => {
   let response: IApiResponse<ICaseRequestData>;
 
-  try {
-    response = await setupAxios({
-      method: 'patch',
-      url: `api/case/${caseId}`,
-      data: caseRequestData,
-      withCredentials: true,
-    });
-  } catch {
-    response = { data: { error: 500, message: 'Connection problem' } };
-  }
+  response = await setupAxios({
+    method: 'patch',
+    url: `api/case/${caseId}`,
+    data: caseRequestData,
+    withCredentials: true,
+  });
 
   return response;
 };
@@ -36,14 +32,28 @@ const useEditCaseMutation = (
       onSuccess: (response) => {
         if (!response.data.error) {
           updateCasesState({ type: ECasesActionType.resetCaseFormData });
+          updateCasesState({
+            type: ECasesActionType.openSuccessSnackbar,
+            payload: true,
+          });
           onClose();
           queryClient.invalidateQueries({ queryKey: ['casesList'] });
           queryClient.invalidateQueries({ queryKey: ['case'] });
         }
         return response.data.message;
       },
-      onError: (error) => {
-        return { error, message: 'Connection problem' };
+      onError: (error: any) => {
+        console.error(error);
+        if (error?.response?.data?.message) {
+          updateCasesState({
+            type: ECasesActionType.openErrorSnackbar,
+            payload: true,
+          });
+        }
+        return {
+          error,
+          message: error?.response?.data?.message || 'Error has occured',
+        };
       },
     },
   );

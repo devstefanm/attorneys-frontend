@@ -31,6 +31,8 @@ export enum ECasesActionType {
   casesExportChecklistValues = 'CASES_EXPORT_CHECKLIST',
   casesCheckUncheckAll = 'CASES_CHECK_UNCHECK_ALL',
   casesFileForUpload = 'CASES_FILE',
+  openSuccessSnackbar = 'SUCCESS_SNACKBAR',
+  openErrorSnackbar = 'ERROR_SNACKBAR',
 }
 
 export type CasesFirstRowName =

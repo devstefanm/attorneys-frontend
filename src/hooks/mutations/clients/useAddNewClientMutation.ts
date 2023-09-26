@@ -11,16 +11,12 @@ const addNewClient = async (
 ): Promise<IApiResponse<IClientRequestData>> => {
   let response: IApiResponse<IClientRequestData>;
 
-  try {
-    response = await setupAxios({
-      method: 'post',
-      url: 'api/clients',
-      data: clientRequestData,
-      withCredentials: true,
-    });
-  } catch {
-    response = { data: { error: 500, message: 'Connection problem' } };
-  }
+  response = await setupAxios({
+    method: 'post',
+    url: 'api/clients',
+    data: clientRequestData,
+    withCredentials: true,
+  });
 
   return response;
 };
@@ -39,13 +35,25 @@ const useAddNewClientMutation = (
           updateClientsState({
             type: EClientsActionType.resetClientFormData,
           });
+          updateClientsState({
+            type: EClientsActionType.openSuccessSnackbar,
+            payload: true,
+          });
           onClose();
           queryClient.invalidateQueries({ queryKey: ['clientsList'] });
         }
         return response.data.message;
       },
-      onError: (error) => {
-        return { error: error, message: 'Connection problem' };
+      onError: (error: any) => {
+        console.error(error);
+        updateClientsState({
+          type: EClientsActionType.openErrorSnackbar,
+          payload: true,
+        });
+        return {
+          error,
+          message: error?.response?.data?.message || 'Error has occured',
+        };
       },
     },
   );

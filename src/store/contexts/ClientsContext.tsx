@@ -19,6 +19,8 @@ const initialState: IClientsState = {
   searchable: [],
   addClientModalOpen: false,
   addClientForm: addClientsInitialFormData,
+  openSuccessSnackbar: false,
+  openErrorSnackbar: false,
 };
 
 export const ClientsContext = React.createContext<{

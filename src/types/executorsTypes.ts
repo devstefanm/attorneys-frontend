@@ -9,6 +9,8 @@ export enum EExecutorsActionType {
   addExecutorForm = 'ADD_EXECUTOR_FORM',
   addExecutorAutocompleteValues = 'ADD_EXECUTOR_AC_VALUES',
   resetExecutorFormData = 'RESET_EXECUTOR_FORM_DATA',
+  openSuccessSnackbar = 'SUCCESS_SNACKBAR',
+  openErrorSnackbar = 'ERROR_SNACKBAR',
 }
 
 export type ExecutorsTableName =

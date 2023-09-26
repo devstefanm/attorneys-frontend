@@ -11,16 +11,12 @@ const addNewCity = async (
 ): Promise<IApiResponse<ICityRequestData>> => {
   let response: IApiResponse<ICityRequestData>;
 
-  try {
-    response = await setupAxios({
-      method: 'post',
-      url: 'api/cities',
-      data: cityRequestData,
-      withCredentials: true,
-    });
-  } catch {
-    response = { data: { error: 500, message: 'Connection problem' } };
-  }
+  response = await setupAxios({
+    method: 'post',
+    url: 'api/cities',
+    data: cityRequestData,
+    withCredentials: true,
+  });
 
   return response;
 };
@@ -39,13 +35,25 @@ const useAddNewCityMutation = (
           updateCitiesState({
             type: ECitiesActionType.resetCityFormData,
           });
+          updateCitiesState({
+            type: ECitiesActionType.openSuccessSnackbar,
+            payload: true,
+          });
           onClose();
           queryClient.invalidateQueries({ queryKey: ['citiesList'] });
         }
         return response.data.message;
       },
-      onError: (error) => {
-        return { error: error, message: 'Connection problem' };
+      onError: (error: any) => {
+        console.error(error);
+        updateCitiesState({
+          type: ECitiesActionType.openErrorSnackbar,
+          payload: true,
+        });
+        return {
+          error,
+          message: error?.response?.data?.message || 'Error has occured',
+        };
       },
     },
   );

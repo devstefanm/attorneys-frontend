@@ -5,6 +5,8 @@ export enum EEmployersActionType {
   addEmployerForm = 'ADD_EMPLOYER_FORM',
   addEmployerAutocompleteValues = 'ADD_EMPLOYER_AC_VALUES',
   resetEmployerFormData = 'RESET_EMPLOYER_FORM_DATA',
+  openSuccessSnackbar = 'SUCCESS_SNACKBAR',
+  openErrorSnackbar = 'ERROR_SNACKBAR',
 }
 
 export type EmployersTableName = 'employer' | 'numberOfEmployees';

@@ -27,6 +27,47 @@ const Cases = (_props: Props) => {
     dispatch: updateCasesState,
   } = useCases();
 
+  const handleAddCaseModalClose = () => {
+    updateCasesState({
+      type: ECasesActionType.addCaseModalOpen,
+      payload: false,
+    });
+    updateCasesState({
+      type: ECasesActionType.resetCaseFormData,
+    });
+  };
+
+  const handleEditCaseModalClose = () => {
+    updateCasesState({
+      type: ECasesActionType.editCaseModalOpen,
+      payload: false,
+    });
+    updateCasesState({
+      type: ECasesActionType.resetCaseFormData,
+    });
+  };
+
+  const handleExportCasesDialogClose = () => {
+    updateCasesState({
+      type: ECasesActionType.exportCasesDialogOpen,
+      payload: false,
+    });
+    updateCasesState({
+      type: ECasesActionType.downloadFile,
+      payload: false,
+    });
+  };
+
+  const handleImportCasesDialogClose = () => {
+    updateCasesState({
+      type: ECasesActionType.importCasesDialogOpen,
+      payload: false,
+    });
+    updateCasesState({
+      type: ECasesActionType.resetCaseFormData,
+    });
+  };
+
   return (
     <ErrorBoundary>
       <React.Suspense fallback={'Loading....'}>
@@ -73,38 +114,16 @@ const Cases = (_props: Props) => {
         <CasesTable />
         <AddCaseModal
           open={addCaseModalOpen}
-          onClose={() =>
-            updateCasesState({
-              type: ECasesActionType.addCaseModalOpen,
-              payload: false,
-            })
-          }
+          onClose={handleAddCaseModalClose}
         />
         <EditCaseModal
           open={editCaseModalOpen}
-          onClose={() => {
-            updateCasesState({
-              type: ECasesActionType.editCaseModalOpen,
-              payload: false,
-            });
-            updateCasesState({
-              type: ECasesActionType.resetCaseFormData,
-            });
-          }}
+          onClose={handleEditCaseModalClose}
         />
         {exportCasesDialogOpen ? (
           <ExportCasesDialog
             open={exportCasesDialogOpen}
-            onClose={() => {
-              updateCasesState({
-                type: ECasesActionType.exportCasesDialogOpen,
-                payload: false,
-              });
-              updateCasesState({
-                type: ECasesActionType.downloadFile,
-                payload: false,
-              });
-            }}
+            onClose={handleExportCasesDialogClose}
           />
         ) : (
           ''
@@ -112,15 +131,7 @@ const Cases = (_props: Props) => {
         {importCasesDialogOpen ? (
           <ImportCasesDialog
             open={importCasesDialogOpen}
-            onClose={() => {
-              updateCasesState({
-                type: ECasesActionType.importCasesDialogOpen,
-                payload: false,
-              });
-              updateCasesState({
-                type: ECasesActionType.resetCaseFormData,
-              });
-            }}
+            onClose={handleImportCasesDialogClose}
           />
         ) : (
           ''

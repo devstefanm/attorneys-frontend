@@ -11,16 +11,12 @@ const addNewCourt = async (
 ): Promise<IApiResponse<ICourtRequestData>> => {
   let response: IApiResponse<ICourtRequestData>;
 
-  try {
-    response = await setupAxios({
-      method: 'post',
-      url: 'api/courts',
-      data: courtRequestData,
-      withCredentials: true,
-    });
-  } catch {
-    response = { data: { error: 500, message: 'Connection problem' } };
-  }
+  response = await setupAxios({
+    method: 'post',
+    url: 'api/courts',
+    data: courtRequestData,
+    withCredentials: true,
+  });
 
   return response;
 };
@@ -39,13 +35,25 @@ const useAddNewCourtMutation = (
           updateCourtsState({
             type: ECourtsActionType.resetCourtFormData,
           });
+          updateCourtsState({
+            type: ECourtsActionType.openSuccessSnackbar,
+            payload: true,
+          });
           onClose();
           queryClient.invalidateQueries({ queryKey: ['courtsList'] });
         }
         return response.data.message;
       },
-      onError: (error) => {
-        return { error: error, message: 'Connection problem' };
+      onError: (error: any) => {
+        console.error(error);
+        updateCourtsState({
+          type: ECourtsActionType.openErrorSnackbar,
+          payload: true,
+        });
+        return {
+          error,
+          message: error?.response?.data?.message || 'Error has occured',
+        };
       },
     },
   );

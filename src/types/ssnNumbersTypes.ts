@@ -5,6 +5,8 @@ export enum ESSNNumbersActionType {
   addSSNNumberForm = 'ADD_SSN_NUMBER_FORM',
   addSSNNumberAutocompleteValues = 'ADD_SSN_NUMBER_AC_VALUES',
   resetSSNNumberFormData = 'RESET_SSN_NUMBER_FORM_DATA',
+  openSuccessSnackbar = 'SUCCESS_SNACKBAR',
+  openErrorSnackbar = 'ERROR_SNACKBAR',
 }
 
 export type SSNNumbersTableName = 'ssn' | 'numberOfCases';

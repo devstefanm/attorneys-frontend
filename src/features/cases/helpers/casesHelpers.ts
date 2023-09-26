@@ -468,8 +468,9 @@ export const mapEditCaseFormToRequestData = ({
       ? transformDateFormat(lawyerHandOverDate)
       : null;
 
-  if (caseNumber !== undefined) requestData.case_number = caseNumber;
-  if (contractNumber) requestData.contract_number = contractNumber;
+  if (caseNumber !== undefined) requestData.case_number = caseNumber || null;
+  if (contractNumber !== undefined)
+    requestData.contract_number = contractNumber || null;
 
   if (phoneNumbers !== undefined) {
     if (phoneNumbers.length > 0) {

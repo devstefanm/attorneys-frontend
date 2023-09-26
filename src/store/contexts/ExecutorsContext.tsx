@@ -26,6 +26,8 @@ const initialState: IExecutorsState = {
   addExecutorModalOpen: false,
   addExecutorForm: addExecutorsInitialFormData,
   addExecutorAutocompleteValues: addExecutorAutocompleteInitialValues,
+  openSuccessSnackbar: false,
+  openErrorSnackbar: false,
 };
 
 export const ExecutorsContext = React.createContext<{

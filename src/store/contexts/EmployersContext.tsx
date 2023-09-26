@@ -22,6 +22,8 @@ const initialState: IEmployersState = {
   searchable: [],
   addEmployerModalOpen: false,
   addEmployerForm: addEmployersInitialFormData,
+  openSuccessSnackbar: false,
+  openErrorSnackbar: false,
 };
 
 export const EmployersContext = React.createContext<{

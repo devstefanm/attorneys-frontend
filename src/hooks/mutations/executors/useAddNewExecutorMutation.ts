@@ -11,16 +11,12 @@ const addNewExecutor = async (
 ): Promise<IApiResponse<IExecutorRequestData>> => {
   let response: IApiResponse<IExecutorRequestData>;
 
-  try {
-    response = await setupAxios({
-      method: 'post',
-      url: 'api/executors',
-      data: executorRequestData,
-      withCredentials: true,
-    });
-  } catch {
-    response = { data: { error: 500, message: 'Connection problem' } };
-  }
+  response = await setupAxios({
+    method: 'post',
+    url: 'api/executors',
+    data: executorRequestData,
+    withCredentials: true,
+  });
 
   return response;
 };
@@ -40,13 +36,25 @@ const useAddNewExecutorMutation = (
           updateExecutorsState({
             type: EExecutorsActionType.resetExecutorFormData,
           });
+          updateExecutorsState({
+            type: EExecutorsActionType.openSuccessSnackbar,
+            payload: true,
+          });
           onClose();
           queryClient.invalidateQueries({ queryKey: ['executorsList'] });
         }
         return response.data.message;
       },
-      onError: (error) => {
-        return { error: error, message: 'Connection problem' };
+      onError: (error: any) => {
+        console.error(error);
+        updateExecutorsState({
+          type: EExecutorsActionType.openErrorSnackbar,
+          payload: true,
+        });
+        return {
+          error,
+          message: error?.response?.data?.message || 'Error has occured',
+        };
       },
     },
   );

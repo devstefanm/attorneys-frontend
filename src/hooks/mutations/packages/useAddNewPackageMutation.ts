@@ -11,16 +11,12 @@ const addNewPackage = async (
 ): Promise<IApiResponse<IPackageRequestData>> => {
   let response: IApiResponse<IPackageRequestData>;
 
-  try {
-    response = await setupAxios({
-      method: 'post',
-      url: 'api/packages',
-      data: packageRequestData,
-      withCredentials: true,
-    });
-  } catch {
-    response = { data: { error: 500, message: 'Connection problem' } };
-  }
+  response = await setupAxios({
+    method: 'post',
+    url: 'api/packages',
+    data: packageRequestData,
+    withCredentials: true,
+  });
 
   return response;
 };
@@ -40,13 +36,25 @@ const useAddNewPackageMutation = (
           updatePackagesState({
             type: EPackagesActionType.resetPackageFormData,
           });
+          updatePackagesState({
+            type: EPackagesActionType.openSuccessSnackbar,
+            payload: true,
+          });
           onClose();
           queryClient.invalidateQueries({ queryKey: ['packagesList'] });
         }
         return response.data.message;
       },
-      onError: (error) => {
-        return { error: error, message: 'Connection problem' };
+      onError: (error: any) => {
+        console.error(error);
+        updatePackagesState({
+          type: EPackagesActionType.openErrorSnackbar,
+          payload: true,
+        });
+        return {
+          error,
+          message: error?.response?.data?.message || 'Error has occured',
+        };
       },
     },
   );

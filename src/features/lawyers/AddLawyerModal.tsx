@@ -5,6 +5,8 @@ import AddLawyerForm from './AddLawyerForm';
 import useAddNewLawyerMutation from '../../hooks/mutations/lawyers/useAddNewLawyerMutation';
 import { useLawyers } from '../../store/contexts/LawyersContext';
 import { mapAddLawyerFormToRequestData } from './helpers/lawyersHelpers';
+import { SnackbarNotification } from '../../components/SnackbarNotification';
+import { ELawyersActionType } from '../../types/lawyersTypes';
 
 type Props = {
   open: boolean;
@@ -17,14 +19,18 @@ const AddLawyerModal = (props: Props) => {
   const { t } = useTranslation();
 
   const {
-    state: { addLawyerForm },
+    state: { addLawyerForm, openSuccessSnackbar, openErrorSnackbar },
     dispatch: updateLawyersState,
   } = useLawyers();
 
-  const { mutate: postNewLawyer, isLoading } = useAddNewLawyerMutation(
-    onClose,
-    updateLawyersState,
-  );
+  const {
+    mutate: postNewLawyer,
+    isLoading,
+    data,
+    error,
+    isSuccess,
+    isError,
+  } = useAddNewLawyerMutation(onClose, updateLawyersState);
 
   return (
     <ErrorBoundary>
@@ -42,6 +48,36 @@ const AddLawyerModal = (props: Props) => {
         isLoading={isLoading}
         hasCloseIconButton={true}
       />
+      {isSuccess && data?.data.message ? (
+        <SnackbarNotification
+          open={openSuccessSnackbar}
+          onClose={() =>
+            updateLawyersState({
+              type: ELawyersActionType.openSuccessSnackbar,
+              payload: false,
+            })
+          }
+          severity="success"
+          content={data?.data.message}
+        />
+      ) : (
+        ''
+      )}
+      {isError && error?.response?.data?.message ? (
+        <SnackbarNotification
+          open={openErrorSnackbar}
+          onClose={() =>
+            updateLawyersState({
+              type: ELawyersActionType.openErrorSnackbar,
+              payload: false,
+            })
+          }
+          severity="error"
+          content={error?.response?.data?.message}
+        />
+      ) : (
+        ''
+      )}
     </ErrorBoundary>
   );
 };

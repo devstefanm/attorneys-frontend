@@ -30,15 +30,30 @@ const useDeleteCaseMutation = (
 
   return useMutation(() => deleteCase(caseId), {
     onSuccess: (response) => {
+      console.log('response', response.data);
       if (!response.data.error) {
         updateCasesState({ type: ECasesActionType.resetCaseFormData });
+        updateCasesState({
+          type: ECasesActionType.openSuccessSnackbar,
+          payload: true,
+        });
         onClose();
         queryClient.invalidateQueries({ queryKey: ['casesList'] });
       }
       return response.data.message;
     },
-    onError: (error) => {
-      return { error: error, message: 'Connection problem' };
+    onError: (error: any) => {
+      console.error(error);
+      if (error?.response?.data?.message) {
+        updateCasesState({
+          type: ECasesActionType.openErrorSnackbar,
+          payload: true,
+        });
+      }
+      return {
+        error,
+        message: error?.response?.data?.message || 'Error has occured',
+      };
     },
   });
 };

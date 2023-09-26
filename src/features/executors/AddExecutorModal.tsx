@@ -5,6 +5,8 @@ import AddExecutorForm from './AddExecutorForm';
 import useAddNewExecutorMutation from '../../hooks/mutations/executors/useAddNewExecutorMutation';
 import { useExecutors } from '../../store/contexts/ExecutorsContext';
 import { mapAddExecutorFormToRequestData } from './helpers/executorsHelpers';
+import { SnackbarNotification } from '../../components/SnackbarNotification';
+import { EExecutorsActionType } from '../../types/executorsTypes';
 
 type Props = {
   open: boolean;
@@ -17,14 +19,18 @@ const AddExecutorModal = (props: Props) => {
   const { t } = useTranslation();
 
   const {
-    state: { addExecutorForm },
+    state: { addExecutorForm, openSuccessSnackbar, openErrorSnackbar },
     dispatch: updateExecutorsState,
   } = useExecutors();
 
-  const { mutate: postNewExecutor, isLoading } = useAddNewExecutorMutation(
-    onClose,
-    updateExecutorsState,
-  );
+  const {
+    mutate: postNewExecutor,
+    isLoading,
+    data,
+    error,
+    isSuccess,
+    isError,
+  } = useAddNewExecutorMutation(onClose, updateExecutorsState);
 
   return (
     <ErrorBoundary>
@@ -42,6 +48,36 @@ const AddExecutorModal = (props: Props) => {
         isLoading={isLoading}
         hasCloseIconButton={true}
       />
+      {isSuccess && data?.data.message ? (
+        <SnackbarNotification
+          open={openSuccessSnackbar}
+          onClose={() =>
+            updateExecutorsState({
+              type: EExecutorsActionType.openSuccessSnackbar,
+              payload: false,
+            })
+          }
+          severity="success"
+          content={data?.data.message}
+        />
+      ) : (
+        ''
+      )}
+      {isError && error?.response?.data?.message ? (
+        <SnackbarNotification
+          open={openErrorSnackbar}
+          onClose={() =>
+            updateExecutorsState({
+              type: EExecutorsActionType.openErrorSnackbar,
+              payload: false,
+            })
+          }
+          severity="error"
+          content={error?.response?.data?.message}
+        />
+      ) : (
+        ''
+      )}
     </ErrorBoundary>
   );
 };

@@ -5,6 +5,8 @@ import { useTransactions } from '../../store/contexts/TransactionsContext';
 import useAddNewTransactionMutation from '../../hooks/mutations/transactions/useAddNewTransactionMutation';
 import AddTransactionForm from './AddTransactionForm';
 import { mapAddTransactionFormToRequestData } from './helpers/transactionsHelpers';
+import { SnackbarNotification } from '../../components/SnackbarNotification';
+import { ETransactionsActionType } from '../../types/transactionsTypes';
 
 type Props = {
   open: boolean;
@@ -17,12 +19,18 @@ const AddTransactionModal = (props: Props) => {
   const { t } = useTranslation();
 
   const {
-    state: { addTransactionForm },
+    state: { addTransactionForm, openSuccessSnackbar, openErrorSnackbar },
     dispatch: updateTransactionsState,
   } = useTransactions();
 
-  const { mutate: postNewTransaction, isLoading } =
-    useAddNewTransactionMutation(onClose, updateTransactionsState);
+  const {
+    mutate: postNewTransaction,
+    isLoading,
+    data,
+    error,
+    isSuccess,
+    isError,
+  } = useAddNewTransactionMutation(onClose, updateTransactionsState);
 
   return (
     <ErrorBoundary>
@@ -42,6 +50,36 @@ const AddTransactionModal = (props: Props) => {
         isLoading={isLoading}
         hasCloseIconButton={true}
       />
+      {isSuccess && data?.data.message ? (
+        <SnackbarNotification
+          open={openSuccessSnackbar}
+          onClose={() =>
+            updateTransactionsState({
+              type: ETransactionsActionType.openSuccessSnackbar,
+              payload: false,
+            })
+          }
+          severity="success"
+          content={data?.data.message}
+        />
+      ) : (
+        ''
+      )}
+      {isError && error?.response?.data?.message ? (
+        <SnackbarNotification
+          open={openErrorSnackbar}
+          onClose={() =>
+            updateTransactionsState({
+              type: ETransactionsActionType.openErrorSnackbar,
+              payload: false,
+            })
+          }
+          severity="error"
+          content={error?.response?.data?.message}
+        />
+      ) : (
+        ''
+      )}
     </ErrorBoundary>
   );
 };

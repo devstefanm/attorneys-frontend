@@ -17,6 +17,8 @@ export interface IEmployersState {
   searchable: ITableSearchable[];
   addEmployerForm: IAddEmployerForm;
   addEmployerModalOpen: boolean;
+  openSuccessSnackbar: boolean;
+  openErrorSnackbar: boolean;
 }
 
 interface IEmployersAction {
@@ -68,6 +70,10 @@ const employersReducer = (
         ...state,
         addEmployerForm: addEmployersInitialFormData,
       };
+    case EEmployersActionType.openErrorSnackbar:
+      return { ...state, openErrorSnackbar: action.payload as boolean };
+    case EEmployersActionType.openSuccessSnackbar:
+      return { ...state, openSuccessSnackbar: action.payload as boolean };
     default:
       return state;
   }

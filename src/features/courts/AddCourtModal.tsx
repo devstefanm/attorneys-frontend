@@ -5,6 +5,8 @@ import AddCourtForm from './AddCourtForm';
 import useAddNewCourtMutation from '../../hooks/mutations/courts/useAddNewCourtMutation';
 import { useCourts } from '../../store/contexts/CourtsContext';
 import { mapAddCourtFormToRequestData } from './helpers/courtsHelpers';
+import { SnackbarNotification } from '../../components/SnackbarNotification';
+import { ECourtsActionType } from '../../types/courtsTypes';
 
 type Props = {
   open: boolean;
@@ -17,14 +19,18 @@ const AddCourtModal = (props: Props) => {
   const { t } = useTranslation();
 
   const {
-    state: { addCourtForm },
+    state: { addCourtForm, openSuccessSnackbar, openErrorSnackbar },
     dispatch: updateCourtsState,
   } = useCourts();
 
-  const { mutate: postNewCourt, isLoading } = useAddNewCourtMutation(
-    onClose,
-    updateCourtsState,
-  );
+  const {
+    mutate: postNewCourt,
+    isLoading,
+    data,
+    error,
+    isSuccess,
+    isError,
+  } = useAddNewCourtMutation(onClose, updateCourtsState);
 
   return (
     <ErrorBoundary>
@@ -42,6 +48,36 @@ const AddCourtModal = (props: Props) => {
         isLoading={isLoading}
         hasCloseIconButton={true}
       />
+      {isSuccess && data?.data.message ? (
+        <SnackbarNotification
+          open={openSuccessSnackbar}
+          onClose={() =>
+            updateCourtsState({
+              type: ECourtsActionType.openSuccessSnackbar,
+              payload: false,
+            })
+          }
+          severity="success"
+          content={data?.data.message}
+        />
+      ) : (
+        ''
+      )}
+      {isError && error?.response?.data?.message ? (
+        <SnackbarNotification
+          open={openErrorSnackbar}
+          onClose={() =>
+            updateCourtsState({
+              type: ECourtsActionType.openErrorSnackbar,
+              payload: false,
+            })
+          }
+          severity="error"
+          content={error?.response?.data?.message}
+        />
+      ) : (
+        ''
+      )}
     </ErrorBoundary>
   );
 };

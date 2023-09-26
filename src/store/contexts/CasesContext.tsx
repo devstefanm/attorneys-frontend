@@ -42,6 +42,8 @@ const initialState: ICasesState = {
   downloadFile: false,
   casesExportChecklistValues: initialCasesExportChecklistValues,
   casesFileForUpload: null,
+  openSuccessSnackbar: false,
+  openErrorSnackbar: false,
 };
 
 export const CasesContext = React.createContext<{

@@ -5,6 +5,8 @@ export enum ECourtsActionType {
   addCourtForm = 'ADD_COURT_FORM',
   addCourtAutocompleteValues = 'ADD_COURT_AC_VALUES',
   resetCourtFormData = 'RESET_COURT_FORM_DATA',
+  openSuccessSnackbar = 'SUCCESS_SNACKBAR',
+  openErrorSnackbar = 'ERROR_SNACKBAR',
 }
 
 export type CourtsTableName = 'court' | 'numberOfCases';

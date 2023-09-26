@@ -40,13 +40,25 @@ const useAddNewTransactionMutation = (
           updateTransactionsState({
             type: ETransactionsActionType.resetTransactionFormData,
           });
+          updateTransactionsState({
+            type: ETransactionsActionType.openSuccessSnackbar,
+            payload: true,
+          });
           onClose();
           queryClient.invalidateQueries({ queryKey: ['transactionsList'] });
         }
         return response.data.message;
       },
-      onError: (error) => {
-        return { error: error, message: 'Connection problem' };
+      onError: (error: any) => {
+        console.error(error);
+        updateTransactionsState({
+          type: ETransactionsActionType.openErrorSnackbar,
+          payload: true,
+        });
+        return {
+          error,
+          message: error?.response?.data?.message || 'Error has occured',
+        };
       },
     },
   );

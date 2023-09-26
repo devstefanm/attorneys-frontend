@@ -23,6 +23,8 @@ export interface ILawyersState {
   addLawyerForm: IAddLawyerForm;
   addLawyerModalOpen: boolean;
   addLawyerAutocompleteValues: IAddLawyerAutocompleteValues;
+  openSuccessSnackbar: boolean;
+  openErrorSnackbar: boolean;
 }
 
 interface ILawyersAction {
@@ -86,6 +88,10 @@ const lawyersReducer = (
         addLawyerAutocompleteValues: addLawyerAutocompleteInitialValues,
         addLawyerForm: addLawyersInitialFormData,
       };
+    case ELawyersActionType.openErrorSnackbar:
+      return { ...state, openErrorSnackbar: action.payload as boolean };
+    case ELawyersActionType.openSuccessSnackbar:
+      return { ...state, openSuccessSnackbar: action.payload as boolean };
     default:
       return state;
   }

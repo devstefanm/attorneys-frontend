@@ -28,6 +28,8 @@ const initialState: ITransactionsState = {
   addTransactionModalOpen: false,
   addTransactionForm: addTransactionsInitialFormData,
   addTransactionAutocompleteValues: addTransactionAutocompleteInitialValues,
+  openSuccessSnackbar: false,
+  openErrorSnackbar: false,
 };
 
 export const TransactionsContext = React.createContext<{

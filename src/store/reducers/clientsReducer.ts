@@ -14,6 +14,8 @@ export interface IClientsState {
   searchable: ITableSearchable[];
   addClientForm: IAddClientForm;
   addClientModalOpen: boolean;
+  openSuccessSnackbar: boolean;
+  openErrorSnackbar: boolean;
 }
 
 interface IClientsAction {
@@ -65,6 +67,10 @@ const clientsReducer = (
         ...state,
         addClientForm: addClientsInitialFormData,
       };
+    case EClientsActionType.openErrorSnackbar:
+      return { ...state, openErrorSnackbar: action.payload as boolean };
+    case EClientsActionType.openSuccessSnackbar:
+      return { ...state, openSuccessSnackbar: action.payload as boolean };
     default:
       return state;
   }

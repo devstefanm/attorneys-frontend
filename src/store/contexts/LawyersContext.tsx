@@ -23,6 +23,8 @@ const initialState: ILawyersState = {
   addLawyerModalOpen: false,
   addLawyerForm: addLawyersInitialFormData,
   addLawyerAutocompleteValues: addLawyerAutocompleteInitialValues,
+  openSuccessSnackbar: false,
+  openErrorSnackbar: false,
 };
 
 export const LawyersContext = React.createContext<{

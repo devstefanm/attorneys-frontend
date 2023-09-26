@@ -5,6 +5,8 @@ import AddCaseForm from './AddCaseForm';
 import useAddNewCaseMutation from '../../hooks/mutations/cases/useAddNewCaseMutation';
 import { useCases } from '../../store/contexts/CasesContext';
 import { mapAddCaseFormToRequestData } from './helpers/casesHelpers';
+import { SnackbarNotification } from '../../components/SnackbarNotification';
+import { ECasesActionType } from '../../types/casesTypes';
 
 type Props = {
   open: boolean;
@@ -17,14 +19,18 @@ const AddCaseModal = (props: Props) => {
   const { t } = useTranslation();
 
   const {
-    state: { addCaseForm },
+    state: { addCaseForm, openSuccessSnackbar, openErrorSnackbar },
     dispatch: updateCasesState,
   } = useCases();
 
-  const { mutate: postNewCase, isLoading } = useAddNewCaseMutation(
-    onClose,
-    updateCasesState,
-  );
+  const {
+    mutate: postNewCase,
+    isLoading,
+    data,
+    error,
+    isSuccess,
+    isError,
+  } = useAddNewCaseMutation(onClose, updateCasesState);
 
   return (
     <ErrorBoundary>
@@ -40,6 +46,36 @@ const AddCaseModal = (props: Props) => {
         isLoading={isLoading}
         hasCloseIconButton={true}
       />
+      {isSuccess && data?.data.message ? (
+        <SnackbarNotification
+          open={openSuccessSnackbar}
+          onClose={() =>
+            updateCasesState({
+              type: ECasesActionType.openSuccessSnackbar,
+              payload: false,
+            })
+          }
+          severity="success"
+          content={data?.data.message}
+        />
+      ) : (
+        ''
+      )}
+      {isError && error?.response?.data?.message ? (
+        <SnackbarNotification
+          open={openErrorSnackbar}
+          onClose={() =>
+            updateCasesState({
+              type: ECasesActionType.openErrorSnackbar,
+              payload: false,
+            })
+          }
+          severity="error"
+          content={error?.response?.data?.message}
+        />
+      ) : (
+        ''
+      )}
     </ErrorBoundary>
   );
 };

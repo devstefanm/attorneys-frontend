@@ -1,6 +1,10 @@
 import { setupAxios } from '../../../libs/axios/setupAxios';
 import { IApiResponse } from '../../../types/universalTypes';
-import { EState, ICasesFiltersData } from '../../../types/casesTypes';
+import {
+  ECasesActionType,
+  EState,
+  ICasesFiltersData,
+} from '../../../types/casesTypes';
 import { useMutation } from '@tanstack/react-query';
 
 const exportCasesList = async (
@@ -10,20 +14,16 @@ const exportCasesList = async (
 
   let response: IApiResponse<{ type: string; data: number[] } | Blob | string>;
 
-  try {
-    response = await setupAxios({
-      method: 'post',
-      url: 'api/export-cases-list',
-      data: {
-        ...casesFiltersData,
-        filter: filter === EState.all ? '' : filter,
-        clientsFilter: clientsFilter === 9999 ? '' : clientsFilter,
-      },
-      withCredentials: true,
-    });
-  } catch (error) {
-    response = { data: { error: 500, message: 'Connection problem' } };
-  }
+  response = await setupAxios({
+    method: 'post',
+    url: 'api/export-cases-list',
+    data: {
+      ...casesFiltersData,
+      filter: filter === EState.all ? '' : filter,
+      clientsFilter: clientsFilter === 9999 ? '' : clientsFilter,
+    },
+    withCredentials: true,
+  });
 
   if (!response.data.error) {
     const responseData = response.data.data;
@@ -43,12 +43,22 @@ const exportCasesList = async (
   }
 };
 
-const useExportCasesListMutation = () => {
+const useExportCasesListMutation = (updateCasesState: React.Dispatch<any>) => {
   return useMutation(
     (casesFiltersData: ICasesFiltersData) => exportCasesList(casesFiltersData),
     {
-      onError: (error) => {
-        return { error: error, message: 'Connection problem' };
+      onError: (error: any) => {
+        console.error(error);
+        if (error?.response?.data?.message) {
+          updateCasesState({
+            type: ECasesActionType.openErrorSnackbar,
+            payload: true,
+          });
+        }
+        return {
+          error,
+          message: error?.response?.data?.message || 'Error has occured',
+        };
       },
     },
   );

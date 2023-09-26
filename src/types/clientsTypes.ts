@@ -5,6 +5,8 @@ export enum EClientsActionType {
   addClientForm = 'ADD_CLIENT_FORM',
   addClientAutocompleteValues = 'ADD_CLIENT_AC_VALUES',
   resetClientFormData = 'RESET_CLIENT_FORM_DATA',
+  openSuccessSnackbar = 'SUCCESS_SNACKBAR',
+  openErrorSnackbar = 'ERROR_SNACKBAR',
 }
 
 export type ClientsTableName = 'client' | 'numberOfCases';

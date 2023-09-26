@@ -14,6 +14,8 @@ export interface ICitiesState {
   searchable: ITableSearchable[];
   addCityForm: IAddCityForm;
   addCityModalOpen: boolean;
+  openSuccessSnackbar: boolean;
+  openErrorSnackbar: boolean;
 }
 
 interface ICitiesAction {
@@ -65,6 +67,10 @@ const citiesReducer = (
         ...state,
         addCityForm: addCitiesInitialFormData,
       };
+    case ECitiesActionType.openErrorSnackbar:
+      return { ...state, openErrorSnackbar: action.payload as boolean };
+    case ECitiesActionType.openSuccessSnackbar:
+      return { ...state, openSuccessSnackbar: action.payload as boolean };
     default:
       return state;
   }

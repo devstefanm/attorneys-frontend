@@ -11,16 +11,12 @@ const addNewLawyer = async (
 ): Promise<IApiResponse<ILawyerRequestData>> => {
   let response: IApiResponse<ILawyerRequestData>;
 
-  try {
-    response = await setupAxios({
-      method: 'post',
-      url: 'api/lawyers',
-      data: lawyerRequestData,
-      withCredentials: true,
-    });
-  } catch {
-    response = { data: { error: 500, message: 'Connection problem' } };
-  }
+  response = await setupAxios({
+    method: 'post',
+    url: 'api/lawyers',
+    data: lawyerRequestData,
+    withCredentials: true,
+  });
 
   return response;
 };
@@ -39,13 +35,25 @@ const useAddNewLawyerMutation = (
           updateLawyersState({
             type: ELawyersActionType.resetLawyerFormData,
           });
+          updateLawyersState({
+            type: ELawyersActionType.openSuccessSnackbar,
+            payload: true,
+          });
           onClose();
           queryClient.invalidateQueries({ queryKey: ['lawyersList'] });
         }
         return response.data.message;
       },
-      onError: (error) => {
-        return { error: error, message: 'Connection problem' };
+      onError: (error: any) => {
+        console.error(error);
+        updateLawyersState({
+          type: ELawyersActionType.openErrorSnackbar,
+          payload: true,
+        });
+        return {
+          error,
+          message: error?.response?.data?.message || 'Error has occured',
+        };
       },
     },
   );
