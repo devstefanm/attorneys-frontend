@@ -7,6 +7,7 @@ import { useClients } from '../../store/contexts/ClientsContext';
 import { mapAddClientFormToRequestData } from './helpers/clientsHelpers';
 import { SnackbarNotification } from '../../components/SnackbarNotification';
 import { EClientsActionType } from '../../types/clientsTypes';
+import * as React from 'react';
 
 type Props = {
   open: boolean;
@@ -19,7 +20,13 @@ const AddClientModal = (props: Props) => {
   const { t } = useTranslation();
 
   const {
-    state: { addClientForm, openSuccessSnackbar, openErrorSnackbar },
+    state: {
+      addClientForm,
+      openSuccessSnackbar,
+      openErrorSnackbar,
+      addClientModalOpen,
+      editClientModalOpen,
+    },
     dispatch: updateClientsState,
   } = useClients();
 
@@ -30,7 +37,12 @@ const AddClientModal = (props: Props) => {
     error,
     isSuccess,
     isError,
+    reset,
   } = useAddNewClientMutation(onClose, updateClientsState);
+
+  React.useEffect(() => {
+    if ((addClientModalOpen || editClientModalOpen) && isSuccess) reset();
+  }, [addClientModalOpen, editClientModalOpen]);
 
   return (
     <ErrorBoundary>

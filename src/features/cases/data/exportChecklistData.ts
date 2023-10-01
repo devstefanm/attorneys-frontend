@@ -151,4 +151,9 @@ export const checklist: IFormField[] = [
     type: EFormFieldType.checkbox,
     gridWidth: 4,
   },
+  {
+    name: 'limitationObjection',
+    type: EFormFieldType.checkbox,
+    gridWidth: 4,
+  },
 ];

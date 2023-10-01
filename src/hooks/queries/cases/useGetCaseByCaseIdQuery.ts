@@ -4,7 +4,7 @@ import { IApiResponse } from '../../../types/universalTypes';
 import { IViewCaseApiResponseData } from '../../../types/casesTypes';
 import { mapCaseApiResponseToEditCaseForm } from '../../../features/cases/helpers/casesHelpers';
 
-const getCaseNumbersWithNames = async (
+const getCaseByCaseId = async (
   caseId: number,
 ): Promise<IApiResponse<IViewCaseApiResponseData>> => {
   let response: IApiResponse<IViewCaseApiResponseData>;
@@ -16,16 +16,16 @@ const getCaseNumbersWithNames = async (
         withCredentials: true,
       });
     } catch (error) {
-      response = { data: { error: 500, message: 'Connection problem' } };
+      response = { data: { error: 500, message: 'errors.serverError' } };
     }
 
     return response;
   }
-  return { data: { error: 400, message: 'No Case has been passed' } };
+  return { data: { error: 400, message: 'errors.notFound' } };
 };
 
 const useGetCaseByCaseIdQuery = (caseId: number) => {
-  return useQuery(['case', caseId], () => getCaseNumbersWithNames(caseId), {
+  return useQuery(['case', caseId], () => getCaseByCaseId(caseId), {
     keepPreviousData: false,
     refetchOnMount: true,
     refetchOnWindowFocus: false,

@@ -2,11 +2,16 @@ import { IMetaApiResponseData, IMetaQueryParams } from './universalTypes';
 
 export enum ECitiesActionType {
   addCityModalOpen = 'ADD_CITY_MODAL_OPEN',
+  editCityModalOpen = 'EDIT_CITY_MODAL_OPEN',
   addCityForm = 'ADD_CITY_FORM',
   addCityAutocompleteValues = 'ADD_CITY_AC_VALUES',
   resetCityFormData = 'RESET_CITY_FORM_DATA',
   openSuccessSnackbar = 'SUCCESS_SNACKBAR',
   openErrorSnackbar = 'ERROR_SNACKBAR',
+  setCityFormData = 'SET_CITY_FORM_DATA',
+  editCityForm = 'EDIT_CITY_FORM',
+  editCityId = 'EDIT_CITY_ID',
+  confirmationDialogOpen = 'DIALOG_OPEN',
 }
 
 export type CitiesTableName =
@@ -22,6 +27,7 @@ export type CitiesTableHeader =
   | 'Number of Lawyers';
 
 export interface ICitiesTableData {
+  id: number;
   city: string;
   numberOfDebtors: string;
   numberOfExecutors: string;
@@ -29,6 +35,7 @@ export interface ICitiesTableData {
 }
 
 export interface ICitiesApiResponseData {
+  id: number;
   city: string;
   debtor_count: string;
   executor_count: string;
@@ -58,5 +65,16 @@ export interface ICityResponseObject {
 }
 
 export interface ICityRequestData {
+  name?: string | null;
+}
+
+export interface IEditCityForm extends IAddCityForm {}
+
+export interface IEditedCityFormData {
+  name?: string;
+}
+
+export interface IViewCityApiResponseData {
+  id: number;
   name: string;
 }

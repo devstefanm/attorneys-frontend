@@ -7,6 +7,7 @@ import { useSSNNumbers } from '../../store/contexts/SSNNumbersContext';
 import { mapAddSSNNumberFormToRequestData } from './helpers/ssnNumbersHelpers';
 import { SnackbarNotification } from '../../components/SnackbarNotification';
 import { ESSNNumbersActionType } from '../../types/ssnNumbersTypes';
+import * as React from 'react';
 
 type Props = {
   open: boolean;
@@ -19,7 +20,13 @@ const AddSSNNumberModal = (props: Props) => {
   const { t } = useTranslation();
 
   const {
-    state: { addSSNNumberForm, openSuccessSnackbar, openErrorSnackbar },
+    state: {
+      addSSNNumberForm,
+      openSuccessSnackbar,
+      openErrorSnackbar,
+      addSSNNumberModalOpen,
+      editSSNNumberModalOpen,
+    },
     dispatch: updateSSNNumbersState,
   } = useSSNNumbers();
 
@@ -30,7 +37,12 @@ const AddSSNNumberModal = (props: Props) => {
     error,
     isSuccess,
     isError,
+    reset,
   } = useAddNewSSNNumberMutation(onClose, updateSSNNumbersState);
+
+  React.useEffect(() => {
+    if ((addSSNNumberModalOpen || editSSNNumberModalOpen) && isSuccess) reset();
+  }, [addSSNNumberModalOpen, editSSNNumberModalOpen]);
 
   return (
     <ErrorBoundary>

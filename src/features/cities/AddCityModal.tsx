@@ -7,6 +7,7 @@ import { useCities } from '../../store/contexts/CitiesContext';
 import { mapAddCityFormToRequestData } from './helpers/citiesHelpers';
 import { SnackbarNotification } from '../../components/SnackbarNotification';
 import { ECitiesActionType } from '../../types/citiesTypes';
+import * as React from 'react';
 
 type Props = {
   open: boolean;
@@ -19,7 +20,13 @@ const AddCityModal = (props: Props) => {
   const { t } = useTranslation();
 
   const {
-    state: { addCityForm, openSuccessSnackbar, openErrorSnackbar },
+    state: {
+      addCityForm,
+      openSuccessSnackbar,
+      openErrorSnackbar,
+      addCityModalOpen,
+      editCityModalOpen,
+    },
     dispatch: updateCitiesState,
   } = useCities();
 
@@ -30,7 +37,12 @@ const AddCityModal = (props: Props) => {
     error,
     isSuccess,
     isError,
+    reset,
   } = useAddNewCityMutation(onClose, updateCitiesState);
+
+  React.useEffect(() => {
+    if ((addCityModalOpen || editCityModalOpen) && isSuccess) reset();
+  }, [addCityModalOpen, editCityModalOpen]);
 
   return (
     <ErrorBoundary>

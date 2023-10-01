@@ -23,6 +23,7 @@ type Props = {
   inputProps?: {
     label: string;
   };
+  limit?: number;
   name?: string;
   actionType?: ECasesActionType;
   onValuesChange?: (values: IAutocompleteOption<string>[]) => void;
@@ -37,6 +38,7 @@ const DynamicAutocompletes: React.FC<Props> = ({
   options,
   name,
   actionType,
+  limit,
   onValuesChange,
   updateState,
 }) => {
@@ -126,6 +128,7 @@ const DynamicAutocompletes: React.FC<Props> = ({
         <Box className="flex my-3" key={index}>
           <Autocomplete
             {...autocompleteProps}
+            clearIcon={false}
             isOptionEqualToValue={(option, value) => option.id === value.id}
             options={options ?? []}
             getOptionLabel={(option) =>
@@ -149,6 +152,16 @@ const DynamicAutocompletes: React.FC<Props> = ({
                 {...params}
                 {...inputProps}
                 label={`${inputProps?.label} ${index + 1}`}
+                onBlur={() =>
+                  updateState &&
+                  updateState({
+                    type: actionType,
+                    payload: {
+                      inputName: name,
+                      inputValue: '',
+                    },
+                  })
+                }
                 onChange={(event) => handleTextFieldChange(event, index)}
               />
             )}
@@ -163,7 +176,7 @@ const DynamicAutocompletes: React.FC<Props> = ({
         </Box>
       ))}
 
-      {autocompleteFields.length < 4 && (
+      {autocompleteFields.length < (limit || 4) && (
         <Box className="flex justify-center">
           <IconButton onClick={addAutocompleteField}>
             <Add />

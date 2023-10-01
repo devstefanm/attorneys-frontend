@@ -3,10 +3,11 @@ import { FilterComponent, IOption } from '../../components/FilterComponent';
 import { useTranslation } from 'react-i18next';
 import { EState } from '../../types/casesTypes';
 import { useCases } from '../../store/contexts/CasesContext';
+import { ETableActionType } from '../../types/universalTypes';
 
 const CasesFilter = () => {
   const {
-    state: { filterable },
+    state: { filterable, pageable },
     dispatch: updateCasesState,
   } = useCases();
 
@@ -18,6 +19,20 @@ const CasesFilter = () => {
     { id: 3, label: t('closed'), value: EState.closed },
   ];
 
+  const handleChange = (value: any) => {
+    updateCasesState({
+      type: ETableActionType.filterable,
+      payload: value,
+    });
+    updateCasesState({
+      type: ETableActionType.pageable,
+      payload: {
+        ...pageable,
+        page: 1,
+      },
+    });
+  };
+
   return (
     <ErrorBoundary>
       <FilterComponent
@@ -25,7 +40,7 @@ const CasesFilter = () => {
         size="small"
         options={options}
         value={filterable}
-        onChange={updateCasesState}
+        onChange={handleChange}
       />
     </ErrorBoundary>
   );

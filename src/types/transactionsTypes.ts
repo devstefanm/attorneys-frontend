@@ -22,11 +22,17 @@ export enum ETransactionTypeFilter {
 
 export enum ETransactionsActionType {
   addTransactionModalOpen = 'ADD_TRANSACTION_MODAL_OPEN',
+  editTransactionModalOpen = 'EDIT_TRANSACTION_MODAL_OPEN',
   addTransactionForm = 'ADD_TRANSACTION_FORM',
   addTransactionAutocompleteValues = 'ADD_TRANSACTION_AC_VALUES',
   resetTransactionFormData = 'RESET_TRANSACTION_FORM_DATA',
   openSuccessSnackbar = 'SUCCESS_SNACKBAR',
   openErrorSnackbar = 'ERROR_SNACKBAR',
+  editTransactionAutocompleteValues = 'EDIT_TRANSACTION_AC_VALUES',
+  setTransactionFormData = 'SET_TRANSACTION_FORM_DATA',
+  editTransactionForm = 'EDIT_TRANSACTION_FORM',
+  editTransactionId = 'EDIT_TRANSACTION_ID',
+  confirmationDialogOpen = 'DIALOG_OPEN',
 }
 
 export type TransactionsTableName =
@@ -48,6 +54,7 @@ export type TransactionsTableHeader =
   | 'Excerpt Number';
 
 export interface ITransactionsTableData {
+  id: number;
   debtorsName: string;
   displayType: string;
   amount: number;
@@ -59,6 +66,7 @@ export interface ITransactionsTableData {
 }
 
 export interface ITransactionsApiResponseData {
+  id: number;
   first_name?: string;
   last_name?: string;
   name?: string;
@@ -112,9 +120,35 @@ export interface ITransactionResponseObject {
 }
 
 export interface ITransactionRequestData {
-  case_number: string;
-  type: ETransactionType | string;
+  case_number?: string;
+  type?: ETransactionType | string | null;
+  amount?: number | null;
+  payment_date?: string | null;
+  posting_method?: string | null;
+  case_id?: number | null;
+}
+
+export interface IEditTransactionForm extends IAddTransactionForm {}
+
+export interface IEditedTransactionFormData {
+  caseNumber?: IAutocompleteOption<string> | string;
+  type?: IAutocompleteOption<ETransactionType> | string;
+  amount?: string | null;
+  postingMethod?: string | null;
+  paymentDate?: Moment | null;
+}
+
+export interface IViewTransactionApiResponseData {
+  id: number;
+  type: ETransactionType;
   amount: number;
-  payment_date: string | null;
-  posting_method: string | null;
+  posting_method: string;
+  payment_date: string;
+  case: {
+    id: number;
+    name: string | null;
+    first_name: string | null;
+    last_name: string | null;
+    case_number: string;
+  };
 }

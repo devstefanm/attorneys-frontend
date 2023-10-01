@@ -1,6 +1,8 @@
 import {
   IAddExecutorForm,
+  IEditedExecutorFormData,
   IExecutorRequestData,
+  IViewExecutorApiResponseData,
 } from './../../../types/executorsTypes';
 import { IExecutorResponseObject } from '../../../types/executorsTypes';
 import { IAutocompleteOption } from '../../../types/universalTypes';
@@ -62,4 +64,55 @@ export const mapAddExecutorFormToRequestData = ({
     last_name,
     phone_numbers,
   };
+};
+
+export const mapExecutorApiResponseToEditExecutorForm = ({
+  city,
+  email,
+  first_name,
+  last_name,
+  phone_numbers,
+}: IViewExecutorApiResponseData): IAddExecutorForm => {
+  return {
+    city: city?.id ? { id: city.id, name: city.name } : '',
+    email: email || '',
+    firstName: first_name,
+    lastName: last_name,
+    phoneNumbers:
+      phone_numbers && phone_numbers.length > 0 ? phone_numbers : [''],
+  };
+};
+
+export const mapEditExecutorFormToRequestData = ({
+  city,
+  email,
+  firstName: first_name,
+  lastName: last_name,
+  phoneNumbers,
+}: IEditedExecutorFormData): Partial<IExecutorRequestData> => {
+  const requestData: Partial<IExecutorRequestData> = {};
+  console.log('city', city);
+  if (city !== undefined) {
+    if (typeof city !== 'string') {
+      requestData.city_id = city.id || null;
+    } else if (city === '') {
+      requestData.city_id = null;
+    }
+  }
+
+  if (email !== undefined) requestData.email = email || null;
+  if (first_name !== undefined) requestData.first_name = first_name || null;
+  if (last_name !== undefined) requestData.last_name = last_name || null;
+
+  if (phoneNumbers !== undefined) {
+    if (phoneNumbers.length > 0) {
+      requestData.phone_numbers = phoneNumbers?.filter(
+        (phoneNumber) => phoneNumber.length > 5,
+      );
+    } else {
+      requestData.phone_numbers = [''];
+    }
+  }
+
+  return requestData;
 };

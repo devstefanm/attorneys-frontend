@@ -8,7 +8,6 @@ import {
   SelectChangeEvent,
   SelectProps,
 } from '@mui/material';
-import { ETableActionType } from '../types/universalTypes';
 
 export interface IOption {
   id: number;
@@ -19,26 +18,14 @@ export interface IOption {
 type Props = SelectProps & {
   options: IOption[];
   onChange: React.Dispatch<any>;
-  actionType?: string;
 };
 
 const FilterComponent = (props: Props) => {
-  const {
-    label,
-    value,
-    onChange,
-    options,
-    size = 'small',
-    actionType = ETableActionType.filterable,
-  } = props;
+  const { label, value, onChange, options, size = 'small' } = props;
 
   const handleChange = (event: SelectChangeEvent<unknown>) => {
     const { value } = event.target;
-    onChange &&
-      onChange({
-        type: actionType,
-        payload: value,
-      });
+    onChange && onChange(value);
   };
 
   return (

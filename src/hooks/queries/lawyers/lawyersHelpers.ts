@@ -5,6 +5,7 @@ import {
 import { uppercaseFirstLetter } from '../../../utils/transformData';
 
 export const mapApiResponseToTableData = ({
+  id,
   address,
   case_count,
   city,
@@ -15,6 +16,7 @@ export const mapApiResponseToTableData = ({
   office_name,
   phone_numbers,
 }: ILawyersApiResponseData): ILawyersTableData => ({
+  id,
   address,
   numberOfCases: case_count,
   city,

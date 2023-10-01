@@ -3,8 +3,9 @@ import {
   IEmployersTableData,
   IEmployersListQueryParams,
   IEmployersTableHeader,
+  EEmployersActionType,
 } from '../../types/employersTypes';
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, Row } from '@tanstack/react-table';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import useGetEmployersListQuery from '../../hooks/queries/employers/useGetEmployersListQuery';
@@ -45,6 +46,22 @@ const EmployersTable = () => {
     ...queryParams,
     ...searchParams,
   });
+
+  const handleRowClick = (row: Row<IEmployersTableData>) => {
+    const { id } = row.original;
+
+    if (id) {
+      updateEmployersState({
+        type: EEmployersActionType.editEmployerId,
+        payload: id,
+      });
+
+      updateEmployersState({
+        type: EEmployersActionType.editEmployerModalOpen,
+        payload: true,
+      });
+    }
+  };
 
   const columns = React.useMemo<ColumnDef<IEmployersTableData>[]>(
     () => [
@@ -87,6 +104,7 @@ const EmployersTable = () => {
       updateState={updateEmployersState}
       refetch={refetch}
       mapBorderColors={mapEmployersToBorderColors}
+      onRowClick={handleRowClick}
     />
   ) : (
     <>Loading...</>

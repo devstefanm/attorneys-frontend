@@ -1,12 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { ModalDialog } from '../../components/ModalDialog';
-import { useTransactions } from '../../store/contexts/TransactionsContext';
-import useAddNewTransactionMutation from '../../hooks/mutations/transactions/useAddNewTransactionMutation';
 import AddTransactionForm from './AddTransactionForm';
+import useAddNewTransactionMutation from '../../hooks/mutations/transactions/useAddNewTransactionMutation';
+import { useTransactions } from '../../store/contexts/TransactionsContext';
 import { mapAddTransactionFormToRequestData } from './helpers/transactionsHelpers';
 import { SnackbarNotification } from '../../components/SnackbarNotification';
 import { ETransactionsActionType } from '../../types/transactionsTypes';
+import * as React from 'react';
 
 type Props = {
   open: boolean;
@@ -19,7 +20,13 @@ const AddTransactionModal = (props: Props) => {
   const { t } = useTranslation();
 
   const {
-    state: { addTransactionForm, openSuccessSnackbar, openErrorSnackbar },
+    state: {
+      addTransactionForm,
+      openSuccessSnackbar,
+      openErrorSnackbar,
+      addTransactionModalOpen,
+      editTransactionModalOpen,
+    },
     dispatch: updateTransactionsState,
   } = useTransactions();
 
@@ -30,7 +37,13 @@ const AddTransactionModal = (props: Props) => {
     error,
     isSuccess,
     isError,
+    reset,
   } = useAddNewTransactionMutation(onClose, updateTransactionsState);
+
+  React.useEffect(() => {
+    if ((addTransactionModalOpen || editTransactionModalOpen) && isSuccess)
+      reset();
+  }, [addTransactionModalOpen, editTransactionModalOpen]);
 
   return (
     <ErrorBoundary>

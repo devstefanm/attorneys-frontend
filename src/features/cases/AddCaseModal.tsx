@@ -7,6 +7,7 @@ import { useCases } from '../../store/contexts/CasesContext';
 import { mapAddCaseFormToRequestData } from './helpers/casesHelpers';
 import { SnackbarNotification } from '../../components/SnackbarNotification';
 import { ECasesActionType } from '../../types/casesTypes';
+import * as React from 'react';
 
 type Props = {
   open: boolean;
@@ -19,7 +20,15 @@ const AddCaseModal = (props: Props) => {
   const { t } = useTranslation();
 
   const {
-    state: { addCaseForm, openSuccessSnackbar, openErrorSnackbar },
+    state: {
+      addCaseForm,
+      openSuccessSnackbar,
+      openErrorSnackbar,
+      addCaseModalOpen,
+      editCaseModalOpen,
+      exportCasesDialogOpen,
+      importCasesDialogOpen,
+    },
     dispatch: updateCasesState,
   } = useCases();
 
@@ -30,7 +39,25 @@ const AddCaseModal = (props: Props) => {
     error,
     isSuccess,
     isError,
+    reset,
   } = useAddNewCaseMutation(onClose, updateCasesState);
+
+  React.useEffect(() => {
+    if (
+      (addCaseModalOpen ||
+        editCaseModalOpen ||
+        exportCasesDialogOpen ||
+        importCasesDialogOpen) &&
+      isSuccess
+    ) {
+      reset();
+    }
+  }, [
+    addCaseModalOpen,
+    editCaseModalOpen,
+    exportCasesDialogOpen,
+    importCasesDialogOpen,
+  ]);
 
   return (
     <ErrorBoundary>

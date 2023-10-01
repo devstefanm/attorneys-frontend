@@ -1,10 +1,13 @@
 import {
   EPackagesActionType,
   IAddPackageForm,
+  IEditPackageForm,
+  IEditedPackageFormData,
 } from '../../types/packagesTypes';
 import {
   ETableActionType,
   IAddNewEntityStateUpdate,
+  IEditEntityStateUpdate,
   ITablePageable,
   ITableSearchable,
   ITableSortable,
@@ -17,8 +20,13 @@ export interface IPackagesState {
   searchable: ITableSearchable[];
   addPackageForm: IAddPackageForm;
   addPackageModalOpen: boolean;
+  editPackageModalOpen: boolean;
+  editPackageForm: IEditPackageForm;
+  editedPackageFormData: IEditedPackageFormData;
+  editPackageId: number | null;
   openSuccessSnackbar: boolean;
   openErrorSnackbar: boolean;
+  confirmationDialogOpen: boolean;
 }
 
 interface IPackagesAction {
@@ -27,8 +35,11 @@ interface IPackagesAction {
     | ITableSortable
     | ITablePageable
     | ITableSearchable
+    | IAddNewEntityStateUpdate
+    | IEditEntityStateUpdate
+    | IEditPackageForm
     | boolean
-    | IAddNewEntityStateUpdate;
+    | number;
 }
 
 const packagesReducer = (
@@ -56,6 +67,8 @@ const packagesReducer = (
       return { ...state, searchable: newState };
     case EPackagesActionType.addPackageModalOpen:
       return { ...state, addPackageModalOpen: action.payload as boolean };
+    case EPackagesActionType.editPackageModalOpen:
+      return { ...state, editPackageModalOpen: action.payload as boolean };
     case EPackagesActionType.addPackageForm:
       const { name, fieldValue } = action.payload as IAddNewEntityStateUpdate;
       return {
@@ -65,15 +78,41 @@ const packagesReducer = (
           [name]: fieldValue,
         },
       };
+    case EPackagesActionType.setPackageFormData:
+      return {
+        ...state,
+        editPackageForm: action.payload as IEditPackageForm,
+      };
+    case EPackagesActionType.editPackageForm:
+      const { editName, fieldEditValue } =
+        action.payload as IEditEntityStateUpdate;
+      return {
+        ...state,
+        editPackageForm: {
+          ...state.editPackageForm,
+          [editName]: fieldEditValue,
+        },
+        editedPackageFormData: {
+          ...state.editedPackageFormData,
+          [editName]: fieldEditValue,
+        },
+      };
+    case EPackagesActionType.editPackageId:
+      return { ...state, editPackageId: action.payload as number };
     case EPackagesActionType.resetPackageFormData:
       return {
         ...state,
         addPackageForm: addPackagesInitialFormData,
+        editPackageForm: addPackagesInitialFormData,
+        editPackageId: null,
+        editedPackageFormData: {},
       };
     case EPackagesActionType.openErrorSnackbar:
       return { ...state, openErrorSnackbar: action.payload as boolean };
     case EPackagesActionType.openSuccessSnackbar:
       return { ...state, openSuccessSnackbar: action.payload as boolean };
+    case EPackagesActionType.confirmationDialogOpen:
+      return { ...state, confirmationDialogOpen: action.payload as boolean };
     default:
       return state;
   }

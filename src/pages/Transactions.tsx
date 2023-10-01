@@ -8,15 +8,36 @@ import { ETransactionsActionType } from '../types/transactionsTypes';
 import { Box, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { TransactionsFilter } from '../features/transactions/TransactionsFilter';
+import { EditTransactionModal } from '../features/transactions/EditTransactionModal';
 
 type Props = IPagesProps & {};
 
 const Transactions = (_props: Props) => {
   const { t } = useTranslation();
   const {
-    state: { addTransactionModalOpen },
+    state: { addTransactionModalOpen, editTransactionModalOpen },
     dispatch: updateTransactionsState,
   } = useTransactions();
+
+  const handleAddTransactionModalClose = () => {
+    updateTransactionsState({
+      type: ETransactionsActionType.addTransactionModalOpen,
+      payload: false,
+    });
+    updateTransactionsState({
+      type: ETransactionsActionType.resetTransactionFormData,
+    });
+  };
+
+  const handleEditTransactionModalClose = () => {
+    updateTransactionsState({
+      type: ETransactionsActionType.editTransactionModalOpen,
+      payload: false,
+    });
+    updateTransactionsState({
+      type: ETransactionsActionType.resetTransactionFormData,
+    });
+  };
 
   return (
     <ErrorBoundary>
@@ -37,12 +58,11 @@ const Transactions = (_props: Props) => {
         <TransactionsTable />
         <AddTransactionModal
           open={addTransactionModalOpen}
-          onClose={() =>
-            updateTransactionsState({
-              type: ETransactionsActionType.addTransactionModalOpen,
-              payload: false,
-            })
-          }
+          onClose={handleAddTransactionModalClose}
+        />
+        <EditTransactionModal
+          open={editTransactionModalOpen}
+          onClose={handleEditTransactionModalClose}
         />
       </React.Suspense>
     </ErrorBoundary>

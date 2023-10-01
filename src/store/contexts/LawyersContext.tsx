@@ -21,10 +21,16 @@ const initialState: ILawyersState = {
   },
   searchable: [],
   addLawyerModalOpen: false,
+  editLawyerModalOpen: false,
   addLawyerForm: addLawyersInitialFormData,
   addLawyerAutocompleteValues: addLawyerAutocompleteInitialValues,
+  editLawyerAutocompleteValues: addLawyerAutocompleteInitialValues,
+  editLawyerForm: addLawyersInitialFormData,
+  editLawyerId: null,
+  editedLawyerFormData: {},
   openSuccessSnackbar: false,
   openErrorSnackbar: false,
+  confirmationDialogOpen: false,
 };
 
 export const LawyersContext = React.createContext<{

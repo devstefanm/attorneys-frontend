@@ -3,8 +3,9 @@ import {
   IPackagesTableData,
   IPackagesListQueryParams,
   IPackagesTableHeader,
+  EPackagesActionType,
 } from '../../types/packagesTypes';
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, Row } from '@tanstack/react-table';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import useGetPackagesListQuery from '../../hooks/queries/packages/useGetPackagesListQuery';
@@ -46,6 +47,22 @@ const PackagesTable = () => {
     ...searchParams,
   });
 
+  const handleRowClick = (row: Row<IPackagesTableData>) => {
+    const { id } = row.original;
+
+    if (id) {
+      updatePackagesState({
+        type: EPackagesActionType.editPackageId,
+        payload: id,
+      });
+
+      updatePackagesState({
+        type: EPackagesActionType.editPackageModalOpen,
+        payload: true,
+      });
+    }
+  };
+
   const columns = React.useMemo<ColumnDef<IPackagesTableData>[]>(
     () => [
       {
@@ -85,6 +102,7 @@ const PackagesTable = () => {
       updateState={updatePackagesState}
       refetch={refetch}
       mapBorderColors={mapPackagesToBorderColors}
+      onRowClick={handleRowClick}
     />
   ) : (
     <>Loading...</>

@@ -49,11 +49,12 @@ const AddEmployerForm = () => {
           const { value } = event?.target as HTMLTextAreaElement;
           let fieldValue = value;
           if (format) {
-            fieldValue = value.replace(format, '');
-            updateEmployersState({
-              type: EEmployersActionType.addEmployerForm,
-              payload: { name, fieldValue },
-            });
+            if (fieldValue.match(format)) {
+              updateEmployersState({
+                type: EEmployersActionType.addEmployerForm,
+                payload: { name, fieldValue },
+              });
+            }
           } else {
             updateEmployersState({
               type: EEmployersActionType.addEmployerForm,
@@ -96,12 +97,14 @@ const AddEmployerForm = () => {
       size,
       subfieldName,
       format,
+      required,
     } = field;
     switch (type) {
       case EFormFieldType.checkbox:
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <FormControlLabel
+              required={required}
               control={
                 <Checkbox
                   className={formFieldClassName}
@@ -120,6 +123,7 @@ const AddEmployerForm = () => {
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <TextField
+              required={required}
               fullWidth
               className={formFieldClassName}
               size={size ?? 'small'}
@@ -136,12 +140,17 @@ const AddEmployerForm = () => {
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <LocalizationProvider dateAdapter={AdapterMoment}>
               <DatePicker
+                localeText={{ clearButtonLabel: t('clear') }}
                 label={t(`entities.${name}`)}
                 // @ts-ignore
                 value={addEmployerForm[name]}
                 className={formFieldClassName}
                 slotProps={{
-                  textField: { size: 'small', fullWidth: true },
+                  textField: {
+                    size: 'small',
+                    fullWidth: true,
+                    required: required,
+                  },
                   actionBar: {
                     actions: ['clear'],
                   },
@@ -156,6 +165,7 @@ const AddEmployerForm = () => {
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <DynamicInputs
+              limit={name === 'phoneNumbers' ? 4 : 2}
               label={t(`entities.${name}`)}
               inputProps={{
                 label: t(`entities.${subfieldName}`),

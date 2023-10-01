@@ -5,6 +5,7 @@ import * as React from 'react';
 type Props = {
   label: string;
   values?: string[];
+  limit?: number;
   inputProps?: {
     size?: any;
     label: string;
@@ -17,6 +18,7 @@ const DynamicInputs: React.FC<Props> = ({
   label,
   values,
   inputProps,
+  limit,
   onValuesChange,
 }) => {
   const [inputFields, setInputFields] = React.useState<string[]>(
@@ -71,7 +73,7 @@ const DynamicInputs: React.FC<Props> = ({
         </Box>
       ))}
 
-      {inputFields.length < 4 && (
+      {inputFields.length < (limit || 4) && (
         <Box className="flex justify-center">
           <IconButton onClick={addInputField}>
             <Add />

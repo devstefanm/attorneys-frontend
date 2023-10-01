@@ -11,6 +11,8 @@ import { EClientsActionType } from '../types/clientsTypes';
 import { EEmployersActionType } from '../types/employersTypes';
 import AddClientModal from '../features/clients/AddClientModal';
 import AddEmployerModal from '../features/employers/AddEmployerModal';
+import { EditClientModal } from '../features/clients/EditClientModal';
+import { EditEmployerModal } from '../features/employers/EditEmployerModal';
 
 type Props = IPagesProps & {};
 
@@ -18,14 +20,54 @@ const ClientsAndEmployers = (_props: Props) => {
   const { t } = useTranslation();
 
   const {
-    state: { addClientModalOpen },
+    state: { addClientModalOpen, editClientModalOpen },
     dispatch: updateClientsState,
   } = useClients();
 
   const {
-    state: { addEmployerModalOpen },
+    state: { addEmployerModalOpen, editEmployerModalOpen },
     dispatch: updateEmployersState,
   } = useEmployers();
+
+  const handleAddClientModalClose = () => {
+    updateClientsState({
+      type: EClientsActionType.addClientModalOpen,
+      payload: false,
+    });
+    updateClientsState({
+      type: EClientsActionType.resetClientFormData,
+    });
+  };
+
+  const handleEditClientModalClose = () => {
+    updateClientsState({
+      type: EClientsActionType.editClientModalOpen,
+      payload: false,
+    });
+    updateClientsState({
+      type: EClientsActionType.resetClientFormData,
+    });
+  };
+
+  const handleAddEmployerModalClose = () => {
+    updateEmployersState({
+      type: EEmployersActionType.addEmployerModalOpen,
+      payload: false,
+    });
+    updateEmployersState({
+      type: EEmployersActionType.resetEmployerFormData,
+    });
+  };
+
+  const handleEditEmployerModalClose = () => {
+    updateEmployersState({
+      type: EEmployersActionType.editEmployerModalOpen,
+      payload: false,
+    });
+    updateEmployersState({
+      type: EEmployersActionType.resetEmployerFormData,
+    });
+  };
 
   return (
     <ErrorBoundary>
@@ -64,21 +106,19 @@ const ClientsAndEmployers = (_props: Props) => {
         </Box>
         <AddClientModal
           open={addClientModalOpen}
-          onClose={() =>
-            updateClientsState({
-              type: EClientsActionType.addClientModalOpen,
-              payload: false,
-            })
-          }
+          onClose={handleAddClientModalClose}
+        />
+        <EditClientModal
+          open={editClientModalOpen}
+          onClose={handleEditClientModalClose}
         />
         <AddEmployerModal
           open={addEmployerModalOpen}
-          onClose={() =>
-            updateEmployersState({
-              type: EEmployersActionType.addEmployerModalOpen,
-              payload: false,
-            })
-          }
+          onClose={handleAddEmployerModalClose}
+        />
+        <EditEmployerModal
+          open={editEmployerModalOpen}
+          onClose={handleEditEmployerModalClose}
         />
       </React.Suspense>
     </ErrorBoundary>

@@ -36,6 +36,7 @@ i18n
           closed: 'Closed',
           all: 'All',
           delete: 'Delete',
+          clear: 'Clear',
 
           // Pagination
           rowsPerPage: 'Rows per page',
@@ -117,16 +118,22 @@ i18n
             numberOfExecutors: 'Number of Bailiffs',
             numberOfLawyers: 'Number of Lawyers',
             addNewCity: 'Add new City',
+            editCity: 'Edit a City',
+            deleteCity: 'Delete a City',
 
             // Clients
             client: 'Client',
             clients: 'Clients',
             addNewClient: 'Add new Client',
+            editClient: 'Edit a Client',
+            deleteClient: 'Delete a Client',
 
             // Courts
             court: 'Court',
             courts: 'Courts',
             addNewCourt: 'Add new Court',
+            editCourt: 'Edit a Court',
+            deleteCourt: 'Delete a Court',
 
             // Courts and Cities
             courtsAndCities: 'Courts and Cities',
@@ -135,6 +142,8 @@ i18n
             employers: 'Employers',
             employer: `Employer`,
             addNewEmployer: 'Add new Employer',
+            editEmployer: 'Edit an Employer',
+            deleteEmployer: 'Delete an Employer',
 
             // Clients and Employers
             clientsAndEmployers: 'Clients and Employers',
@@ -155,12 +164,16 @@ i18n
             packages: 'Packages',
             packageName: 'Package Name',
             addNewPackage: 'Add new Package',
+            editPackage: 'Edit a Package',
+            deletePackage: 'Delete a Package',
 
             // SSN Numbers
             ssnNumbers: 'SSN Numbers',
             ssnNumber: 'SSN Number',
             ssn: 'SSN',
             addNewSSNNumber: 'Add new SSN Number',
+            editSSNNumber: 'Edit a SSN Number',
+            deleteSSNNumber: 'Delete a SSN Number',
 
             // SSN Numbers and Packages
             ssnNumbersAndPackages: 'SSN Numbers and Packages',
@@ -171,11 +184,15 @@ i18n
             officeName: 'Office Name',
             address: 'Address',
             addNewLawyer: 'Add new Lawyer',
+            editLawyer: 'Edit a Lawyer',
+            deleteLawyer: 'Delete a Lawyer',
 
             // Executors
             executors: 'Bailiffs',
             executor: 'Bailiff',
             addNewExecutor: 'Add new Bailiff',
+            editExecutor: 'Edit a Bailiff',
+            deleteExecutor: 'Delete a Bailiff',
 
             // People
             people: 'People',
@@ -222,6 +239,7 @@ i18n
             enteringDate: 'Date of entering Creditexpress',
             lawyerHandOverDate: 'Lawyer hand-over date',
             comment: 'Comment',
+            limitationObjection: 'Limitation of Objection',
 
             // Transactions
             transactions: 'Transactions',
@@ -239,6 +257,8 @@ i18n
             withdrawals: 'Withdrawals',
             addNewTransaction: 'Add new Transactions',
             transactionType: 'Transaction Type',
+            editTransaction: 'Edit a Transaction',
+            deleteTransaction: 'Delete a Transaction',
 
             // Case Executors
             caseExecutors: 'Case Bailiffs',
@@ -253,6 +273,15 @@ i18n
 
           messages: {
             retrieveCaseSuccess: 'Case retrieved successfully.',
+            retrieveCitiesSuccess: 'City retrieved successfully.',
+            retrieveClientsSuccess: 'Client retrieved successfully.',
+            retrieveCourtsSuccess: 'Court retrieved successfully.',
+            retrieveEmployersSuccess: 'Employer retrieved successfully.',
+            retrieveExecutorSuccess: 'Bailiff retrieved successfully.',
+            retrieveLawyerSuccess: 'Lawyer retrieved successfully.',
+            retrievePackageSuccess: 'Package retrieved successfully.',
+            retrieveSSNNumberSuccess: 'SSN Number retrieved successfully.',
+            retrieveTransactionSuccess: 'Transaction retrieved successfully.',
             createCaseSuccess: 'Case created successfully.',
             editCaseSuccess: 'Case edited successfully.',
             caseDeleted: 'Case deleted successfully.',
@@ -296,9 +325,11 @@ i18n
             noType: 'You have not choosen a Transaction type.',
             noAmount: 'You have not entered an amount.',
             caseNotFound: 'The case was not found.',
+            closingDateLate: 'Closing date has not happened yet.',
             noContractNumber: 'You have not entered a contract number.',
             noCaseNumber: 'You have not entered a case number.',
             noClient: 'You have not selected a client.',
+            noPaymentDate: 'You have not selected a payment date.',
             caseOrContractNumberDuplicate:
               'Case with the same case or contract number already exists.',
             phoneNumberNull:
@@ -355,6 +386,7 @@ i18n
           closed: 'Zatvoreni',
           all: 'Svi',
           delete: 'Obriši',
+          clear: 'Očisti',
 
           // Pagination
           rowsPerPage: 'Broj redova po strani',
@@ -436,16 +468,22 @@ i18n
             numberOfExecutors: 'Broj izvršitelja',
             numberOfLawyers: 'Broj advokata',
             addNewCity: 'Dodaj novi grad',
+            editCity: 'Izmeni grad',
+            deleteCity: 'Izbriši grad',
 
             // Clients
             client: 'Klijent',
             clients: 'Klijenti',
             addNewClient: 'Dodaj novog klijenta',
+            editClient: 'Izmeni klijenta',
+            deleteClient: 'Izbriši klijenta',
 
             // Courts
             court: 'Sud',
             courts: 'Sudovi',
             addNewCourt: 'Dodaj novi sud',
+            editCourt: 'Izmeni sud',
+            deleteCourt: 'Izbriši sud',
 
             // Courts and Cities
             courtsAndCities: 'Sudovi i Gradovi',
@@ -453,7 +491,9 @@ i18n
             // Employers
             employers: 'Poslodavci',
             employer: 'Poslodavac',
-            addNewEmployer: 'Dodaj novog Poslodavca',
+            addNewEmployer: 'Dodaj novog poslodavca',
+            editEmployer: 'Izmeni poslodavca',
+            deleteEmployer: 'Izbriši poslodavca',
 
             // Clients and Employers
             clientsAndEmployers: 'Klijenti i Poslodavci',
@@ -474,12 +514,16 @@ i18n
             packages: 'Paketi',
             packageName: 'Naziv paketa',
             addNewPackage: 'Dodaj novi Paket',
+            editPackage: 'Izmeni paket',
+            deletePackage: 'Izbriši paket',
 
             // SSN Numbers
             ssnNumbers: 'SSN brojevi',
             ssnNumber: 'SSN broj',
             ssn: 'SSN',
             addNewSSNNumber: 'Dodaj novi SSN broj',
+            editSSNNumber: 'Izmeni SSN broj',
+            deleteSSNNumber: 'Izbriši SSN broj',
 
             // SSN Numbers and Packages
             ssnNumbersAndPackages: 'SSN brojevi i Paketi',
@@ -490,11 +534,15 @@ i18n
             officeName: 'Naziv kancelarije',
             address: 'Adresa',
             addNewLawyer: 'Dodaj novog advokata',
+            editLawyer: 'Izmeni advokata',
+            deleteLawyer: 'Izbriši advokata',
 
             // Executors
             executors: 'Izvršitelji',
             executor: 'Izvršitelj',
             addNewExecutor: 'Dodaj novog izvršitelja',
+            editExecutor: 'Izmeni izvršitelja',
+            deleteExecutor: 'Izbriši izvršitelja',
 
             // People
             people: 'Ljudi',
@@ -541,6 +589,7 @@ i18n
             enteringDate: 'Datum ulaska u Creditexpress',
             lawyerHandOverDate: 'Datum predaje advokatima',
             comment: 'Komentar',
+            limitationObjection: 'Prigovor zastarelosti',
 
             // Transactions
             transactions: 'Transakcije',
@@ -558,6 +607,8 @@ i18n
             withdrawals: 'Povlačenja predmeta',
             addNewTransaction: 'Dodaj novu transakciju',
             transactionType: 'Tip transakcije',
+            editTransaction: 'Izmeni transakciju',
+            deleteTransaction: 'Izbriši transakciju',
 
             // Case Executors
             caseExecutors: 'Izvršitelji predmeta',
@@ -566,12 +617,21 @@ i18n
             caseBusinessNumbers: 'Poslovni brojevi predmeta',
 
             // Common
-            numberOfCases: 'Broj slučajeva',
+            numberOfCases: 'Broj predmeta',
             numberOfEmployees: 'Broj zaposlenih dužnika',
           },
 
           messages: {
             retrieveCaseSuccess: 'Predmet uspešno pronađen.',
+            retrieveCitiesSuccess: 'Grad uspešno pronađen.',
+            retrieveClientsSuccess: 'Klijent uspešno pronađen.',
+            retrieveCourtsSuccess: 'Sud uspešno pronađen.',
+            retrieveEmployersSuccess: 'Poslodavac uspešno pronađen.',
+            retrieveExecutorSuccess: 'Izvršitelj uspešno pronađen.',
+            retrieveLawyerSuccess: 'Advokat uspešno pronađen.',
+            retrievePackageSuccess: 'Paket uspešno pronađen.',
+            retrieveSSNNumberSuccess: 'SSN broj uspešno pronađen.',
+            retrieveTransactionSuccess: 'Transakcija uspešno pronađen.',
             createCaseSuccess: 'Predmet uspešno dodat.',
             editCaseSuccess: 'Predmet uspešno izmenjen.',
             caseDeleted: 'Predmet uspešno izbrisan.',
@@ -601,9 +661,9 @@ i18n
             createSSNSuccess: 'SSN broj uspešno dodat.',
             editSSNSuccess: 'SSN broj uspešno izmenjen.',
             ssnDeleted: 'SSN broj uspešno izbrisan.',
-            createTransactionSuccess: 'Transakcija uspešno dodat.',
-            editTransactionSuccess: 'Transakcija uspešno izmenjen.',
-            transactionDeleted: 'Transakcija uspešno izbrisan.',
+            createTransactionSuccess: 'Transakcija uspešno dodata.',
+            editTransactionSuccess: 'Transakcija uspešno izmenjena.',
+            transactionDeleted: 'Transakcija uspešno izbrisana.',
           },
 
           errors: {
@@ -615,9 +675,11 @@ i18n
             noType: 'Niste izabrali tip transakcije.',
             noAmount: 'Niste uneli iznos.',
             caseNotFound: 'Predmet nije pronađen.',
+            closingDateLate: 'Datum zatvaranja se još nije dogodio.',
             noContractNumber: 'Niste uneli broj ugovora.',
             noCaseNumber: 'Niste uneli broj predmeta.',
             noClient: 'Niste odabrali klijenta.',
+            noPaymentDate: 'Niste odabrali datum uplate.',
             caseOrContractNumberDuplicate:
               'Predmet sa istim brojem predmeta ili brojem ugovora već postoji.',
             phoneNumberNull:

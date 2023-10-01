@@ -3,8 +3,9 @@ import {
   IExecutorsTableData,
   IExecutorsListQueryParams,
   IExecutorsTableHeader,
+  EExecutorsActionType,
 } from '../../types/executorsTypes';
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, Row } from '@tanstack/react-table';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import useGetExecutorsListQuery from '../../hooks/queries/executors/useGetExecutorsListQuery';
@@ -49,6 +50,22 @@ const ExecutorsTable = () => {
     ...queryParams,
     ...searchParams,
   });
+
+  const handleRowClick = (row: Row<IExecutorsTableData>) => {
+    const { id } = row.original;
+
+    if (id) {
+      updateExecutorsState({
+        type: EExecutorsActionType.editExecutorId,
+        payload: id,
+      });
+
+      updateExecutorsState({
+        type: EExecutorsActionType.editExecutorModalOpen,
+        payload: true,
+      });
+    }
+  };
 
   const columns = React.useMemo<ColumnDef<IExecutorsTableData>[]>(
     () => [
@@ -117,6 +134,7 @@ const ExecutorsTable = () => {
       updateState={updateExecutorsState}
       refetch={refetch}
       mapBorderColors={mapExecutorsToBorderColors}
+      onRowClick={handleRowClick}
     />
   ) : (
     <>Loading...</>

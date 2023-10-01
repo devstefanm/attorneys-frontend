@@ -11,6 +11,8 @@ import { ESSNNumbersActionType } from '../types/ssnNumbersTypes';
 import { EPackagesActionType } from '../types/packagesTypes';
 import AddSSNNumberModal from '../features/ssnNumbers/AddSSNNumberModal';
 import AddPackageModal from '../features/packages/AddPackageModal';
+import { EditPackageModal } from '../features/packages/EditPackageModal';
+import { EditSSNNumberModal } from '../features/ssnNumbers/EditSSNNumberModal';
 
 type Props = IPagesProps & {};
 
@@ -18,14 +20,54 @@ const SSNNumbersAndPackages = (_props: Props) => {
   const { t } = useTranslation();
 
   const {
-    state: { addSSNNumberModalOpen },
+    state: { addSSNNumberModalOpen, editSSNNumberModalOpen },
     dispatch: updateSSNNumbersState,
   } = useSSNNumbers();
 
   const {
-    state: { addPackageModalOpen },
+    state: { addPackageModalOpen, editPackageModalOpen },
     dispatch: updatePackagesState,
   } = usePackages();
+
+  const handleAddSSNNumberModalClose = () => {
+    updateSSNNumbersState({
+      type: ESSNNumbersActionType.addSSNNumberModalOpen,
+      payload: false,
+    });
+    updateSSNNumbersState({
+      type: ESSNNumbersActionType.resetSSNNumberFormData,
+    });
+  };
+
+  const handleEditSSNNumberModalClose = () => {
+    updateSSNNumbersState({
+      type: ESSNNumbersActionType.editSSNNumberModalOpen,
+      payload: false,
+    });
+    updateSSNNumbersState({
+      type: ESSNNumbersActionType.resetSSNNumberFormData,
+    });
+  };
+
+  const handleAddPackageModalClose = () => {
+    updatePackagesState({
+      type: EPackagesActionType.addPackageModalOpen,
+      payload: false,
+    });
+    updatePackagesState({
+      type: EPackagesActionType.resetPackageFormData,
+    });
+  };
+
+  const handleEditPackageModalClose = () => {
+    updatePackagesState({
+      type: EPackagesActionType.editPackageModalOpen,
+      payload: false,
+    });
+    updatePackagesState({
+      type: EPackagesActionType.resetPackageFormData,
+    });
+  };
 
   return (
     <ErrorBoundary>
@@ -64,21 +106,19 @@ const SSNNumbersAndPackages = (_props: Props) => {
         </Box>
         <AddSSNNumberModal
           open={addSSNNumberModalOpen}
-          onClose={() =>
-            updateSSNNumbersState({
-              type: ESSNNumbersActionType.addSSNNumberModalOpen,
-              payload: false,
-            })
-          }
+          onClose={handleAddSSNNumberModalClose}
+        />
+        <EditSSNNumberModal
+          open={editSSNNumberModalOpen}
+          onClose={handleEditSSNNumberModalClose}
         />
         <AddPackageModal
           open={addPackageModalOpen}
-          onClose={() =>
-            updatePackagesState({
-              type: EPackagesActionType.addPackageModalOpen,
-              payload: false,
-            })
-          }
+          onClose={handleAddPackageModalClose}
+        />
+        <EditPackageModal
+          open={editPackageModalOpen}
+          onClose={handleEditPackageModalClose}
         />
       </React.Suspense>
     </ErrorBoundary>

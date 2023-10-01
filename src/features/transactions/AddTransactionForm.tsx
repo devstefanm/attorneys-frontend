@@ -68,11 +68,12 @@ const AddTransactionForm = () => {
           const { value } = event?.target as HTMLTextAreaElement;
           let fieldValue = value;
           if (format) {
-            fieldValue = value.replace(format, '');
-            updateTransactionsState({
-              type: ETransactionsActionType.addTransactionForm,
-              payload: { name, fieldValue },
-            });
+            if (fieldValue.match(format)) {
+              updateTransactionsState({
+                type: ETransactionsActionType.addTransactionForm,
+                payload: { name, fieldValue },
+              });
+            }
           } else {
             updateTransactionsState({
               type: ETransactionsActionType.addTransactionForm,
@@ -122,12 +123,14 @@ const AddTransactionForm = () => {
       options,
       size,
       format,
+      required,
     } = field;
     switch (type) {
       case EFormFieldType.checkbox:
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <FormControlLabel
+              required={required}
               control={
                 <Checkbox
                   className={formFieldClassName}
@@ -146,6 +149,7 @@ const AddTransactionForm = () => {
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <TextField
+              required={required}
               fullWidth
               className={formFieldClassName}
               size={size ?? 'small'}
@@ -162,6 +166,7 @@ const AddTransactionForm = () => {
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <Autocomplete
               fullWidth
+              clearIcon={false}
               className={formFieldClassName}
               options={isFetching ? [] : options || []}
               getOptionLabel={(option) => {
@@ -181,7 +186,17 @@ const AddTransactionForm = () => {
               renderInput={(params) => (
                 <TextField
                   {...params}
+                  required={required}
                   label={t(`entities.${name}`)}
+                  onBlur={() =>
+                    updateTransactionsState({
+                      type: ETransactionsActionType.addTransactionAutocompleteValues,
+                      payload: {
+                        inputName: name,
+                        inputValue: '',
+                      },
+                    })
+                  }
                   onChange={debounce(
                     (event) =>
                       updateTransactionsState({
@@ -203,12 +218,17 @@ const AddTransactionForm = () => {
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <LocalizationProvider dateAdapter={AdapterMoment}>
               <DatePicker
+                localeText={{ clearButtonLabel: t('clear') }}
                 label={t(`entities.${name}`)}
                 // @ts-ignore
                 value={addTransactionForm[name]}
                 className={formFieldClassName}
                 slotProps={{
-                  textField: { size: 'small', fullWidth: true },
+                  textField: {
+                    size: 'small',
+                    fullWidth: true,
+                    required: required,
+                  },
                   actionBar: {
                     actions: ['clear'],
                   },

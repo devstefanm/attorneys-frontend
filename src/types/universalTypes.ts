@@ -76,6 +76,7 @@ export interface IFormField {
   formFieldClassName?: string;
   labelPlacement?: 'top' | 'bottom' | 'start' | 'end';
   size?: any;
+  required?: boolean;
 }
 
 export interface IAutocompleteParams {

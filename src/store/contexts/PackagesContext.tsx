@@ -18,9 +18,14 @@ const initialState: IPackagesState = {
   },
   searchable: [],
   addPackageModalOpen: false,
+  editPackageModalOpen: false,
   addPackageForm: addPackagesInitialFormData,
+  editPackageForm: addPackagesInitialFormData,
+  editPackageId: null,
+  editedPackageFormData: {},
   openSuccessSnackbar: false,
   openErrorSnackbar: false,
+  confirmationDialogOpen: false,
 };
 
 export const PackagesContext = React.createContext<{

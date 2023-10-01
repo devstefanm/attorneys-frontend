@@ -7,15 +7,36 @@ import AddExecutorModal from '../features/executors/AddExecutorModal';
 import { Box, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { EExecutorsActionType } from '../types/executorsTypes';
+import { EditExecutorModal } from '../features/executors/EditExecutorModal';
 
 type Props = IPagesProps & {};
 
 const Executors = (_props: Props) => {
   const { t } = useTranslation();
   const {
-    state: { addExecutorModalOpen },
+    state: { addExecutorModalOpen, editExecutorModalOpen },
     dispatch: updateExecutorsState,
   } = useExecutors();
+
+  const handleAddExecutorModalClose = () => {
+    updateExecutorsState({
+      type: EExecutorsActionType.addExecutorModalOpen,
+      payload: false,
+    });
+    updateExecutorsState({
+      type: EExecutorsActionType.resetExecutorFormData,
+    });
+  };
+
+  const handleEditExecutorModalClose = () => {
+    updateExecutorsState({
+      type: EExecutorsActionType.editExecutorModalOpen,
+      payload: false,
+    });
+    updateExecutorsState({
+      type: EExecutorsActionType.resetExecutorFormData,
+    });
+  };
 
   return (
     <ErrorBoundary>
@@ -35,12 +56,11 @@ const Executors = (_props: Props) => {
         <ExecutorsTable />
         <AddExecutorModal
           open={addExecutorModalOpen}
-          onClose={() =>
-            updateExecutorsState({
-              type: EExecutorsActionType.addExecutorModalOpen,
-              payload: false,
-            })
-          }
+          onClose={handleAddExecutorModalClose}
+        />
+        <EditExecutorModal
+          open={editExecutorModalOpen}
+          onClose={handleEditExecutorModalClose}
         />
       </React.Suspense>
     </ErrorBoundary>

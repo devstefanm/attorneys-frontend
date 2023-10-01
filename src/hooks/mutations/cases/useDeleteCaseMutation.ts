@@ -8,15 +8,11 @@ const deleteCase = async (
 ): Promise<IApiResponse<ICaseRequestData>> => {
   let response: IApiResponse<ICaseRequestData>;
 
-  try {
-    response = await setupAxios({
-      method: 'delete',
-      url: `api/case/${caseId}`,
-      withCredentials: true,
-    });
-  } catch {
-    response = { data: { error: 500, message: 'Connection problem' } };
-  }
+  response = await setupAxios({
+    method: 'delete',
+    url: `api/case/${caseId}`,
+    withCredentials: true,
+  });
 
   return response;
 };
@@ -30,7 +26,6 @@ const useDeleteCaseMutation = (
 
   return useMutation(() => deleteCase(caseId), {
     onSuccess: (response) => {
-      console.log('response', response.data);
       if (!response.data.error) {
         updateCasesState({ type: ECasesActionType.resetCaseFormData });
         updateCasesState({

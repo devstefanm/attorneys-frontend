@@ -57,11 +57,12 @@ const AddLawyerForm = () => {
           const { value } = event?.target as HTMLTextAreaElement;
           let fieldValue = value;
           if (format) {
-            fieldValue = value.replace(format, '');
-            updateLawyersState({
-              type: ELawyersActionType.addLawyerForm,
-              payload: { name, fieldValue },
-            });
+            if (fieldValue.match(format)) {
+              updateLawyersState({
+                type: ELawyersActionType.addLawyerForm,
+                payload: { name, fieldValue },
+              });
+            }
           } else {
             updateLawyersState({
               type: ELawyersActionType.addLawyerForm,
@@ -129,12 +130,14 @@ const AddLawyerForm = () => {
       size,
       subfieldName,
       format,
+      required,
     } = field;
     switch (type) {
       case EFormFieldType.checkbox:
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <FormControlLabel
+              required={required}
               control={
                 <Checkbox
                   className={formFieldClassName}
@@ -153,6 +156,7 @@ const AddLawyerForm = () => {
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <TextField
+              required={required}
               fullWidth
               className={formFieldClassName}
               size={size ?? 'small'}
@@ -169,6 +173,7 @@ const AddLawyerForm = () => {
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <Autocomplete
               fullWidth
+              clearIcon={false}
               className={formFieldClassName}
               options={options ?? []}
               getOptionLabel={(option) =>
@@ -181,7 +186,17 @@ const AddLawyerForm = () => {
               renderInput={(params) => (
                 <TextField
                   {...params}
+                  required={required}
                   label={t(`entities.${name}`)}
+                  onBlur={() =>
+                    updateLawyersState({
+                      type: ELawyersActionType.addLawyerAutocompleteValues,
+                      payload: {
+                        inputName: name,
+                        inputValue: '',
+                      },
+                    })
+                  }
                   onChange={debounce(
                     (event) =>
                       updateLawyersState({
@@ -203,12 +218,17 @@ const AddLawyerForm = () => {
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <LocalizationProvider dateAdapter={AdapterMoment}>
               <DatePicker
+                localeText={{ clearButtonLabel: t('clear') }}
                 label={t(`entities.${name}`)}
                 // @ts-ignore
                 value={addLawyerForm[name]}
                 className={formFieldClassName}
                 slotProps={{
-                  textField: { size: 'small', fullWidth: true },
+                  textField: {
+                    size: 'small',
+                    fullWidth: true,
+                    required: required,
+                  },
                   actionBar: {
                     actions: ['clear'],
                   },
@@ -223,6 +243,7 @@ const AddLawyerForm = () => {
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <DynamicInputs
+              limit={name === 'phoneNumbers' ? 4 : 2}
               label={t(`entities.${name}`)}
               inputProps={{
                 label: t(`entities.${subfieldName}`),

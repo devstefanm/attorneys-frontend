@@ -26,10 +26,16 @@ const initialState: ITransactionsState = {
   searchable: [],
   filterable: ETransactionTypeFilter.payment,
   addTransactionModalOpen: false,
+  editTransactionModalOpen: false,
   addTransactionForm: addTransactionsInitialFormData,
   addTransactionAutocompleteValues: addTransactionAutocompleteInitialValues,
+  editTransactionForm: addTransactionsInitialFormData,
+  editTransactionId: null,
+  editedTransactionFormData: {},
+  editTransactionAutocompleteValues: addTransactionAutocompleteInitialValues,
   openSuccessSnackbar: false,
   openErrorSnackbar: false,
+  confirmationDialogOpen: false,
 };
 
 export const TransactionsContext = React.createContext<{

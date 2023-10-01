@@ -3,10 +3,11 @@ import { FilterComponent, IOption } from '../../components/FilterComponent';
 import { useTranslation } from 'react-i18next';
 import { ETransactionTypeFilter } from '../../types/transactionsTypes';
 import { useTransactions } from '../../store/contexts/TransactionsContext';
+import { ETableActionType } from '../../types/universalTypes';
 
 const TransactionsFilter = () => {
   const {
-    state: { filterable },
+    state: { filterable, pageable },
     dispatch: updateTransactionsState,
   } = useTransactions();
 
@@ -32,6 +33,20 @@ const TransactionsFilter = () => {
     },
   ];
 
+  const handleChange = (value: any) => {
+    updateTransactionsState({
+      type: ETableActionType.filterable,
+      payload: value,
+    });
+    updateTransactionsState({
+      type: ETableActionType.pageable,
+      payload: {
+        ...pageable,
+        page: 1,
+      },
+    });
+  };
+
   return (
     <ErrorBoundary>
       <FilterComponent
@@ -39,7 +54,7 @@ const TransactionsFilter = () => {
         size="small"
         options={options}
         value={filterable}
-        onChange={updateTransactionsState}
+        onChange={handleChange}
       />
     </ErrorBoundary>
   );

@@ -120,11 +120,12 @@ const EditCaseForm = () => {
           const { value } = event?.target as HTMLTextAreaElement;
           let fieldEditValue = value;
           if (format) {
-            fieldEditValue = value.replace(format, '');
-            updateCasesState({
-              type: ECasesActionType.editCaseForm,
-              payload: { editName, fieldEditValue },
-            });
+            if (fieldEditValue.match(format)) {
+              updateCasesState({
+                type: ECasesActionType.editCaseForm,
+                payload: { editName, fieldEditValue },
+              });
+            }
           } else {
             updateCasesState({
               type: ECasesActionType.editCaseForm,
@@ -193,12 +194,14 @@ const EditCaseForm = () => {
       size,
       subfieldName,
       format,
+      required,
     } = field;
     switch (type) {
       case EFormFieldType.toggle:
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <FormControlLabel
+              required={required}
               className={formFieldClassName}
               value={isLegalEntity}
               onChange={handleChange(name, type)}
@@ -212,6 +215,7 @@ const EditCaseForm = () => {
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <FormControlLabel
+              required={required}
               control={
                 <Checkbox
                   className={formFieldClassName}
@@ -230,6 +234,7 @@ const EditCaseForm = () => {
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <TextField
+              required={required}
               fullWidth
               className={formFieldClassName}
               size={size ?? 'small'}
@@ -247,6 +252,7 @@ const EditCaseForm = () => {
             <Autocomplete
               isOptionEqualToValue={(option, value) => option.id === value.id}
               fullWidth
+              clearIcon={false}
               className={formFieldClassName}
               options={options ?? []}
               getOptionLabel={(option) =>
@@ -259,7 +265,17 @@ const EditCaseForm = () => {
               renderInput={(params) => (
                 <TextField
                   {...params}
+                  required={required}
                   label={t(`entities.${name}`)}
+                  onBlur={() =>
+                    updateCasesState({
+                      type: ECasesActionType.editCaseAutocompleteValues,
+                      payload: {
+                        inputName: name,
+                        inputValue: '',
+                      },
+                    })
+                  }
                   onChange={debounce(
                     (event) =>
                       updateCasesState({
@@ -281,12 +297,17 @@ const EditCaseForm = () => {
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <LocalizationProvider dateAdapter={AdapterMoment}>
               <DatePicker
+                localeText={{ clearButtonLabel: t('clear') }}
                 label={t(`entities.${name}`)}
                 // @ts-ignore
                 value={editCaseForm[name]}
                 className={formFieldClassName}
                 slotProps={{
-                  textField: { size: 'small', fullWidth: true },
+                  textField: {
+                    size: 'small',
+                    fullWidth: true,
+                    required: required,
+                  },
                   actionBar: {
                     actions: ['clear'],
                   },
@@ -301,6 +322,7 @@ const EditCaseForm = () => {
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <DynamicInputs
+              limit={name === 'phoneNumbers' ? 4 : 2}
               label={t(`entities.${name}`)}
               inputProps={{
                 label: t(`entities.${subfieldName}`),
@@ -317,6 +339,7 @@ const EditCaseForm = () => {
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <DynamicAutocompletes
+              limit={name === 'phoneNumbers' ? 4 : 2}
               options={options}
               label={t(`entities.${name}`)}
               autocompleteProps={{
@@ -339,6 +362,7 @@ const EditCaseForm = () => {
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <TextField
+              required={required}
               fullWidth
               multiline
               className={formFieldClassName}

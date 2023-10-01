@@ -24,10 +24,16 @@ const initialState: IExecutorsState = {
   },
   searchable: [],
   addExecutorModalOpen: false,
+  editExecutorModalOpen: false,
   addExecutorForm: addExecutorsInitialFormData,
   addExecutorAutocompleteValues: addExecutorAutocompleteInitialValues,
+  editExecutorForm: addExecutorsInitialFormData,
+  editExecutorAutocompleteValues: addExecutorAutocompleteInitialValues,
+  editExecutorId: null,
+  editedExecutorFormData: {},
   openSuccessSnackbar: false,
   openErrorSnackbar: false,
+  confirmationDialogOpen: false,
 };
 
 export const ExecutorsContext = React.createContext<{

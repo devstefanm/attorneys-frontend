@@ -7,6 +7,7 @@ import { useExecutors } from '../../store/contexts/ExecutorsContext';
 import { mapAddExecutorFormToRequestData } from './helpers/executorsHelpers';
 import { SnackbarNotification } from '../../components/SnackbarNotification';
 import { EExecutorsActionType } from '../../types/executorsTypes';
+import * as React from 'react';
 
 type Props = {
   open: boolean;
@@ -19,7 +20,13 @@ const AddExecutorModal = (props: Props) => {
   const { t } = useTranslation();
 
   const {
-    state: { addExecutorForm, openSuccessSnackbar, openErrorSnackbar },
+    state: {
+      addExecutorForm,
+      openSuccessSnackbar,
+      openErrorSnackbar,
+      addExecutorModalOpen,
+      editExecutorModalOpen,
+    },
     dispatch: updateExecutorsState,
   } = useExecutors();
 
@@ -30,7 +37,12 @@ const AddExecutorModal = (props: Props) => {
     error,
     isSuccess,
     isError,
+    reset,
   } = useAddNewExecutorMutation(onClose, updateExecutorsState);
+
+  React.useEffect(() => {
+    if ((addExecutorModalOpen || editExecutorModalOpen) && isSuccess) reset();
+  }, [addExecutorModalOpen, editExecutorModalOpen]);
 
   return (
     <ErrorBoundary>

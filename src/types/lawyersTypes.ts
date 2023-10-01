@@ -6,11 +6,17 @@ import {
 
 export enum ELawyersActionType {
   addLawyerModalOpen = 'ADD_LAWYER_MODAL_OPEN',
+  editLawyerModalOpen = 'EDIT_LAWYER_MODAL_OPEN',
   addLawyerForm = 'ADD_LAWYER_FORM',
   addLawyerAutocompleteValues = 'ADD_LAWYER_AC_VALUES',
   resetLawyerFormData = 'RESET_LAWYER_FORM_DATA',
   openSuccessSnackbar = 'SUCCESS_SNACKBAR',
   openErrorSnackbar = 'ERROR_SNACKBAR',
+  setLawyerFormData = 'SET_LAWYER_FORM_DATA',
+  editLawyerAutocompleteValues = 'EDIT_LAWYER_AC_VALUES',
+  editLawyerForm = 'EDIT_LAWYER_FORM',
+  editLawyerId = 'EDIT_LAWYER_ID',
+  confirmationDialogOpen = 'DIALOG_OPEN',
 }
 
 export type LawyersTableName =
@@ -33,6 +39,7 @@ export type LawyersTableHeader =
   | 'Number of Cases';
 
 export interface ILawyersTableData {
+  id: number;
   name: string;
   officeName: string;
   email: string;
@@ -44,6 +51,7 @@ export interface ILawyersTableData {
 }
 
 export interface ILawyersApiResponseData {
+  id: number;
   first_name: string;
   last_name: string;
   office_name: string;
@@ -97,11 +105,37 @@ export interface ILawyerResponseObject {
 }
 
 export interface ILawyerRequestData {
+  office_name?: string | null;
+  address?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
+  email?: string | null;
+  phone_numbers?: string[];
+  city_id?: number | null;
+}
+
+export interface IEditLawyerForm extends IAddLawyerForm {}
+
+export interface IEditedLawyerFormData {
+  firstName?: string;
+  lastName?: string;
+  officeName?: string;
+  address?: string;
+  email?: string;
+  phoneNumbers?: string[];
+  city?: IAutocompleteOption<string> | string;
+}
+
+export interface IViewLawyerApiResponseData {
+  id: number;
+  office_name: string;
   first_name: string;
   last_name: string;
-  office_name: string;
-  address: string;
-  email: string;
+  email: string | null;
+  address: string | null;
+  city: {
+    id: number;
+    name: string;
+  };
   phone_numbers: string[];
-  city_id: number | null;
 }

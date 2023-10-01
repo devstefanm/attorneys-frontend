@@ -35,10 +35,12 @@ const useAddNewLawyerMutation = (
           updateLawyersState({
             type: ELawyersActionType.resetLawyerFormData,
           });
-          updateLawyersState({
-            type: ELawyersActionType.openSuccessSnackbar,
-            payload: true,
-          });
+          if (response.data.message) {
+            updateLawyersState({
+              type: ELawyersActionType.openSuccessSnackbar,
+              payload: true,
+            });
+          }
           onClose();
           queryClient.invalidateQueries({ queryKey: ['lawyersList'] });
         }

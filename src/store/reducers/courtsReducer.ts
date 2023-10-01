@@ -1,7 +1,13 @@
-import { ECourtsActionType, IAddCourtForm } from '../../types/courtsTypes';
+import {
+  ECourtsActionType,
+  IAddCourtForm,
+  IEditCourtForm,
+  IEditedCourtFormData,
+} from '../../types/courtsTypes';
 import {
   ETableActionType,
   IAddNewEntityStateUpdate,
+  IEditEntityStateUpdate,
   ITablePageable,
   ITableSearchable,
   ITableSortable,
@@ -14,8 +20,13 @@ export interface ICourtsState {
   searchable: ITableSearchable[];
   addCourtForm: IAddCourtForm;
   addCourtModalOpen: boolean;
+  editCourtModalOpen: boolean;
+  editCourtForm: IEditCourtForm;
+  editedCourtFormData: IEditedCourtFormData;
+  editCourtId: number | null;
   openSuccessSnackbar: boolean;
   openErrorSnackbar: boolean;
+  confirmationDialogOpen: boolean;
 }
 
 interface ICourtsAction {
@@ -25,7 +36,10 @@ interface ICourtsAction {
     | ITablePageable
     | ITableSearchable
     | boolean
-    | IAddNewEntityStateUpdate;
+    | IAddNewEntityStateUpdate
+    | IEditEntityStateUpdate
+    | boolean
+    | number;
 }
 
 const courtsReducer = (
@@ -53,6 +67,8 @@ const courtsReducer = (
       return { ...state, searchable: newState };
     case ECourtsActionType.addCourtModalOpen:
       return { ...state, addCourtModalOpen: action.payload as boolean };
+    case ECourtsActionType.editCourtModalOpen:
+      return { ...state, editCourtModalOpen: action.payload as boolean };
     case ECourtsActionType.addCourtForm:
       const { name, fieldValue } = action.payload as IAddNewEntityStateUpdate;
       return {
@@ -62,15 +78,41 @@ const courtsReducer = (
           [name]: fieldValue,
         },
       };
+    case ECourtsActionType.setCourtFormData:
+      return {
+        ...state,
+        editCourtForm: action.payload as IEditCourtForm,
+      };
+    case ECourtsActionType.editCourtForm:
+      const { editName, fieldEditValue } =
+        action.payload as IEditEntityStateUpdate;
+      return {
+        ...state,
+        editCourtForm: {
+          ...state.editCourtForm,
+          [editName]: fieldEditValue,
+        },
+        editedCourtFormData: {
+          ...state.editedCourtFormData,
+          [editName]: fieldEditValue,
+        },
+      };
+    case ECourtsActionType.editCourtId:
+      return { ...state, editCourtId: action.payload as number };
     case ECourtsActionType.resetCourtFormData:
       return {
         ...state,
         addCourtForm: addCourtsInitialFormData,
+        editCourtForm: addCourtsInitialFormData,
+        editCourtId: null,
+        editedCourtFormData: {},
       };
     case ECourtsActionType.openErrorSnackbar:
       return { ...state, openErrorSnackbar: action.payload as boolean };
     case ECourtsActionType.openSuccessSnackbar:
       return { ...state, openSuccessSnackbar: action.payload as boolean };
+    case ECourtsActionType.confirmationDialogOpen:
+      return { ...state, confirmationDialogOpen: action.payload as boolean };
     default:
       return state;
   }

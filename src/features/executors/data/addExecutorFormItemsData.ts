@@ -3,12 +3,14 @@ import { EFormFieldType, IFormField } from '../../../types/universalTypes';
 export const formFields = ({ citiesOptions }: any): IFormField[] => [
   {
     name: 'firstName',
+    required: true,
     type: EFormFieldType.input,
     gridWidth: 6,
     condition: false,
   },
   {
     name: 'lastName',
+    required: true,
     type: EFormFieldType.input,
     gridWidth: 6,
     condition: false,

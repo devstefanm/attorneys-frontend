@@ -3,8 +3,9 @@ import {
   ICitiesTableData,
   ICitiesListQueryParams,
   ICitiesTableHeader,
+  ECitiesActionType,
 } from '../../types/citiesTypes';
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, Row } from '@tanstack/react-table';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import useGetCitiesListQuery from '../../hooks/queries/cities/useGetCitiesListQuery';
@@ -47,6 +48,22 @@ const CitiesTable = () => {
     ...queryParams,
     ...searchParams,
   });
+
+  const handleRowClick = (row: Row<ICitiesTableData>) => {
+    const { id } = row.original;
+
+    if (id) {
+      updateCitiesState({
+        type: ECitiesActionType.editCityId,
+        payload: id,
+      });
+
+      updateCitiesState({
+        type: ECitiesActionType.editCityModalOpen,
+        payload: true,
+      });
+    }
+  };
 
   const columns = React.useMemo<ColumnDef<ICitiesTableData>[]>(
     () => [
@@ -103,6 +120,7 @@ const CitiesTable = () => {
       updateState={updateCitiesState}
       refetch={refetch}
       mapBorderColors={mapCitiesToBorderColors}
+      onRowClick={handleRowClick}
     />
   ) : (
     <>Loading...</>

@@ -7,6 +7,7 @@ import { useCourts } from '../../store/contexts/CourtsContext';
 import { mapAddCourtFormToRequestData } from './helpers/courtsHelpers';
 import { SnackbarNotification } from '../../components/SnackbarNotification';
 import { ECourtsActionType } from '../../types/courtsTypes';
+import * as React from 'react';
 
 type Props = {
   open: boolean;
@@ -19,7 +20,13 @@ const AddCourtModal = (props: Props) => {
   const { t } = useTranslation();
 
   const {
-    state: { addCourtForm, openSuccessSnackbar, openErrorSnackbar },
+    state: {
+      addCourtForm,
+      openSuccessSnackbar,
+      openErrorSnackbar,
+      addCourtModalOpen,
+      editCourtModalOpen,
+    },
     dispatch: updateCourtsState,
   } = useCourts();
 
@@ -30,7 +37,12 @@ const AddCourtModal = (props: Props) => {
     error,
     isSuccess,
     isError,
+    reset,
   } = useAddNewCourtMutation(onClose, updateCourtsState);
+
+  React.useEffect(() => {
+    if ((addCourtModalOpen || editCourtModalOpen) && isSuccess) reset();
+  }, [addCourtModalOpen, editCourtModalOpen]);
 
   return (
     <ErrorBoundary>

@@ -6,6 +6,7 @@ import i18n from '../../../libs/i18next/i18n';
 import { uppercaseFirstLetter } from '../../../utils/transformData';
 
 export const mapApiResponseToTableData = ({
+  id,
   first_name,
   last_name,
   name,
@@ -16,6 +17,7 @@ export const mapApiResponseToTableData = ({
   posting_method,
   type,
 }: ITransactionsApiResponseData): ITransactionsTableData => ({
+  id,
   debtorsName: name
     ? uppercaseFirstLetter(name)
     : `${first_name ? uppercaseFirstLetter(first_name) : ''} ${

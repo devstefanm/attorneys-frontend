@@ -3,8 +3,9 @@ import {
   ITransactionsTableData,
   ITransactionsListQueryParams,
   ITransactionsTableHeader,
+  ETransactionsActionType,
 } from '../../types/transactionsTypes';
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, Row } from '@tanstack/react-table';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import useGetTransactionsListQuery from '../../hooks/queries/transactions/useGetTransactionsListQuery';
@@ -52,6 +53,22 @@ const TransactionsTable = () => {
     ...searchParams,
     filter: filterable,
   });
+
+  const handleRowClick = (row: Row<ITransactionsTableData>) => {
+    const { id } = row.original;
+
+    if (id) {
+      updateTransactionsState({
+        type: ETransactionsActionType.editTransactionId,
+        payload: id,
+      });
+
+      updateTransactionsState({
+        type: ETransactionsActionType.editTransactionModalOpen,
+        payload: true,
+      });
+    }
+  };
 
   const columns = React.useMemo<ColumnDef<ITransactionsTableData>[]>(
     () => [
@@ -133,6 +150,7 @@ const TransactionsTable = () => {
       updateState={updateTransactionsState}
       refetch={refetch}
       mapBorderColors={mapTypeToBorderColor}
+      onRowClick={handleRowClick}
     />
   ) : (
     <>Loading...</>

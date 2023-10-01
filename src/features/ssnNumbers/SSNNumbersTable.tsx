@@ -3,8 +3,9 @@ import {
   ISSNNumbersTableData,
   ISSNNumbersListQueryParams,
   ISSNNumbersTableHeader,
+  ESSNNumbersActionType,
 } from '../../types/ssnNumbersTypes';
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, Row } from '@tanstack/react-table';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import useGetSSNNumbersListQuery from '../../hooks/queries/ssnNumbers/useGetSSNNumbersListQuery';
@@ -46,6 +47,22 @@ const SSNNumbersTable = () => {
     ...searchParams,
   });
 
+  const handleRowClick = (row: Row<ISSNNumbersTableData>) => {
+    const { id } = row.original;
+
+    if (id) {
+      updateSSNNumbersState({
+        type: ESSNNumbersActionType.editSSNNumberId,
+        payload: id,
+      });
+
+      updateSSNNumbersState({
+        type: ESSNNumbersActionType.editSSNNumberModalOpen,
+        payload: true,
+      });
+    }
+  };
+
   const columns = React.useMemo<ColumnDef<ISSNNumbersTableData>[]>(
     () => [
       {
@@ -85,6 +102,7 @@ const SSNNumbersTable = () => {
       updateState={updateSSNNumbersState}
       refetch={refetch}
       mapBorderColors={mapSSNNumbersToBorderColors}
+      onRowClick={handleRowClick}
     />
   ) : (
     <>Loading...</>

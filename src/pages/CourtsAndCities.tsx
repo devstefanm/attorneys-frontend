@@ -11,6 +11,8 @@ import { ECourtsActionType } from '../types/courtsTypes';
 import { ECitiesActionType } from '../types/citiesTypes';
 import AddCourtModal from '../features/courts/AddCourtModal';
 import AddCityModal from '../features/cities/AddCityModal';
+import { EditCityModal } from '../features/cities/EditCityModal';
+import { EditCourtModal } from '../features/courts/EditCourtModal';
 
 type Props = IPagesProps & {};
 
@@ -18,14 +20,54 @@ const CourtsAndCities = (_props: Props) => {
   const { t } = useTranslation();
 
   const {
-    state: { addCourtModalOpen },
+    state: { addCourtModalOpen, editCourtModalOpen },
     dispatch: updateCourtsState,
   } = useCourts();
 
   const {
-    state: { addCityModalOpen },
+    state: { addCityModalOpen, editCityModalOpen },
     dispatch: updateCitiesState,
   } = useCities();
+
+  const handleAddCourtModalClose = () => {
+    updateCourtsState({
+      type: ECourtsActionType.addCourtModalOpen,
+      payload: false,
+    });
+    updateCourtsState({
+      type: ECourtsActionType.resetCourtFormData,
+    });
+  };
+
+  const handleEditCourtModalClose = () => {
+    updateCourtsState({
+      type: ECourtsActionType.editCourtModalOpen,
+      payload: false,
+    });
+    updateCourtsState({
+      type: ECourtsActionType.resetCourtFormData,
+    });
+  };
+
+  const handleAddCityModalClose = () => {
+    updateCitiesState({
+      type: ECitiesActionType.addCityModalOpen,
+      payload: false,
+    });
+    updateCitiesState({
+      type: ECitiesActionType.resetCityFormData,
+    });
+  };
+
+  const handleEditCityModalClose = () => {
+    updateCitiesState({
+      type: ECitiesActionType.editCityModalOpen,
+      payload: false,
+    });
+    updateCitiesState({
+      type: ECitiesActionType.resetCityFormData,
+    });
+  };
 
   return (
     <ErrorBoundary>
@@ -64,21 +106,19 @@ const CourtsAndCities = (_props: Props) => {
         </Box>
         <AddCourtModal
           open={addCourtModalOpen}
-          onClose={() =>
-            updateCourtsState({
-              type: ECourtsActionType.addCourtModalOpen,
-              payload: false,
-            })
-          }
+          onClose={handleAddCourtModalClose}
+        />
+        <EditCourtModal
+          open={editCourtModalOpen}
+          onClose={handleEditCourtModalClose}
         />
         <AddCityModal
           open={addCityModalOpen}
-          onClose={() =>
-            updateCitiesState({
-              type: ECitiesActionType.addCityModalOpen,
-              payload: false,
-            })
-          }
+          onClose={handleAddCityModalClose}
+        />
+        <EditCityModal
+          open={editCityModalOpen}
+          onClose={handleEditCityModalClose}
         />
       </React.Suspense>
     </ErrorBoundary>

@@ -7,6 +7,7 @@ import { usePackages } from '../../store/contexts/PackagesContext';
 import { mapAddPackageFormToRequestData } from './helpers/packagesHelpers';
 import { SnackbarNotification } from '../../components/SnackbarNotification';
 import { EPackagesActionType } from '../../types/packagesTypes';
+import * as React from 'react';
 
 type Props = {
   open: boolean;
@@ -19,7 +20,13 @@ const AddPackageModal = (props: Props) => {
   const { t } = useTranslation();
 
   const {
-    state: { addPackageForm, openSuccessSnackbar, openErrorSnackbar },
+    state: {
+      addPackageForm,
+      openSuccessSnackbar,
+      openErrorSnackbar,
+      addPackageModalOpen,
+      editPackageModalOpen,
+    },
     dispatch: updatePackagesState,
   } = usePackages();
 
@@ -30,7 +37,12 @@ const AddPackageModal = (props: Props) => {
     error,
     isSuccess,
     isError,
+    reset,
   } = useAddNewPackageMutation(onClose, updatePackagesState);
+
+  React.useEffect(() => {
+    if ((addPackageModalOpen || editPackageModalOpen) && isSuccess) reset();
+  }, [addPackageModalOpen, editPackageModalOpen]);
 
   return (
     <ErrorBoundary>

@@ -49,11 +49,12 @@ const AddSSNNumberForm = () => {
           const { value } = event?.target as HTMLTextAreaElement;
           let fieldValue = value;
           if (format) {
-            fieldValue = value.replace(format, '');
-            updateSSNNumbersState({
-              type: ESSNNumbersActionType.addSSNNumberForm,
-              payload: { name, fieldValue },
-            });
+            if (fieldValue.match(format)) {
+              updateSSNNumbersState({
+                type: ESSNNumbersActionType.addSSNNumberForm,
+                payload: { name, fieldValue },
+              });
+            }
           } else {
             updateSSNNumbersState({
               type: ESSNNumbersActionType.addSSNNumberForm,
@@ -96,12 +97,14 @@ const AddSSNNumberForm = () => {
       size,
       subfieldName,
       format,
+      required,
     } = field;
     switch (type) {
       case EFormFieldType.checkbox:
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <FormControlLabel
+              required={required}
               control={
                 <Checkbox
                   className={formFieldClassName}
@@ -120,6 +123,7 @@ const AddSSNNumberForm = () => {
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <TextField
+              required={required}
               fullWidth
               className={formFieldClassName}
               size={size ?? 'small'}
@@ -136,12 +140,17 @@ const AddSSNNumberForm = () => {
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <LocalizationProvider dateAdapter={AdapterMoment}>
               <DatePicker
+                localeText={{ clearButtonLabel: t('clear') }}
                 label={t(`entities.${name}`)}
                 // @ts-ignore
                 value={addSSNNumberForm[name]}
                 className={formFieldClassName}
                 slotProps={{
-                  textField: { size: 'small', fullWidth: true },
+                  textField: {
+                    size: 'small',
+                    fullWidth: true,
+                    required: required,
+                  },
                   actionBar: {
                     actions: ['clear'],
                   },
@@ -156,6 +165,7 @@ const AddSSNNumberForm = () => {
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <DynamicInputs
+              limit={name === 'phoneNumbers' ? 4 : 2}
               label={t(`entities.${name}`)}
               inputProps={{
                 label: t(`entities.${subfieldName}`),

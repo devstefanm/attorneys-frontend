@@ -3,8 +3,9 @@ import {
   ILawyersTableData,
   ILawyersListQueryParams,
   ILawyersTableHeader,
+  ELawyersActionType,
 } from '../../types/lawyersTypes';
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, Row } from '@tanstack/react-table';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import useGetLawyersListQuery from '../../hooks/queries/lawyers/useGetLawyersListQuery';
@@ -51,6 +52,22 @@ const LawyersTable = () => {
     ...queryParams,
     ...searchParams,
   });
+
+  const handleRowClick = (row: Row<ILawyersTableData>) => {
+    const { id } = row.original;
+
+    if (id) {
+      updateLawyersState({
+        type: ELawyersActionType.editLawyerId,
+        payload: id,
+      });
+
+      updateLawyersState({
+        type: ELawyersActionType.editLawyerModalOpen,
+        payload: true,
+      });
+    }
+  };
 
   const columns = React.useMemo<ColumnDef<ILawyersTableData>[]>(
     () => [
@@ -139,6 +156,7 @@ const LawyersTable = () => {
       updateState={updateLawyersState}
       refetch={refetch}
       mapBorderColors={mapLawyersToBorderColors}
+      onRowClick={handleRowClick}
     />
   ) : (
     <>Loading...</>

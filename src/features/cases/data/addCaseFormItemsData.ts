@@ -19,24 +19,28 @@ export const formFields = ({
   },
   {
     name: 'firstName',
+    required: true,
     type: EFormFieldType.input,
     gridWidth: 6,
     condition: false,
   },
   {
     name: 'lastName',
+    required: true,
     type: EFormFieldType.input,
     gridWidth: 6,
     condition: false,
   },
   {
     name: 'jmbg',
+    required: true,
     type: EFormFieldType.input,
     gridWidth: 12,
     condition: false,
   },
   {
     name: 'name',
+    required: true,
     type: EFormFieldType.input,
     gridWidth: 6,
     condition: true,
@@ -77,13 +81,13 @@ export const formFields = ({
     name: 'principal',
     type: EFormFieldType.input,
     gridWidth: 6,
-    format: /[^0-9.]/g,
+    format: /^[\d 0-9.]{0,24}$/,
   },
   {
     name: 'interest',
     type: EFormFieldType.input,
     gridWidth: 6,
-    format: /[^0-9.]/g,
+    format: /^[\d 0-9.]{0,24}$/,
   },
   {
     name: 'businessNumbers',
@@ -93,11 +97,13 @@ export const formFields = ({
   },
   {
     name: 'caseNumber',
+    required: true,
     type: EFormFieldType.input,
     gridWidth: 6,
   },
   {
     name: 'contractNumber',
+    required: true,
     type: EFormFieldType.input,
     gridWidth: 6,
   },
@@ -155,6 +161,7 @@ export const formFields = ({
   },
   {
     name: 'client',
+    required: true,
     type: EFormFieldType.autocomplete,
     gridWidth: 6,
     options: clientsOptions,
@@ -183,20 +190,28 @@ export const formFields = ({
     name: 'oldPayment',
     type: EFormFieldType.input,
     gridWidth: 6,
+    format: /^[\d 0-9.]{0,24}$/,
   },
   {
     name: 'ourTaxes',
     type: EFormFieldType.input,
     gridWidth: 6,
+    format: /^[\d 0-9.]{0,24}$/,
   },
   {
     name: 'warningPrice',
     type: EFormFieldType.input,
     gridWidth: 6,
+    format: /^[\d 0-9.]{0,24}$/,
   },
   {
     name: 'comment',
     type: EFormFieldType.textArea,
-    gridWidth: 12,
+    gridWidth: 6,
+  },
+  {
+    name: 'limitationObjection',
+    type: EFormFieldType.checkbox,
+    gridWidth: 6,
   },
 ];

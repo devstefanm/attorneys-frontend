@@ -1,13 +1,18 @@
 import {
   IAddTransactionForm,
+  IEditedTransactionFormData,
   ITransactionRequestData,
+  IViewTransactionApiResponseData,
 } from './../../../types/transactionsTypes';
 import {
   ETransactionType,
   ITransactionResponseObject,
 } from '../../../types/transactionsTypes';
 import { IAutocompleteOption } from '../../../types/universalTypes';
-import { transformDateFormat } from '../../../utils/transformData';
+import {
+  reverseDateFormat,
+  transformDateFormat,
+} from '../../../utils/transformData';
 
 export const mapTypeToBorderColor = (type: string) => {
   switch (type) {
@@ -36,7 +41,6 @@ export const mapApiResponseToAutocompleteOptions = (
     name: responseName,
   } = responseObject;
   let name = '';
-
   if (responseName) name = responseName;
 
   if (case_number) {
@@ -82,4 +86,80 @@ export const mapAddTransactionFormToRequestData = ({
     posting_method: postingMethod || null,
     type: transactionType,
   };
+};
+
+export const mapTransactionApiResponseToEditTransactionForm = ({
+  amount,
+  case: { id, case_number, first_name, last_name, name },
+  payment_date,
+  posting_method,
+  type,
+}: IViewTransactionApiResponseData): IAddTransactionForm => {
+  const transactionTypeOptions: ITransactionResponseObject[] = [
+    { id: 1, type: 'fee' },
+    { id: 2, type: 'legal_fee' },
+    { id: 3, type: 'payment' },
+    { id: 4, type: 'withdrawal' },
+  ];
+
+  const typeObject = transactionTypeOptions.find(
+    (option) => option.type === type,
+  );
+
+  return {
+    amount: String(amount),
+    caseNumber: {
+      id,
+      name: `${case_number} ${
+        first_name
+          ? `- (${first_name} ${last_name})`
+          : name
+          ? `- (${name})`
+          : ''
+      }`,
+    },
+    type: typeObject as IAutocompleteOption<ETransactionType>,
+    paymentDate: payment_date ? reverseDateFormat(payment_date) : null,
+    postingMethod: posting_method,
+  };
+};
+
+export const mapEditTransactionFormToRequestData = ({
+  amount,
+  caseNumber,
+  paymentDate,
+  postingMethod,
+  type,
+}: IEditedTransactionFormData): Partial<ITransactionRequestData> => {
+  const requestData: Partial<ITransactionRequestData> = {};
+
+  if (amount !== undefined) requestData.amount = Number(amount) || null;
+
+  if (caseNumber !== undefined) {
+    if (typeof caseNumber !== 'string') {
+      requestData.case_id = caseNumber.id || null;
+    } else if (caseNumber === '') {
+      requestData.case_id = null;
+    }
+  }
+
+  if (paymentDate !== undefined) {
+    requestData.payment_date = paymentDate
+      ? transformDateFormat(paymentDate)
+      : null;
+  }
+
+  if (postingMethod !== undefined) {
+    requestData.posting_method = postingMethod || null;
+  }
+
+  if (type !== undefined) {
+    if (typeof type !== 'string') {
+      requestData.type = type.name || null;
+    } else if (type === '') {
+      requestData.type = null;
+    }
+  }
+
+  return requestData;
 };

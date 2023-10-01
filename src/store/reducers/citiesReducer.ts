@@ -1,7 +1,13 @@
-import { ECitiesActionType, IAddCityForm } from '../../types/citiesTypes';
+import {
+  ECitiesActionType,
+  IAddCityForm,
+  IEditCityForm,
+  IEditedCityFormData,
+} from '../../types/citiesTypes';
 import {
   ETableActionType,
   IAddNewEntityStateUpdate,
+  IEditEntityStateUpdate,
   ITablePageable,
   ITableSearchable,
   ITableSortable,
@@ -14,8 +20,13 @@ export interface ICitiesState {
   searchable: ITableSearchable[];
   addCityForm: IAddCityForm;
   addCityModalOpen: boolean;
+  editCityModalOpen: boolean;
+  editCityForm: IEditCityForm;
+  editedCityFormData: IEditedCityFormData;
+  editCityId: number | null;
   openSuccessSnackbar: boolean;
   openErrorSnackbar: boolean;
+  confirmationDialogOpen: boolean;
 }
 
 interface ICitiesAction {
@@ -24,8 +35,10 @@ interface ICitiesAction {
     | ITableSortable
     | ITablePageable
     | ITableSearchable
+    | IAddNewEntityStateUpdate
+    | IEditEntityStateUpdate
     | boolean
-    | IAddNewEntityStateUpdate;
+    | number;
 }
 
 const citiesReducer = (
@@ -53,6 +66,8 @@ const citiesReducer = (
       return { ...state, searchable: newState };
     case ECitiesActionType.addCityModalOpen:
       return { ...state, addCityModalOpen: action.payload as boolean };
+    case ECitiesActionType.editCityModalOpen:
+      return { ...state, editCityModalOpen: action.payload as boolean };
     case ECitiesActionType.addCityForm:
       const { name, fieldValue } = action.payload as IAddNewEntityStateUpdate;
       return {
@@ -62,15 +77,41 @@ const citiesReducer = (
           [name]: fieldValue,
         },
       };
+    case ECitiesActionType.setCityFormData:
+      return {
+        ...state,
+        editCityForm: action.payload as IEditCityForm,
+      };
+    case ECitiesActionType.editCityForm:
+      const { editName, fieldEditValue } =
+        action.payload as IEditEntityStateUpdate;
+      return {
+        ...state,
+        editCityForm: {
+          ...state.editCityForm,
+          [editName]: fieldEditValue,
+        },
+        editedCityFormData: {
+          ...state.editedCityFormData,
+          [editName]: fieldEditValue,
+        },
+      };
+    case ECitiesActionType.editCityId:
+      return { ...state, editCityId: action.payload as number };
     case ECitiesActionType.resetCityFormData:
       return {
         ...state,
         addCityForm: addCitiesInitialFormData,
+        editCityForm: addCitiesInitialFormData,
+        editCityId: null,
+        editedCityFormData: {},
       };
     case ECitiesActionType.openErrorSnackbar:
       return { ...state, openErrorSnackbar: action.payload as boolean };
     case ECitiesActionType.openSuccessSnackbar:
       return { ...state, openSuccessSnackbar: action.payload as boolean };
+    case ECitiesActionType.confirmationDialogOpen:
+      return { ...state, confirmationDialogOpen: action.payload as boolean };
     default:
       return state;
   }

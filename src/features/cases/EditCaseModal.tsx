@@ -9,6 +9,7 @@ import { ConfirmationDialog } from '../../components/ConfirmationDialog';
 import { ECasesActionType } from '../../types/casesTypes';
 import useDeleteCaseMutation from '../../hooks/mutations/cases/useDeleteCaseMutation';
 import { SnackbarNotification } from '../../components/SnackbarNotification';
+import * as React from 'react';
 
 type Props = {
   open: boolean;
@@ -20,6 +21,21 @@ const EditCaseModal = (props: Props) => {
 
   const { t } = useTranslation();
 
+  const {
+    state: {
+      editedCaseFormData,
+      editCaseId,
+      confirmationDialogOpen,
+      openSuccessSnackbar,
+      openErrorSnackbar,
+      addCaseModalOpen,
+      editCaseModalOpen,
+      exportCasesDialogOpen,
+      importCasesDialogOpen,
+    },
+    dispatch: updateCasesState,
+  } = useCases();
+
   const onConfirmationDialogClose = () => {
     updateCasesState({
       type: ECasesActionType.confirmationDialogOpen,
@@ -29,23 +45,13 @@ const EditCaseModal = (props: Props) => {
   };
 
   const {
-    state: {
-      editedCaseFormData,
-      editCaseId,
-      confirmationDialogOpen,
-      openSuccessSnackbar,
-      openErrorSnackbar,
-    },
-    dispatch: updateCasesState,
-  } = useCases();
-
-  const {
     mutate: editCase,
     isLoading: isEditLoading,
     data: editData,
     error: editError,
     isSuccess: isEditSuccess,
     isError: isEditError,
+    reset: editReset,
   } = useEditCaseMutation(onClose, updateCasesState, editCaseId as number);
 
   const {
@@ -55,15 +61,31 @@ const EditCaseModal = (props: Props) => {
     error: deleteError,
     isSuccess: isDeleteSuccess,
     isError: isDeleteError,
+    reset: deleteReset,
   } = useDeleteCaseMutation(
     onConfirmationDialogClose,
     updateCasesState,
     editCaseId as number,
   );
 
+  React.useEffect(() => {
+    if (
+      addCaseModalOpen ||
+      editCaseModalOpen ||
+      exportCasesDialogOpen ||
+      importCasesDialogOpen
+    ) {
+      if (isEditSuccess) editReset();
+      if (isDeleteSuccess) deleteReset();
+    }
+  }, [
+    addCaseModalOpen,
+    editCaseModalOpen,
+    exportCasesDialogOpen,
+    importCasesDialogOpen,
+  ]);
+
   const isError = isEditError || isDeleteError;
-  const isSuccess = isEditSuccess || isDeleteSuccess;
-  const data = editData || deleteData;
   const error = editError || deleteError;
 
   return (
@@ -97,7 +119,7 @@ const EditCaseModal = (props: Props) => {
         onClose={() => onConfirmationDialogClose()}
         onSubmit={() => daleteCase()}
       />
-      {isSuccess && data?.data.message ? (
+      {isEditSuccess && editData?.data.message ? (
         <SnackbarNotification
           open={openSuccessSnackbar}
           onClose={() =>
@@ -107,7 +129,22 @@ const EditCaseModal = (props: Props) => {
             })
           }
           severity="success"
-          content={data?.data.message}
+          content={editData?.data.message}
+        />
+      ) : (
+        ''
+      )}
+      {isDeleteSuccess && deleteData?.data.message ? (
+        <SnackbarNotification
+          open={openSuccessSnackbar}
+          onClose={() =>
+            updateCasesState({
+              type: ECasesActionType.openSuccessSnackbar,
+              payload: false,
+            })
+          }
+          severity="success"
+          content={deleteData?.data.message}
         />
       ) : (
         ''

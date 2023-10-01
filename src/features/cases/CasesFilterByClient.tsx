@@ -5,10 +5,11 @@ import { useCases } from '../../store/contexts/CasesContext';
 import useGetClientsNamesQuery from '../../hooks/queries/clients/useGetClientsNamesQuery';
 import { mapClientToFilterOption } from './helpers/casesHelpers';
 import { ECasesActionType } from '../../types/casesTypes';
+import { ETableActionType } from '../../types/universalTypes';
 
 const CasesFilterByClient = () => {
   const {
-    state: { filterableByClient },
+    state: { filterableByClient, pageable },
     dispatch: updateCasesState,
   } = useCases();
 
@@ -25,6 +26,20 @@ const CasesFilterByClient = () => {
     ...clientsOptions,
   ];
 
+  const handleChange = (value: any) => {
+    updateCasesState({
+      type: ECasesActionType.filterableByClient,
+      payload: value,
+    });
+    updateCasesState({
+      type: ETableActionType.pageable,
+      payload: {
+        ...pageable,
+        page: 1,
+      },
+    });
+  };
+
   return (
     <ErrorBoundary>
       <FilterComponent
@@ -32,8 +47,7 @@ const CasesFilterByClient = () => {
         size="small"
         options={options}
         value={filterableByClient}
-        onChange={updateCasesState}
-        actionType={ECasesActionType.filterableByClient}
+        onChange={handleChange}
       />
     </ErrorBoundary>
   );

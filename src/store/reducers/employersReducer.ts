@@ -1,10 +1,13 @@
 import {
   EEmployersActionType,
   IAddEmployerForm,
+  IEditEmployerForm,
+  IEditedEmployerFormData,
 } from '../../types/employersTypes';
 import {
   ETableActionType,
   IAddNewEntityStateUpdate,
+  IEditEntityStateUpdate,
   ITablePageable,
   ITableSearchable,
   ITableSortable,
@@ -17,8 +20,13 @@ export interface IEmployersState {
   searchable: ITableSearchable[];
   addEmployerForm: IAddEmployerForm;
   addEmployerModalOpen: boolean;
+  editEmployerModalOpen: boolean;
+  editEmployerForm: IEditEmployerForm;
+  editedEmployerFormData: IEditedEmployerFormData;
+  editEmployerId: number | null;
   openSuccessSnackbar: boolean;
   openErrorSnackbar: boolean;
+  confirmationDialogOpen: boolean;
 }
 
 interface IEmployersAction {
@@ -27,8 +35,10 @@ interface IEmployersAction {
     | ITableSortable
     | ITablePageable
     | ITableSearchable
+    | IAddNewEntityStateUpdate
+    | IEditEntityStateUpdate
     | boolean
-    | IAddNewEntityStateUpdate;
+    | number;
 }
 
 const employersReducer = (
@@ -56,6 +66,8 @@ const employersReducer = (
       return { ...state, searchable: newState };
     case EEmployersActionType.addEmployerModalOpen:
       return { ...state, addEmployerModalOpen: action.payload as boolean };
+    case EEmployersActionType.editEmployerModalOpen:
+      return { ...state, editEmployerModalOpen: action.payload as boolean };
     case EEmployersActionType.addEmployerForm:
       const { name, fieldValue } = action.payload as IAddNewEntityStateUpdate;
       return {
@@ -65,15 +77,41 @@ const employersReducer = (
           [name]: fieldValue,
         },
       };
+    case EEmployersActionType.setEmployerFormData:
+      return {
+        ...state,
+        editEmployerForm: action.payload as IEditEmployerForm,
+      };
+    case EEmployersActionType.editEmployerForm:
+      const { editName, fieldEditValue } =
+        action.payload as IEditEntityStateUpdate;
+      return {
+        ...state,
+        editEmployerForm: {
+          ...state.editEmployerForm,
+          [editName]: fieldEditValue,
+        },
+        editedEmployerFormData: {
+          ...state.editedEmployerFormData,
+          [editName]: fieldEditValue,
+        },
+      };
+    case EEmployersActionType.editEmployerId:
+      return { ...state, editEmployerId: action.payload as number };
     case EEmployersActionType.resetEmployerFormData:
       return {
         ...state,
         addEmployerForm: addEmployersInitialFormData,
+        editEmployerForm: addEmployersInitialFormData,
+        editEmployerId: null,
+        editedEmployerFormData: {},
       };
     case EEmployersActionType.openErrorSnackbar:
       return { ...state, openErrorSnackbar: action.payload as boolean };
     case EEmployersActionType.openSuccessSnackbar:
       return { ...state, openSuccessSnackbar: action.payload as boolean };
+    case EEmployersActionType.confirmationDialogOpen:
+      return { ...state, confirmationDialogOpen: action.payload as boolean };
     default:
       return state;
   }

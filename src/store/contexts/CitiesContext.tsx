@@ -18,9 +18,14 @@ const initialState: ICitiesState = {
   },
   searchable: [],
   addCityModalOpen: false,
+  editCityModalOpen: false,
   addCityForm: addCitiesInitialFormData,
+  editCityForm: addCitiesInitialFormData,
+  editCityId: null,
+  editedCityFormData: {},
   openSuccessSnackbar: false,
   openErrorSnackbar: false,
+  confirmationDialogOpen: false,
 };
 
 export const CitiesContext = React.createContext<{

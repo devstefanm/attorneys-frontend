@@ -7,6 +7,7 @@ import { useEmployers } from '../../store/contexts/EmployersContext';
 import { mapAddEmployerFormToRequestData } from './helpers/employersHelpers';
 import { SnackbarNotification } from '../../components/SnackbarNotification';
 import { EEmployersActionType } from '../../types/employersTypes';
+import * as React from 'react';
 
 type Props = {
   open: boolean;
@@ -19,7 +20,13 @@ const AddEmployerModal = (props: Props) => {
   const { t } = useTranslation();
 
   const {
-    state: { addEmployerForm, openSuccessSnackbar, openErrorSnackbar },
+    state: {
+      addEmployerForm,
+      openSuccessSnackbar,
+      openErrorSnackbar,
+      addEmployerModalOpen,
+      editEmployerModalOpen,
+    },
     dispatch: updateEmployersState,
   } = useEmployers();
 
@@ -30,7 +37,12 @@ const AddEmployerModal = (props: Props) => {
     error,
     isSuccess,
     isError,
+    reset,
   } = useAddNewEmployerMutation(onClose, updateEmployersState);
+
+  React.useEffect(() => {
+    if ((addEmployerModalOpen || editEmployerModalOpen) && isSuccess) reset();
+  }, [addEmployerModalOpen, editEmployerModalOpen]);
 
   return (
     <ErrorBoundary>

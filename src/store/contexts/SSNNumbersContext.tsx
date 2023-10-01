@@ -21,9 +21,14 @@ const initialState: ISSNNumbersState = {
   },
   searchable: [],
   addSSNNumberModalOpen: false,
+  editSSNNumberModalOpen: false,
   addSSNNumberForm: addSSNNumbersInitialFormData,
+  editSSNNumberForm: addSSNNumbersInitialFormData,
+  editSSNNumberId: null,
+  editedSSNNumberFormData: {},
   openSuccessSnackbar: false,
   openErrorSnackbar: false,
+  confirmationDialogOpen: false,
 };
 
 export const SSNNumbersContext = React.createContext<{

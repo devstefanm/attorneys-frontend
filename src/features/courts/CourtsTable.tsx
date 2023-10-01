@@ -3,8 +3,9 @@ import {
   ICourtsTableData,
   ICourtsListQueryParams,
   ICourtsTableHeader,
+  ECourtsActionType,
 } from '../../types/courtsTypes';
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, Row } from '@tanstack/react-table';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import useGetCourtsListQuery from '../../hooks/queries/courts/useGetCourtsListQuery';
@@ -46,6 +47,22 @@ const CourtsTable = () => {
     ...searchParams,
   });
 
+  const handleRowClick = (row: Row<ICourtsTableData>) => {
+    const { id } = row.original;
+
+    if (id) {
+      updateCourtsState({
+        type: ECourtsActionType.editCourtId,
+        payload: id,
+      });
+
+      updateCourtsState({
+        type: ECourtsActionType.editCourtModalOpen,
+        payload: true,
+      });
+    }
+  };
+
   const columns = React.useMemo<ColumnDef<ICourtsTableData>[]>(
     () => [
       {
@@ -85,6 +102,7 @@ const CourtsTable = () => {
       updateState={updateCourtsState}
       refetch={refetch}
       mapBorderColors={mapCourtsToBorderColors}
+      onRowClick={handleRowClick}
     />
   ) : (
     <>Loading...</>

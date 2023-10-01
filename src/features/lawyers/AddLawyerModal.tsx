@@ -7,6 +7,7 @@ import { useLawyers } from '../../store/contexts/LawyersContext';
 import { mapAddLawyerFormToRequestData } from './helpers/lawyersHelpers';
 import { SnackbarNotification } from '../../components/SnackbarNotification';
 import { ELawyersActionType } from '../../types/lawyersTypes';
+import * as React from 'react';
 
 type Props = {
   open: boolean;
@@ -19,7 +20,13 @@ const AddLawyerModal = (props: Props) => {
   const { t } = useTranslation();
 
   const {
-    state: { addLawyerForm, openSuccessSnackbar, openErrorSnackbar },
+    state: {
+      addLawyerForm,
+      openSuccessSnackbar,
+      openErrorSnackbar,
+      addLawyerModalOpen,
+      editLawyerModalOpen,
+    },
     dispatch: updateLawyersState,
   } = useLawyers();
 
@@ -30,7 +37,12 @@ const AddLawyerModal = (props: Props) => {
     error,
     isSuccess,
     isError,
+    reset,
   } = useAddNewLawyerMutation(onClose, updateLawyersState);
+
+  React.useEffect(() => {
+    if ((addLawyerModalOpen || editLawyerModalOpen) && isSuccess) reset();
+  }, [addLawyerModalOpen, editLawyerModalOpen]);
 
   return (
     <ErrorBoundary>

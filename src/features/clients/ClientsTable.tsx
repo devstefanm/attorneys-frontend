@@ -3,8 +3,9 @@ import {
   IClientsTableData,
   IClientsListQueryParams,
   IClientsTableHeader,
+  EClientsActionType,
 } from '../../types/clientsTypes';
-import { ColumnDef } from '@tanstack/react-table';
+import { ColumnDef, Row } from '@tanstack/react-table';
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import useGetClientsListQuery from '../../hooks/queries/clients/useGetClientsListQuery';
@@ -46,6 +47,22 @@ const ClientsTable = () => {
     ...searchParams,
   });
 
+  const handleRowClick = (row: Row<IClientsTableData>) => {
+    const { id } = row.original;
+
+    if (id) {
+      updateClientsState({
+        type: EClientsActionType.editClientId,
+        payload: id,
+      });
+
+      updateClientsState({
+        type: EClientsActionType.editClientModalOpen,
+        payload: true,
+      });
+    }
+  };
+
   const columns = React.useMemo<ColumnDef<IClientsTableData>[]>(
     () => [
       {
@@ -85,6 +102,7 @@ const ClientsTable = () => {
       updateState={updateClientsState}
       refetch={refetch}
       mapBorderColors={mapClientsToBorderColors}
+      onRowClick={handleRowClick}
     />
   ) : (
     <>Loading...</>
