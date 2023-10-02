@@ -373,6 +373,7 @@ export interface ICasesExportChecklistValues {
   package: boolean;
   principal: boolean;
   interest: boolean;
+  currentDebt: boolean;
   cession: boolean;
   state: boolean;
   phoneNumbers: boolean;

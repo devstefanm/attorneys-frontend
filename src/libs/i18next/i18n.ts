@@ -237,6 +237,7 @@ i18n
             ourTaxes: 'Additional taxes',
             warningPrice: 'Cost of warning',
             enteringDate: 'Date of entering Creditexpress',
+            currentDebt: 'Current debt',
             lawyerHandOverDate: 'Lawyer hand-over date',
             comment: 'Comment',
             limitationObjection: 'Limitation of Objection',
@@ -322,6 +323,7 @@ i18n
           errors: {
             // Common errors
             nothingChanged: 'You have not changed anything.',
+            caseNumberWithoutCase: 'Unknown Case Number.',
             noName: 'You have not entered a name.',
             noJMBG: 'You have not entered a JMBG.',
             noSSN: 'You have not entered a SSN Number.',
@@ -590,6 +592,7 @@ i18n
             ourTaxes: 'Dodatne takse',
             warningPrice: 'Trošak opomene',
             enteringDate: 'Datum ulaska u Creditexpress',
+            currentDebt: 'Trenutno dugovanje',
             lawyerHandOverDate: 'Datum predaje advokatima',
             comment: 'Komentar',
             limitationObjection: 'Prigovor zastarelosti',
@@ -675,6 +678,7 @@ i18n
           errors: {
             // Common errors
             nothingChanged: 'Niste izmenili nijedan podatak.',
+            caseNumberWithoutCase: 'Nepoznati broj predmeta.',
             noName: 'Niste uneli ime.',
             noJMBG: 'Niste uneli JMBG.',
             noSSN: 'Niste uneli SSN broj.',

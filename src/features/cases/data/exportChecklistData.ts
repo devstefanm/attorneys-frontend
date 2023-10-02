@@ -37,6 +37,11 @@ export const checklist: IFormField[] = [
     gridWidth: 4,
   },
   {
+    name: 'currentDebt',
+    type: EFormFieldType.checkbox,
+    gridWidth: 4,
+  },
+  {
     name: 'cession',
     type: EFormFieldType.checkbox,
     gridWidth: 4,

@@ -3,6 +3,7 @@ import {
   IAddCaseForm,
   ICaseRequestData,
   ICaseResponseObject,
+  IEditCaseForm,
   IEditedCaseFormData,
   IViewCaseApiResponseData,
 } from '../../../types/casesTypes';
@@ -551,20 +552,32 @@ export const mapChecklistTrueFieldsToReqProps = (
 };
 
 export const calculateCurrentDebt = (
-  principal: string,
+  editCaseForm: IEditCaseForm,
   transactions: IAddCaseForm['transactions'],
 ): number => {
-  const principalValue = parseFloat(principal);
+  const { principal, interest, warningPrice } = editCaseForm;
+
+  let principalValue = principal ? parseFloat(principal) : 0;
+  let interestValue = interest ? parseFloat(interest) : 0;
+  let warningPriceValue = warningPrice ? parseFloat(warningPrice) : 0;
 
   if (isNaN(principalValue)) {
-    return 0; // If the principal value is not a valid number, return 0.
+    principalValue = 0;
   }
 
-  let currentDebt: number = principalValue;
+  if (isNaN(interestValue)) {
+    interestValue = 0;
+  }
+
+  if (isNaN(warningPriceValue)) {
+    warningPriceValue = 0;
+  }
+
+  let currentDebt: number = principalValue + interestValue + warningPriceValue;
   // Calculate current_debt based on transactions
   if (transactions) {
     currentDebt =
-      principalValue +
+      currentDebt +
       (transactions['fees'] || 0) +
       (transactions['legal_fees'] || 0) -
       (transactions['withdrawals'] || 0) -

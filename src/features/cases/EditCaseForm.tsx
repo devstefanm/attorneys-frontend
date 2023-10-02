@@ -398,7 +398,7 @@ const EditCaseForm = () => {
         <Container className="flex justify-between mb-10">
           <span className="text-xs">
             {t(`entities.current_debt`)}:{' '}
-            {calculateCurrentDebt(editCaseForm.principal, transactions)}
+            {calculateCurrentDebt(editCaseForm, transactions)}
           </span>
           {keyValueArray.map(([key, value]) =>
             value ? (
