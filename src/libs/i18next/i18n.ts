@@ -240,6 +240,7 @@ i18n
             lawyerHandOverDate: 'Lawyer hand-over date',
             comment: 'Comment',
             limitationObjection: 'Limitation of Objection',
+            current_debt: 'Current debt',
 
             // Transactions
             transactions: 'Transactions',
@@ -259,6 +260,8 @@ i18n
             transactionType: 'Transaction Type',
             editTransaction: 'Edit a Transaction',
             deleteTransaction: 'Delete a Transaction',
+            totalAmount: 'Total amount',
+            importTransactions: 'Import Transactions',
 
             // Case Executors
             caseExecutors: 'Case Bailiffs',
@@ -286,7 +289,7 @@ i18n
             editCaseSuccess: 'Case edited successfully.',
             caseDeleted: 'Case deleted successfully.',
             fileExportSuccess: 'File exported successfully.',
-            fileImportSuccess: 'File imported and cases saved successfully.',
+            fileImportSuccess: 'File imported and entries saved successfully.',
             createCitiesSuccess: 'City created successfully.',
             editCitiesSuccess: 'City edited successfully.',
             citiesDeleted: 'City deleted successfully.',
@@ -590,6 +593,7 @@ i18n
             lawyerHandOverDate: 'Datum predaje advokatima',
             comment: 'Komentar',
             limitationObjection: 'Prigovor zastarelosti',
+            current_debt: 'Trenutno dugovanje',
 
             // Transactions
             transactions: 'Transakcije',
@@ -609,6 +613,8 @@ i18n
             transactionType: 'Tip transakcije',
             editTransaction: 'Izmeni transakciju',
             deleteTransaction: 'Izbriši transakciju',
+            totalAmount: 'Ukupna suma',
+            importTransactions: 'Uvezi transakcije',
 
             // Case Executors
             caseExecutors: 'Izvršitelji predmeta',
@@ -636,7 +642,7 @@ i18n
             editCaseSuccess: 'Predmet uspešno izmenjen.',
             caseDeleted: 'Predmet uspešno izbrisan.',
             fileExportSuccess: 'Datoteka uspešno izvezena.',
-            fileImportSuccess: 'Datoteka uspešno uvezena i predmeti sačuvani.',
+            fileImportSuccess: 'Datoteka uspešno uvezena i unosi sačuvani.',
             createCitiesSuccess: 'Grad uspešno dodat.',
             editCitiesSuccess: 'Grad uspešno izmenjen.',
             citiesDeleted: 'Grad uspešno izbrisan.',

@@ -33,6 +33,9 @@ export enum ETransactionsActionType {
   editTransactionForm = 'EDIT_TRANSACTION_FORM',
   editTransactionId = 'EDIT_TRANSACTION_ID',
   confirmationDialogOpen = 'DIALOG_OPEN',
+  totalAmount = 'TOTAL_AMOUNT',
+  transactionsFileForUpload = 'TRANSACTIONS_FILE',
+  importTransactionsDialogOpen = 'IMPORT_TRANSACTIONS_DIALOG_OPEN',
 }
 
 export type TransactionsTableName =
@@ -94,6 +97,7 @@ export interface ITransactionsListQueryParams extends IMetaQueryParams {
 
 export interface ITransactionsListApiResponse {
   transactions: ITransactionsApiResponseData[] | ITransactionsTableData[];
+  total_amount?: string | null;
   meta: IMetaApiResponseData;
 }
 

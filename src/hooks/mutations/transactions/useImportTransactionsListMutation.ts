@@ -1,44 +1,50 @@
 import { setupAxios } from '../../../libs/axios/setupAxios';
-import {
-  ETransactionsActionType,
-  ITransactionRequestData,
-} from '../../../types/transactionsTypes';
+import { ETransactionsActionType } from '../../../types/transactionsTypes';
 import { IApiResponse } from '../../../types/universalTypes';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-const deleteTransaction = async (
-  transactionId: number,
-): Promise<IApiResponse<ITransactionRequestData>> => {
-  let response: IApiResponse<ITransactionRequestData>;
+const importTransactionsList = async (
+  file: File,
+): Promise<IApiResponse<number[] | undefined>> => {
+  let response: IApiResponse<number[]>;
+
+  const formData = new FormData();
+  formData.append('file', file);
 
   response = await setupAxios({
-    method: 'delete',
-    url: `api/transaction/${transactionId}`,
+    method: 'post',
+    url: 'api/import-transactions-list',
+    data: formData,
     withCredentials: true,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
   });
 
   return response;
 };
 
-const useDeleteTransactionMutation = (
+const useImportTransactionsListMutation = (
   onClose: () => void,
   updateTransactionsState: React.Dispatch<any>,
-  transactionId: number,
 ) => {
   const queryClient = useQueryClient();
 
-  return useMutation(() => deleteTransaction(transactionId), {
+  return useMutation((file: File) => importTransactionsList(file), {
     onSuccess: (response) => {
       if (!response.data.error) {
-        updateTransactionsState({
-          type: ETransactionsActionType.resetTransactionFormData,
-        });
         updateTransactionsState({
           type: ETransactionsActionType.openSuccessSnackbar,
           payload: true,
         });
-        onClose();
+        updateTransactionsState({
+          type: ETransactionsActionType.resetTransactionFormData,
+        });
         queryClient.invalidateQueries({ queryKey: ['transactionsList'] });
+
+        setTimeout(() => {
+          onClose();
+        }, 1500);
       }
       return response.data.message;
     },
@@ -58,4 +64,4 @@ const useDeleteTransactionMutation = (
   });
 };
 
-export default useDeleteTransactionMutation;
+export default useImportTransactionsListMutation;

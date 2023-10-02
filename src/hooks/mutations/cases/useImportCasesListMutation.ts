@@ -39,7 +39,10 @@ const useImportCasesListMutation = (
         });
         updateCasesState({ type: ECasesActionType.resetCaseFormData });
         queryClient.invalidateQueries({ queryKey: ['casesList'] });
-        onClose();
+
+        setTimeout(() => {
+          onClose();
+        }, 1500);
       }
       return response.data.message;
     },

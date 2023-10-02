@@ -91,7 +91,7 @@ export const mapEditExecutorFormToRequestData = ({
   phoneNumbers,
 }: IEditedExecutorFormData): Partial<IExecutorRequestData> => {
   const requestData: Partial<IExecutorRequestData> = {};
-  console.log('city', city);
+
   if (city !== undefined) {
     if (typeof city !== 'string') {
       requestData.city_id = city.id || null;

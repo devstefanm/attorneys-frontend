@@ -29,7 +29,6 @@ const useDeleteCityMutation = (
 
   return useMutation(() => deleteCity(cityId), {
     onSuccess: (response) => {
-      console.log('response', response.data);
       if (!response.data.error) {
         updateCitiesState({ type: ECitiesActionType.resetCityFormData });
         updateCitiesState({

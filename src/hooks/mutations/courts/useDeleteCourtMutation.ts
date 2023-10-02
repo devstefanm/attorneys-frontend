@@ -29,7 +29,6 @@ const useDeleteCourtMutation = (
 
   return useMutation(() => deleteCourt(courtId), {
     onSuccess: (response) => {
-      console.log('response', response.data);
       if (!response.data.error) {
         updateCourtsState({ type: ECourtsActionType.resetCourtFormData });
         updateCourtsState({

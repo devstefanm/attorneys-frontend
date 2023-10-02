@@ -26,6 +26,7 @@ const AddTransactionModal = (props: Props) => {
       openErrorSnackbar,
       addTransactionModalOpen,
       editTransactionModalOpen,
+      importTransactionsDialogOpen,
     },
     dispatch: updateTransactionsState,
   } = useTransactions();
@@ -41,9 +42,18 @@ const AddTransactionModal = (props: Props) => {
   } = useAddNewTransactionMutation(onClose, updateTransactionsState);
 
   React.useEffect(() => {
-    if ((addTransactionModalOpen || editTransactionModalOpen) && isSuccess)
+    if (
+      (addTransactionModalOpen ||
+        editTransactionModalOpen ||
+        importTransactionsDialogOpen) &&
+      isSuccess
+    )
       reset();
-  }, [addTransactionModalOpen, editTransactionModalOpen]);
+  }, [
+    addTransactionModalOpen,
+    editTransactionModalOpen,
+    importTransactionsDialogOpen,
+  ]);
 
   return (
     <ErrorBoundary>

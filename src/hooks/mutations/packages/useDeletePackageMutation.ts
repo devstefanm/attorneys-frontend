@@ -29,7 +29,6 @@ const useDeletePackageMutation = (
 
   return useMutation(() => deletePackage(packageId), {
     onSuccess: (response) => {
-      console.log('response', response.data);
       if (!response.data.error) {
         updatePackagesState({ type: EPackagesActionType.resetPackageFormData });
         updatePackagesState({

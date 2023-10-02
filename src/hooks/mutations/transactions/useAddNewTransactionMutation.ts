@@ -11,16 +11,12 @@ const addNewTransaction = async (
 ): Promise<IApiResponse<ITransactionRequestData>> => {
   let response: IApiResponse<ITransactionRequestData>;
 
-  try {
-    response = await setupAxios({
-      method: 'post',
-      url: 'api/transactions',
-      data: transactionRequestData,
-      withCredentials: true,
-    });
-  } catch {
-    response = { data: { error: 500, message: 'Connection problem' } };
-  }
+  response = await setupAxios({
+    method: 'post',
+    url: 'api/transactions',
+    data: transactionRequestData,
+    withCredentials: true,
+  });
 
   return response;
 };

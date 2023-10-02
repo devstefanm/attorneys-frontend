@@ -37,6 +37,9 @@ export interface ITransactionsState {
   openSuccessSnackbar: boolean;
   openErrorSnackbar: boolean;
   confirmationDialogOpen: boolean;
+  totalAmount: string;
+  transactionsFileForUpload: File | null;
+  importTransactionsDialogOpen: boolean;
 }
 
 interface ITransactionsAction {
@@ -51,7 +54,9 @@ interface ITransactionsAction {
     | IEditEntityStateUpdate
     | IEditTransactionForm
     | boolean
-    | number;
+    | number
+    | string
+    | File;
 }
 
 const transactionsReducer = (
@@ -154,6 +159,18 @@ const transactionsReducer = (
       return { ...state, openSuccessSnackbar: action.payload as boolean };
     case ETransactionsActionType.confirmationDialogOpen:
       return { ...state, confirmationDialogOpen: action.payload as boolean };
+    case ETransactionsActionType.totalAmount:
+      return { ...state, totalAmount: action.payload as string };
+    case ETransactionsActionType.transactionsFileForUpload:
+      return {
+        ...state,
+        transactionsFileForUpload: action.payload as File,
+      };
+    case ETransactionsActionType.importTransactionsDialogOpen:
+      return {
+        ...state,
+        importTransactionsDialogOpen: action.payload as boolean,
+      };
     default:
       return state;
   }

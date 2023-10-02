@@ -66,7 +66,7 @@ const FileUpload: React.FC<Props> = ({
         }
         setTimeout(() => {
           setError(false);
-        }, 2000);
+        }, 1500);
         onError && onError();
       }
     }
@@ -88,7 +88,7 @@ const FileUpload: React.FC<Props> = ({
         }
         setTimeout(() => {
           setError(false);
-        }, 2000);
+        }, 1500);
         onError && onError();
       }
     }

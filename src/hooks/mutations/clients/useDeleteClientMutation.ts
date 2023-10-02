@@ -29,7 +29,6 @@ const useDeleteClientMutation = (
 
   return useMutation(() => deleteClient(clientId), {
     onSuccess: (response) => {
-      console.log('response', response.data);
       if (!response.data.error) {
         updateClientsState({ type: EClientsActionType.resetClientFormData });
         updateClientsState({

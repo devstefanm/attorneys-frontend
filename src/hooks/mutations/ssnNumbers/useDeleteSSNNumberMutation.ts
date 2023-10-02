@@ -29,7 +29,6 @@ const useDeleteSSNNumberMutation = (
 
   return useMutation(() => deleteSSNNumber(ssnNumberId), {
     onSuccess: (response) => {
-      console.log('response', response.data);
       if (!response.data.error) {
         updateSSNNumbersState({
           type: ESSNNumbersActionType.resetSSNNumberFormData,

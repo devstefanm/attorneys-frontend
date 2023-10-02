@@ -183,6 +183,12 @@ export interface IAddCaseForm {
   comment: string;
   limitationObjection: boolean;
   state?: string;
+  transactions?: {
+    fees: number | null;
+    legal_fees: number | null;
+    payments: number | null;
+    withdrawals: number | null;
+  };
 }
 
 export interface IAddCaseAutocompleteValues {
@@ -312,6 +318,11 @@ export interface IViewCaseApiResponseData {
   lawyer_hand_over_date: string;
   comment: string;
   limitation_objection: boolean;
+  payment?: number;
+  fee?: number;
+  legal_fee?: number;
+  withdrawal?: number;
+  current_debt?: number;
   lawyer: {
     id: number;
     office_name: string;

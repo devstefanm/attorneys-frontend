@@ -29,7 +29,6 @@ const useDeleteEmployerMutation = (
 
   return useMutation(() => deleteEmployer(employerId), {
     onSuccess: (response) => {
-      console.log('response', response.data);
       if (!response.data.error) {
         updateEmployersState({
           type: EEmployersActionType.resetEmployerFormData,

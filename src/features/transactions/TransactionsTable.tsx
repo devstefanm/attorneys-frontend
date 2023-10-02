@@ -70,6 +70,13 @@ const TransactionsTable = () => {
     }
   };
 
+  React.useEffect(() => {
+    updateTransactionsState({
+      type: ETransactionsActionType.totalAmount,
+      payload: data?.data.data?.total_amount,
+    });
+  }, [data?.data.data?.total_amount]);
+
   const columns = React.useMemo<ColumnDef<ITransactionsTableData>[]>(
     () => [
       {

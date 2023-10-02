@@ -240,6 +240,10 @@ export const mapCaseApiResponseToEditCaseForm = (
     lawyer_hand_over_date,
     comment,
     limitation_objection,
+    fee,
+    legal_fee,
+    payment,
+    withdrawal,
   } = data;
 
   if (is_legal) {
@@ -295,6 +299,12 @@ export const mapCaseApiResponseToEditCaseForm = (
         ? reverseDateFormat(lawyer_hand_over_date)
         : null,
       limitationObjection: limitation_objection || false,
+      transactions: {
+        fees: fee || null,
+        legal_fees: legal_fee || null,
+        payments: payment || null,
+        withdrawals: withdrawal || null,
+      },
     };
   }
 
@@ -353,6 +363,12 @@ export const mapCaseApiResponseToEditCaseForm = (
       ? reverseDateFormat(lawyer_hand_over_date)
       : null,
     limitationObjection: limitation_objection || false,
+    transactions: {
+      fees: fee || null,
+      legal_fees: legal_fee || null,
+      payments: payment || null,
+      withdrawals: withdrawal || null,
+    },
   };
 };
 
@@ -532,4 +548,28 @@ export const mapChecklistTrueFieldsToReqProps = (
   return Object.keys(checklistValues)
     .filter((key) => checklistValues[key] === true)
     .map((key) => camelToSnake(key));
+};
+
+export const calculateCurrentDebt = (
+  principal: string,
+  transactions: IAddCaseForm['transactions'],
+): number => {
+  const principalValue = parseFloat(principal);
+
+  if (isNaN(principalValue)) {
+    return 0; // If the principal value is not a valid number, return 0.
+  }
+
+  let currentDebt: number = principalValue;
+  // Calculate current_debt based on transactions
+  if (transactions) {
+    currentDebt =
+      principalValue +
+      (transactions['fees'] || 0) +
+      (transactions['legal_fees'] || 0) -
+      (transactions['withdrawals'] || 0) -
+      (transactions['payments'] || 0);
+  }
+
+  return parseFloat(currentDebt.toFixed(2));
 };

@@ -30,8 +30,15 @@ import useGetExecutorsNamesQuery from '../../hooks/queries/executors/useGetExecu
 import useGetLawyersNamesQuery from '../../hooks/queries/lawyers/useGetLawyersNamesQuery';
 import useGetPackagesNamesQuery from '../../hooks/queries/packages/useGetPackagesNamesQuery';
 import useGetSSNNumbersQuery from '../../hooks/queries/ssnNumbers/useGetSSNNumbersQuery';
-import { mapApiResponseToAutocompleteOptions } from './helpers/casesHelpers';
-import { ECasesActionType, ICaseResponseObject } from '../../types/casesTypes';
+import {
+  calculateCurrentDebt,
+  mapApiResponseToAutocompleteOptions,
+} from './helpers/casesHelpers';
+import {
+  ECasesActionType,
+  IAddCaseForm,
+  ICaseResponseObject,
+} from '../../types/casesTypes';
 import debounce from 'lodash.debounce';
 import useGetEmployersNamesQuery from '../../hooks/queries/employers/useGetEmployersNamesQuery';
 import { DynamicAutocompletes } from '../../components/DynamicAutocompletes';
@@ -381,7 +388,34 @@ const EditCaseForm = () => {
     }
   };
 
-  if (isLoading) {
+  const renderCaseTransactions = (
+    transactions: IAddCaseForm['transactions'],
+  ) => {
+    if (transactions) {
+      const keyValueArray = Object.entries(transactions);
+
+      return (
+        <Container className="flex justify-between mb-10">
+          <span className="text-xs">
+            {t(`entities.current_debt`)}:{' '}
+            {calculateCurrentDebt(editCaseForm.principal, transactions)}
+          </span>
+          {keyValueArray.map(([key, value]) =>
+            value ? (
+              <span className="text-xs" key={key}>
+                {t(`entities.${key}`)}: {value}
+              </span>
+            ) : (
+              ''
+            ),
+          )}
+        </Container>
+      );
+    }
+    return '';
+  };
+
+  if (isLoading || !editCaseForm.caseNumber) {
     return (
       <Box className="flex justify-center items-center h-[1300px]">
         <CircularProgress />
@@ -391,6 +425,9 @@ const EditCaseForm = () => {
 
   return (
     <ErrorBoundary>
+      {isSuccess && editCaseFormData?.transactions
+        ? renderCaseTransactions(editCaseFormData.transactions)
+        : ''}
       <Container>
         {isSuccess && editCaseForm ? (
           <form onSubmit={handleSubmit}>

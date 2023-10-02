@@ -36,6 +36,9 @@ const initialState: ITransactionsState = {
   openSuccessSnackbar: false,
   openErrorSnackbar: false,
   confirmationDialogOpen: false,
+  totalAmount: '',
+  transactionsFileForUpload: null,
+  importTransactionsDialogOpen: false,
 };
 
 export const TransactionsContext = React.createContext<{

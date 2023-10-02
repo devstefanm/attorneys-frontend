@@ -30,6 +30,7 @@ const EditTransactionModal = (props: Props) => {
       openErrorSnackbar,
       addTransactionModalOpen,
       editTransactionModalOpen,
+      importTransactionsDialogOpen,
     },
     dispatch: updateTransactionsState,
   } = useTransactions();
@@ -71,11 +72,19 @@ const EditTransactionModal = (props: Props) => {
   );
 
   React.useEffect(() => {
-    if (addTransactionModalOpen || editTransactionModalOpen) {
+    if (
+      addTransactionModalOpen ||
+      editTransactionModalOpen ||
+      importTransactionsDialogOpen
+    ) {
       if (isEditSuccess) editReset();
       if (isDeleteSuccess) deleteReset();
     }
-  }, [addTransactionModalOpen, editTransactionModalOpen]);
+  }, [
+    addTransactionModalOpen,
+    editTransactionModalOpen,
+    importTransactionsDialogOpen,
+  ]);
 
   const isError = isEditError || isDeleteError;
   const error = editError || deleteError;

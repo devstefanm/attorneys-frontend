@@ -29,7 +29,6 @@ const useDeleteExecutorMutation = (
 
   return useMutation(() => deleteExecutor(executorId), {
     onSuccess: (response) => {
-      console.log('response', response.data);
       if (!response.data.error) {
         updateExecutorsState({
           type: EExecutorsActionType.resetExecutorFormData,
