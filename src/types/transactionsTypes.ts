@@ -36,6 +36,7 @@ export enum ETransactionsActionType {
   totalAmount = 'TOTAL_AMOUNT',
   transactionsFileForUpload = 'TRANSACTIONS_FILE',
   importTransactionsDialogOpen = 'IMPORT_TRANSACTIONS_DIALOG_OPEN',
+  filterableDate = 'FILTERABLE_DATE',
 }
 
 export type TransactionsTableName =
@@ -93,6 +94,7 @@ export interface ITransactionsListQueryParams extends IMetaQueryParams {
   case_number?: string;
   excerpt_number?: string;
   filter?: ETransactionTypeFilter;
+  filterableDate?: string | null;
 }
 
 export interface ITransactionsListApiResponse {

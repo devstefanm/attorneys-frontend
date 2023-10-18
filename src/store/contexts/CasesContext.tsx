@@ -44,6 +44,7 @@ const initialState: ICasesState = {
   casesFileForUpload: null,
   openSuccessSnackbar: false,
   openErrorSnackbar: false,
+  filterableMultiselect: [''],
 };
 
 export const CasesContext = React.createContext<{

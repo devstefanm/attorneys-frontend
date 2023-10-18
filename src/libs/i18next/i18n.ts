@@ -242,6 +242,9 @@ i18n
             comment: 'Comment',
             limitationObjection: 'Limitation of Objection',
             current_debt: 'Current debt',
+            hasObjection: 'With Limitation of Objection',
+            hasPayments: 'With payments',
+            hasObjectionPayments: 'With objection / payments',
 
             // Transactions
             transactions: 'Transactions',
@@ -263,6 +266,7 @@ i18n
             deleteTransaction: 'Delete a Transaction',
             totalAmount: 'Total amount',
             importTransactions: 'Import Transactions',
+            transactionsYoungerThan: 'Transactions younger than',
 
             // Case Executors
             caseExecutors: 'Case Bailiffs',
@@ -597,6 +601,9 @@ i18n
             comment: 'Komentar',
             limitationObjection: 'Prigovor zastarelosti',
             current_debt: 'Trenutno dugovanje',
+            hasObjection: 'Sa prigovorom zastarelosti',
+            hasPayments: 'Sa uplatama',
+            hasObjectionPayments: 'Sa zastarom / uplatama',
 
             // Transactions
             transactions: 'Transakcije',
@@ -618,6 +625,7 @@ i18n
             deleteTransaction: 'Izbriši transakciju',
             totalAmount: 'Ukupna suma',
             importTransactions: 'Uvezi transakcije',
+            transactionsYoungerThan: 'Transakcije mlađe od',
 
             // Case Executors
             caseExecutors: 'Izvršitelji predmeta',

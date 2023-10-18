@@ -1,3 +1,4 @@
+import { Moment } from 'moment';
 import {
   ETransactionTypeFilter,
   ETransactionsActionType,
@@ -40,6 +41,7 @@ export interface ITransactionsState {
   totalAmount: string;
   transactionsFileForUpload: File | null;
   importTransactionsDialogOpen: boolean;
+  filterableDate: Moment | null;
 }
 
 interface ITransactionsAction {
@@ -56,7 +58,9 @@ interface ITransactionsAction {
     | boolean
     | number
     | string
-    | File;
+    | File
+    | Moment
+    | null;
 }
 
 const transactionsReducer = (
@@ -170,6 +174,11 @@ const transactionsReducer = (
       return {
         ...state,
         importTransactionsDialogOpen: action.payload as boolean,
+      };
+    case ETransactionsActionType.filterableDate:
+      return {
+        ...state,
+        filterableDate: action.payload as Moment | null,
       };
     default:
       return state;

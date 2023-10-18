@@ -10,7 +10,10 @@ import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import useGetTransactionsListQuery from '../../hooks/queries/transactions/useGetTransactionsListQuery';
 import { useTransactions } from '../../store/contexts/TransactionsContext';
-import { mapSearchToQueryParam } from '../../utils/transformData';
+import {
+  mapSearchToQueryParam,
+  transformDateFormat,
+} from '../../utils/transformData';
 import { mapTypeToBorderColor } from './helpers/transactionsHelpers';
 
 const transactionsTableHeaders: ITransactionsTableHeader = {
@@ -32,6 +35,7 @@ const TransactionsTable = () => {
       pageable: { page, size },
       searchable,
       filterable,
+      filterableDate,
     },
     dispatch: updateTransactionsState,
   } = useTransactions();
@@ -52,6 +56,7 @@ const TransactionsTable = () => {
     ...queryParams,
     ...searchParams,
     filter: filterable,
+    filterableDate: filterableDate ? transformDateFormat(filterableDate) : null,
   });
 
   const handleRowClick = (row: Row<ITransactionsTableData>) => {
@@ -118,18 +123,18 @@ const TransactionsTable = () => {
         cell: (info) => info.getValue(),
         isSortable: true,
       },
-      {
-        accessorFn: (row) => row.postingMethod,
-        id: transactionsTableHeaders.postingMethod,
-        header: () => (
-          <span>
-            {t(`entities.${[transactionsTableHeaders.postingMethod]}`)}
-          </span>
-        ),
-        cell: (info) => info.getValue(),
-        isSearchable: false,
-        isSortable: true,
-      },
+      // {
+      //   accessorFn: (row) => row.postingMethod,
+      //   id: transactionsTableHeaders.postingMethod,
+      //   header: () => (
+      //     <span>
+      //       {t(`entities.${[transactionsTableHeaders.postingMethod]}`)}
+      //     </span>
+      //   ),
+      //   cell: (info) => info.getValue(),
+      //   isSearchable: false,
+      //   isSortable: true,
+      // },
       {
         accessorFn: (row) => row.paymentDate,
         id: transactionsTableHeaders.paymentDate,

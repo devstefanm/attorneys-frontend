@@ -39,6 +39,7 @@ const CasesTable = () => {
       searchable,
       filterable,
       filterableByClient,
+      filterableMultiselect,
     },
     dispatch: updateCasesState,
   } = useCases();
@@ -55,11 +56,19 @@ const CasesTable = () => {
     return { ...accumulator, ...queryParams };
   }, {});
 
+  const multiselectFilters = filterableMultiselect.reduce((object, key) => {
+    if (key !== '') {
+      object[key] = true;
+    }
+    return object;
+  }, {} as { [key: string]: boolean });
+
   const { data, isLoading, refetch } = useGetCasesListQuery({
     ...queryParams,
     ...searchParams,
     filter: filterable,
     clientsFilter: filterableByClient,
+    ...multiselectFilters,
   });
 
   const handleRowClick = (row: Row<ICasesFirstRowData>) => {

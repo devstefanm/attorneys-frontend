@@ -12,6 +12,7 @@ import { EditCaseModal } from '../features/cases/EditCaseModal';
 import { CasesFilterByClient } from '../features/cases/CasesFilterByClient';
 import { ExportCasesDialog } from '../features/cases/ExportCasesDialog';
 import { ImportCasesDialog } from '../features/cases/ImportCasesDialog';
+import { CasesMultiselectFilter } from '../features/cases/CasesMultiselectFilter';
 
 type Props = IPagesProps & {};
 
@@ -75,6 +76,7 @@ const Cases = (_props: Props) => {
           <Box className="grid grid-flow-col gap-2">
             <CasesFilter />
             <CasesFilterByClient />
+            <CasesMultiselectFilter />
           </Box>
           <Box>
             <Button

@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { TransactionsFilter } from '../features/transactions/TransactionsFilter';
 import { EditTransactionModal } from '../features/transactions/EditTransactionModal';
 import { ImportTransactionsDialog } from '../features/transactions/ImportTransactionsDialog';
+import { TransactionsDateFilter } from '../features/transactions/TransactionsDateFilter';
 
 type Props = IPagesProps & {};
 
@@ -60,7 +61,10 @@ const Transactions = (_props: Props) => {
       <React.Suspense fallback={'Loading....'}>
         <Box className="my-2 flex justify-between items-baseline">
           <>
-            <TransactionsFilter />
+            <Box className="grid grid-flow-col gap-2">
+              <TransactionsFilter />
+              <TransactionsDateFilter />
+            </Box>
             {totalAmount ? (
               <span className="text-sm">
                 {t('entities.totalAmount')}: {totalAmount}

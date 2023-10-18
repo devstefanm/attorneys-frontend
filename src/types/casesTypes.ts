@@ -33,6 +33,7 @@ export enum ECasesActionType {
   casesFileForUpload = 'CASES_FILE',
   openSuccessSnackbar = 'SUCCESS_SNACKBAR',
   openErrorSnackbar = 'ERROR_SNACKBAR',
+  filterableMultiselect = 'FILTERABLE_MULTISELECT',
 }
 
 export type CasesFirstRowName =

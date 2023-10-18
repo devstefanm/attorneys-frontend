@@ -39,6 +39,7 @@ const initialState: ITransactionsState = {
   totalAmount: '',
   transactionsFileForUpload: null,
   importTransactionsDialogOpen: false,
+  filterableDate: null,
 };
 
 export const TransactionsContext = React.createContext<{

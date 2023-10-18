@@ -51,6 +51,7 @@ export interface ICasesState {
   casesFileForUpload: File | null;
   openSuccessSnackbar: boolean;
   openErrorSnackbar: boolean;
+  filterableMultiselect: string[];
 }
 
 interface ICasesAction {
@@ -70,7 +71,8 @@ interface ICasesAction {
     | 'excel'
     | 'csv'
     | ICasesExportChecklistStateUpdate
-    | File;
+    | File
+    | string[];
 }
 
 const casesReducer = (
@@ -206,6 +208,8 @@ const casesReducer = (
       return { ...state, openErrorSnackbar: action.payload as boolean };
     case ECasesActionType.openSuccessSnackbar:
       return { ...state, openSuccessSnackbar: action.payload as boolean };
+    case ECasesActionType.filterableMultiselect:
+      return { ...state, filterableMultiselect: action.payload as string[] };
     default:
       return state;
   }
