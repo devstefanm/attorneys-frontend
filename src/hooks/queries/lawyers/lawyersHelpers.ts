@@ -22,9 +22,9 @@ export const mapApiResponseToTableData = ({
   city,
   displayPhoneNumbers: display_phone_numbers,
   email,
-  name: `${uppercaseFirstLetter(first_name)} ${uppercaseFirstLetter(
-    last_name,
-  )}`,
+  name: `${uppercaseFirstLetter(first_name)} ${
+    last_name ? uppercaseFirstLetter(last_name) : ''
+  }`,
   officeName: office_name,
   phoneNumbers: phone_numbers,
 });

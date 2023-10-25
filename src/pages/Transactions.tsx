@@ -11,6 +11,7 @@ import { TransactionsFilter } from '../features/transactions/TransactionsFilter'
 import { EditTransactionModal } from '../features/transactions/EditTransactionModal';
 import { ImportTransactionsDialog } from '../features/transactions/ImportTransactionsDialog';
 import { TransactionsDateFilter } from '../features/transactions/TransactionsDateFilter';
+import { ExportTransactionsDialog } from '../features/transactions/ExportTransactionsDialog';
 
 type Props = IPagesProps & {};
 
@@ -22,6 +23,7 @@ const Transactions = (_props: Props) => {
       editTransactionModalOpen,
       totalAmount,
       importTransactionsDialogOpen,
+      exportTransactionsDialogOpen,
     },
     dispatch: updateTransactionsState,
   } = useTransactions();
@@ -49,6 +51,16 @@ const Transactions = (_props: Props) => {
   const handleImportTransactionsDialogClose = () => {
     updateTransactionsState({
       type: ETransactionsActionType.importTransactionsDialogOpen,
+      payload: false,
+    });
+    updateTransactionsState({
+      type: ETransactionsActionType.resetTransactionFormData,
+    });
+  };
+
+  const handleExportTransactionsDialogClose = () => {
+    updateTransactionsState({
+      type: ETransactionsActionType.exportTransactionsDialogOpen,
       payload: false,
     });
     updateTransactionsState({
@@ -86,6 +98,17 @@ const Transactions = (_props: Props) => {
               {t('entities.importTransactions')}
             </Button>
             <Button
+              color="info"
+              onClick={() =>
+                updateTransactionsState({
+                  type: ETransactionsActionType.exportTransactionsDialogOpen,
+                  payload: !exportTransactionsDialogOpen,
+                })
+              }
+            >
+              {t('entities.exportTransactions')}
+            </Button>
+            <Button
               onClick={() =>
                 updateTransactionsState({
                   type: ETransactionsActionType.addTransactionModalOpen,
@@ -110,6 +133,14 @@ const Transactions = (_props: Props) => {
           <ImportTransactionsDialog
             open={importTransactionsDialogOpen}
             onClose={handleImportTransactionsDialogClose}
+          />
+        ) : (
+          ''
+        )}
+        {exportTransactionsDialogOpen ? (
+          <ExportTransactionsDialog
+            open={exportTransactionsDialogOpen}
+            onClose={handleExportTransactionsDialogClose}
           />
         ) : (
           ''

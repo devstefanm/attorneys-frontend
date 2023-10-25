@@ -35,8 +35,11 @@ export enum ETransactionsActionType {
   confirmationDialogOpen = 'DIALOG_OPEN',
   totalAmount = 'TOTAL_AMOUNT',
   transactionsFileForUpload = 'TRANSACTIONS_FILE',
+  exportTransactionsDialogOpen = 'EXPORT_TRANSACTIONS_DIALOG_OPEN',
   importTransactionsDialogOpen = 'IMPORT_TRANSACTIONS_DIALOG_OPEN',
   filterableDate = 'FILTERABLE_DATE',
+  exportFileType = 'EXPORT_FILE_TYPE',
+  downloadFile = 'DOWNLOAD_FILE',
 }
 
 export type TransactionsTableName =
@@ -85,6 +88,18 @@ export interface ITransactionsApiResponseData {
 
 export interface ITransactionsTableHeader {
   [key: string]: TransactionsTableName;
+}
+
+export interface ITransactionsFiltersData {
+  debtorsName?: string;
+  amount?: number;
+  posting_method?: string;
+  case_number?: string;
+  excerpt_number?: string;
+  filter?: ETransactionTypeFilter;
+  filterableDate?: Moment | string | null;
+  fileType?: 'excel' | 'csv';
+  downloadFile?: boolean;
 }
 
 export interface ITransactionsListQueryParams extends IMetaQueryParams {

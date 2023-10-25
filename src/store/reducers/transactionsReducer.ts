@@ -38,9 +38,12 @@ export interface ITransactionsState {
   openSuccessSnackbar: boolean;
   openErrorSnackbar: boolean;
   confirmationDialogOpen: boolean;
+  exportFileType: 'excel' | 'csv';
+  downloadFile: boolean;
   totalAmount: string;
   transactionsFileForUpload: File | null;
   importTransactionsDialogOpen: boolean;
+  exportTransactionsDialogOpen: boolean;
   filterableDate: Moment | null;
 }
 
@@ -57,6 +60,8 @@ interface ITransactionsAction {
     | IEditTransactionForm
     | boolean
     | number
+    | 'excel'
+    | 'csv'
     | string
     | File
     | Moment
@@ -165,6 +170,10 @@ const transactionsReducer = (
       return { ...state, confirmationDialogOpen: action.payload as boolean };
     case ETransactionsActionType.totalAmount:
       return { ...state, totalAmount: action.payload as string };
+    case ETransactionsActionType.exportFileType:
+      return { ...state, exportFileType: action.payload as 'excel' | 'csv' };
+    case ETransactionsActionType.downloadFile:
+      return { ...state, downloadFile: action.payload as boolean };
     case ETransactionsActionType.transactionsFileForUpload:
       return {
         ...state,
@@ -174,6 +183,11 @@ const transactionsReducer = (
       return {
         ...state,
         importTransactionsDialogOpen: action.payload as boolean,
+      };
+    case ETransactionsActionType.exportTransactionsDialogOpen:
+      return {
+        ...state,
+        exportTransactionsDialogOpen: action.payload as boolean,
       };
     case ETransactionsActionType.filterableDate:
       return {

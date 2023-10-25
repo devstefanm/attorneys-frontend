@@ -36,9 +36,12 @@ const initialState: ITransactionsState = {
   openSuccessSnackbar: false,
   openErrorSnackbar: false,
   confirmationDialogOpen: false,
+  exportFileType: 'excel',
+  downloadFile: false,
   totalAmount: '',
   transactionsFileForUpload: null,
   importTransactionsDialogOpen: false,
+  exportTransactionsDialogOpen: false,
   filterableDate: null,
 };
 

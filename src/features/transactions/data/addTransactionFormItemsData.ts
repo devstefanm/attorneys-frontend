@@ -26,17 +26,17 @@ export const formFields = ({
     condition: false,
     format: /^[\d 0-9.]{0,24}$/,
   },
-  {
-    name: 'postingMethod',
-    type: EFormFieldType.input,
-    gridWidth: 6,
-    condition: false,
-  },
+  // {
+  //   name: 'postingMethod',
+  //   type: EFormFieldType.input,
+  //   gridWidth: 6,
+  //   condition: false,
+  // },
   {
     name: 'paymentDate',
     required: true,
     type: EFormFieldType.datepicker,
-    gridWidth: 12,
+    gridWidth: 6,
     condition: false,
   },
 ];

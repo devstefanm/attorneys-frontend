@@ -266,6 +266,7 @@ i18n
             deleteTransaction: 'Delete a Transaction',
             totalAmount: 'Total amount',
             importTransactions: 'Import Transactions',
+            exportTransactions: 'Export Transactions',
             transactionsYoungerThan: 'Transactions younger than',
 
             // Case Executors
@@ -625,6 +626,7 @@ i18n
             deleteTransaction: 'Izbriši transakciju',
             totalAmount: 'Ukupna suma',
             importTransactions: 'Uvezi transakcije',
+            exportTransactions: 'Izvezi transakcije',
             transactionsYoungerThan: 'Transakcije mlađe od',
 
             // Case Executors

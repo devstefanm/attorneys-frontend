@@ -8,7 +8,7 @@ export const addTransactionsInitialFormData: IAddTransactionForm = {
   amount: '',
   type: '',
   paymentDate: null,
-  postingMethod: '',
+  postingMethod: 'GD',
 };
 
 export const addTransactionAutocompleteInitialValues: IAddTransactionAutocompleteValues =

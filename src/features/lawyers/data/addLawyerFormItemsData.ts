@@ -10,7 +10,6 @@ export const formFields = ({ citiesOptions }: any): IFormField[] => [
   },
   {
     name: 'lastName',
-    required: true,
     type: EFormFieldType.input,
     gridWidth: 6,
     condition: false,
