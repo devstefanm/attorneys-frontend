@@ -370,6 +370,12 @@ i18n
             noAccessToken: 'Invalid login. Refresh to log in again.',
             accessTokenNotConfigured:
               'Unsuccessful login. Failed to configure access token. Contact technical person.',
+            closingDateWrongFormat: 'Wrong format of closing date.',
+            enteringDateWrongFormat: 'Wrong format of entering date.',
+            lawyerHandOverDateWrongFormat:
+              'Wrong format of lawyer handover date.',
+            paymentDateWrongFormat: 'Wrong format of payment date.',
+            wrongType: "Transaction type misspelled or doesn't exist.",
             // Add more common error messages here
           },
         },
@@ -732,6 +738,13 @@ i18n
               'Nevalidna prijava. Osveži stranicu i prijavi se opet.',
             accessTokenNotConfigured:
               'Neuspešna prijava. Token za prijavu nepravilno konfigurisan. Kontaktirajte tehničko lice.',
+            closingDateWrongFormat: 'Pogrešan format datuma zatvaranja.',
+            enteringDateWrongFormat: 'Pogrešan format datuma ulaska u CE.',
+            lawyerHandOverDateWrongFormat:
+              'Pogrešan format datuma predaje advokatu.',
+            paymentDateWrongFormat: 'Pogrešan format datuma uplate.',
+            wrongType:
+              'Tip transakcije ne postoji ili ima grešku pri upisivanju.',
             // Add more common error messages here
           },
         },

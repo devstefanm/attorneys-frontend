@@ -5,6 +5,7 @@ import useImportTransactionsListMutation from '../../hooks/mutations/transaction
 import { useTransactions } from '../../store/contexts/TransactionsContext';
 import { ETransactionsActionType } from '../../types/transactionsTypes';
 import { SnackbarNotification } from '../../components/SnackbarNotification';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   open: boolean;
@@ -14,6 +15,8 @@ type Props = {
 const ImportTransactionsDialog = (props: Props) => {
   const { open, onClose } = props;
 
+  const { t } = useTranslation();
+
   const {
     state: {
       transactionsFileForUpload,
@@ -22,6 +25,18 @@ const ImportTransactionsDialog = (props: Props) => {
     },
     dispatch: updateTransactionsState,
   } = useTransactions();
+
+  const transformErrorMessage = (input: string | string[]): string => {
+    if (typeof input === 'string') {
+      return input;
+    }
+    return input
+      .map((item) => {
+        const [entityPath, number, errorPath] = item.split('->');
+        return `${t(entityPath)} -> ${number} -> ${t(errorPath)}`;
+      })
+      .join(' ');
+  };
 
   const {
     isLoading,
@@ -84,7 +99,12 @@ const ImportTransactionsDialog = (props: Props) => {
             })
           }
           severity="error"
-          content={error?.response?.data?.message}
+          content={transformErrorMessage(error?.response?.data?.message)}
+          autoHideDuration={
+            typeof error?.response?.data?.message !== 'string'
+              ? error?.response?.data?.message.length * 3000
+              : 3000
+          }
         />
       ) : (
         ''

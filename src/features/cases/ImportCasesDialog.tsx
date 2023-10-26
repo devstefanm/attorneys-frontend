@@ -5,6 +5,7 @@ import useImportCasesListMutation from '../../hooks/mutations/cases/useImportCas
 import { useCases } from '../../store/contexts/CasesContext';
 import { ECasesActionType } from '../../types/casesTypes';
 import { SnackbarNotification } from '../../components/SnackbarNotification';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   open: boolean;
@@ -14,10 +15,24 @@ type Props = {
 const ImportCasesDialog = (props: Props) => {
   const { open, onClose } = props;
 
+  const { t } = useTranslation();
+
   const {
     state: { casesFileForUpload, openSuccessSnackbar, openErrorSnackbar },
     dispatch: updateCasesState,
   } = useCases();
+
+  const transformErrorMessage = (input: string | string[]): string => {
+    if (typeof input === 'string') {
+      return input;
+    }
+    return input
+      .map((item) => {
+        const [entityPath, number, errorPath] = item.split('->');
+        return `${t(entityPath)} -> ${number} -> ${t(errorPath)}`;
+      })
+      .join(' ');
+  };
 
   const {
     isLoading,
@@ -78,7 +93,12 @@ const ImportCasesDialog = (props: Props) => {
             })
           }
           severity="error"
-          content={error?.response?.data?.message}
+          content={transformErrorMessage(error?.response?.data?.message)}
+          autoHideDuration={
+            typeof error?.response?.data?.message !== 'string'
+              ? error?.response?.data?.message.length * 3000
+              : 3000
+          }
         />
       ) : (
         ''
