@@ -147,7 +147,7 @@ export interface ITransactionRequestData {
   amount?: number | null;
   payment_date?: string | null;
   posting_method?: string | null;
-  case_id?: number | null;
+  case_id?: number | string | null;
 }
 
 export interface IEditTransactionForm extends IAddTransactionForm {}
