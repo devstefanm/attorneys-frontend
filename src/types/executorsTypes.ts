@@ -95,7 +95,7 @@ export interface IExecutorRequestData {
   last_name?: string | null;
   email?: string | null;
   phone_numbers?: string[];
-  city_id?: number | string | null;
+  city_id?: number | null;
 }
 
 export interface IEditExecutorForm extends IAddExecutorForm {}
