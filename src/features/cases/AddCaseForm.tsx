@@ -29,7 +29,11 @@ import useGetLawyersNamesQuery from '../../hooks/queries/lawyers/useGetLawyersNa
 import useGetPackagesNamesQuery from '../../hooks/queries/packages/useGetPackagesNamesQuery';
 import useGetSSNNumbersQuery from '../../hooks/queries/ssnNumbers/useGetSSNNumbersQuery';
 import { mapApiResponseToAutocompleteOptions } from './helpers/casesHelpers';
-import { ECasesActionType, ICaseResponseObject } from '../../types/casesTypes';
+import {
+  ECaseCategory,
+  ECasesActionType,
+  ICaseResponseObject,
+} from '../../types/casesTypes';
 import debounce from 'lodash.debounce';
 import useGetEmployersNamesQuery from '../../hooks/queries/employers/useGetEmployersNamesQuery';
 import { DynamicAutocompletes } from '../../components/DynamicAutocompletes';
@@ -71,6 +75,13 @@ const AddCaseForm = () => {
   const { data: employersOptions } = useGetEmployersNamesQuery({
     search: addCaseAutocompleteValues.employer,
   });
+
+  const caseCategoryOptions = [
+    { id: ECaseCategory.withdrawn, name: t('entities.withdrawn') },
+    { id: ECaseCategory.combined, name: t('entities.combined') },
+    { id: ECaseCategory.obsolete, name: t('entities.obsolete') },
+    { id: ECaseCategory.with_payment, name: t('entities.withPayment') },
+  ];
 
   const handleChange =
     (name: string, type: EFormFieldType, format?: RegExp) =>
@@ -383,6 +394,7 @@ const AddCaseForm = () => {
               packagesOptions,
               ssnNumbersOptions,
               employersOptions,
+              caseCategoryOptions,
             }).map(
               (field) =>
                 (typeof field.condition !== 'boolean' ||

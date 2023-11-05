@@ -4,6 +4,7 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import { routes } from './libs/react-router-dom/routes';
 import useValidateUser from './hooks/utils/useValidateUser';
 import ProtectedPage from './features/protected/ProtectedPage';
+import { TransactionsStateProvider } from './store/contexts/TransactionsContext';
 
 const App = () => {
   const { role, valid } = useValidateUser();
@@ -15,7 +16,9 @@ const App = () => {
     <ErrorBoundary>
       <React.Suspense>
         {valid ? (
-          <ProtectedPage element={element} pageLabel={pageLabel} />
+          <TransactionsStateProvider>
+            <ProtectedPage element={element} pageLabel={pageLabel} />
+          </TransactionsStateProvider>
         ) : (
           <>{element}</>
         )}

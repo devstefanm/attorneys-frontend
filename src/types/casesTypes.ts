@@ -11,6 +11,14 @@ export enum EState {
   all = 'all',
 }
 
+export enum ECaseCategory {
+  all = 'all',
+  withdrawn = 'withdrawn',
+  combined = 'combined',
+  obsolete = 'obsolete',
+  with_payment = 'with_payment',
+}
+
 export enum ECasesActionType {
   isLegalEntity = 'IS_LEGAL',
   addCaseModalOpen = 'ADD_CASE_MODAL_OPEN',
@@ -33,7 +41,8 @@ export enum ECasesActionType {
   casesFileForUpload = 'CASES_FILE',
   openSuccessSnackbar = 'SUCCESS_SNACKBAR',
   openErrorSnackbar = 'ERROR_SNACKBAR',
-  filterableMultiselect = 'FILTERABLE_MULTISELECT',
+  hasObjection = 'HAS_OBJECTION',
+  caseCategory = 'CASE_CATEGORY',
 }
 
 export type CasesFirstRowName =
@@ -141,6 +150,8 @@ export interface ICasesQueryParams extends ICasesFiltersData, IMetaQueryParams {
   court?: string;
   filter?: EState;
   clientsFilter?: number;
+  caseCategory?: ECaseCategory;
+  hasObjection?: boolean | '';
 }
 
 export interface ICasesListApiResponse {
@@ -190,6 +201,8 @@ export interface IAddCaseForm {
     payments: number | null;
     withdrawals: number | null;
   };
+  caseCategory: IAutocompleteOption<string> | string;
+  opposingPartyExpense: string;
 }
 
 export interface IAddCaseAutocompleteValues {
@@ -201,6 +214,7 @@ export interface IAddCaseAutocompleteValues {
   city: string;
   ssnNumber: string;
   package: string;
+  caseCategory: string;
 }
 
 export interface ICaseResponseObject {
@@ -219,23 +233,23 @@ export interface ICaseRequestData {
   name?: string | null;
   pib?: string | null;
   employed?: boolean | null;
-  employer_id?: number | null;
-  executor_ids?: (number | null)[];
+  employer_id?: number | string | null;
+  executor_ids?: (number | string | null)[];
   business_numbers?: string[];
   phone_numbers?: string[];
   cession?: boolean | null;
   address?: string | null;
   email?: string | null;
   zip_code?: string | null;
-  city_id?: number | null;
+  city_id?: number | string | null;
   case_number?: string | null;
   contract_number?: string | null;
   closing_date?: string | null;
-  lawyer_id?: number | null;
-  client_id?: number | null;
-  court_id?: number | null;
-  ssn_number_id?: number | null;
-  package_id?: number | null;
+  lawyer_id?: number | string | null;
+  client_id?: number | string | null;
+  court_id?: number | string | null;
+  ssn_number_id?: number | string | null;
+  package_id?: number | string | null;
   principal?: number | null;
   interest?: number | null;
   state?: string | null;
@@ -247,6 +261,8 @@ export interface ICaseRequestData {
   lawyer_hand_over_date?: string | null;
   comment?: string | null;
   limitation_objection?: boolean | null;
+  case_category?: number | string | null;
+  opposing_party_expense?: number | null;
 }
 
 export interface IEditCaseAutocompleteValues
@@ -290,6 +306,8 @@ export interface IEditedCaseFormData {
   comment?: string;
   limitationObjection?: boolean;
   state?: string;
+  caseCategory?: IAutocompleteOption<string> | string;
+  opposingPartyExpense?: string;
 }
 
 export interface IViewCaseApiResponseData {
@@ -364,6 +382,8 @@ export interface IViewCaseApiResponseData {
     number: string;
   }[];
   phone_numbers: string[];
+  case_category: string;
+  opposing_party_expense: string;
 }
 
 export interface ICasesExportChecklistValues {
@@ -399,4 +419,6 @@ export interface ICasesExportChecklistValues {
   comment: boolean;
   limitationObjection: boolean;
   closingDate: boolean;
+  caseCategory: boolean;
+  opposingPartyExpense: boolean;
 }

@@ -13,6 +13,14 @@ const initialState: IAuthState = {
     password: '',
   },
   showPassword: false,
+  showNewPassword: false,
+  showNewRepeatedPassword: false,
+  changePasswordCredentials: {
+    newPassword: '',
+    newRepeatedPassword: '',
+  },
+  openErrorSnackbar: false,
+  openSuccessSnackbar: false,
 };
 
 export const AuthContext = React.createContext<{

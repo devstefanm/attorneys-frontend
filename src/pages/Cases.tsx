@@ -4,7 +4,7 @@ import { ErrorBoundary } from '../components/ErrorBoundary';
 import { CasesTable } from '../features/cases/CasesTable';
 import { useCases } from '../store/contexts/CasesContext';
 import { AddCaseModal } from '../features/cases/AddCaseModal';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Checkbox, FormControlLabel } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { CasesFilter } from '../features/cases/CasesFilter';
 import { ECasesActionType } from '../types/casesTypes';
@@ -12,7 +12,9 @@ import { EditCaseModal } from '../features/cases/EditCaseModal';
 import { CasesFilterByClient } from '../features/cases/CasesFilterByClient';
 import { ExportCasesDialog } from '../features/cases/ExportCasesDialog';
 import { ImportCasesDialog } from '../features/cases/ImportCasesDialog';
-import { CasesMultiselectFilter } from '../features/cases/CasesMultiselectFilter';
+import { useTransactions } from '../store/contexts/TransactionsContext';
+import { ETransactionsActionType } from '../types/transactionsTypes';
+import { CaseCategoryFilter } from '../features/cases/CaseCategoryFilter';
 
 type Props = IPagesProps & {};
 
@@ -24,9 +26,12 @@ const Cases = (_props: Props) => {
       editCaseModalOpen,
       exportCasesDialogOpen,
       importCasesDialogOpen,
+      hasObjection,
     },
     dispatch: updateCasesState,
   } = useCases();
+
+  const { dispatch: updateTransactionsState } = useTransactions();
 
   const handleAddCaseModalClose = () => {
     updateCasesState({
@@ -69,6 +74,12 @@ const Cases = (_props: Props) => {
     });
   };
 
+  React.useEffect(() => {
+    updateTransactionsState({
+      type: ETransactionsActionType.resetTransactionStates,
+    });
+  }, []);
+
   return (
     <ErrorBoundary>
       <React.Suspense fallback={'Loading....'}>
@@ -76,7 +87,24 @@ const Cases = (_props: Props) => {
           <Box className="grid grid-flow-col gap-2">
             <CasesFilter />
             <CasesFilterByClient />
-            <CasesMultiselectFilter />
+            <CaseCategoryFilter />
+            <FormControlLabel
+              className="ml-2"
+              control={
+                <Checkbox
+                  size="small"
+                  // @ts-ignore
+                  checked={hasObjection}
+                  onChange={(_event, checked) =>
+                    updateCasesState({
+                      type: ECasesActionType.hasObjection,
+                      payload: checked,
+                    })
+                  }
+                />
+              }
+              label={t(`entities.hasObjectionOnly`)}
+            />
           </Box>
           <Box>
             <Button

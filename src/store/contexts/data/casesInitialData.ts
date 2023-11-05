@@ -41,6 +41,8 @@ export const addCasesInitialFormData: IAddCaseForm = {
   lawyerHandOverDate: null,
   comment: '',
   limitationObjection: false,
+  caseCategory: '',
+  opposingPartyExpense: '',
 };
 
 export const addCaseAutocompleteInitialValues: IAddCaseAutocompleteValues = {
@@ -52,6 +54,7 @@ export const addCaseAutocompleteInitialValues: IAddCaseAutocompleteValues = {
   city: '',
   ssnNumber: '',
   package: '',
+  caseCategory: '',
 };
 
 export const editCasesInitialFormData: IEditCaseForm = {
@@ -90,6 +93,8 @@ export const editCasesInitialFormData: IEditCaseForm = {
   comment: '',
   limitationObjection: false,
   state: '',
+  caseCategory: '',
+  opposingPartyExpense: '',
 };
 
 export const editCaseAutocompleteInitialValues: IEditCaseAutocompleteValues = {
@@ -101,6 +106,7 @@ export const editCaseAutocompleteInitialValues: IEditCaseAutocompleteValues = {
   city: '',
   ssnNumber: '',
   package: '',
+  caseCategory: '',
 };
 
 export const initialCasesExportChecklistValues: ICasesExportChecklistValues = {
@@ -136,6 +142,8 @@ export const initialCasesExportChecklistValues: ICasesExportChecklistValues = {
   comment: false,
   limitationObjection: false,
   closingDate: false,
+  caseCategory: false,
+  opposingPartyExpense: false,
 };
 
 export const allCasesExportChecklistCheckedUnchecked = (
@@ -173,4 +181,6 @@ export const allCasesExportChecklistCheckedUnchecked = (
   comment: checked,
   limitationObjection: checked,
   closingDate: checked,
+  caseCategory: checked,
+  opposingPartyExpense: checked,
 });

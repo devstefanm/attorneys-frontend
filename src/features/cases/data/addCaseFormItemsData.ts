@@ -9,6 +9,7 @@ export const formFields = ({
   packagesOptions,
   citiesOptions,
   executorsOptions,
+  caseCategoryOptions,
 }: any): IFormField[] => [
   {
     name: 'legalEntity',
@@ -187,6 +188,13 @@ export const formFields = ({
     gridWidth: 6,
   },
   {
+    name: 'caseCategory',
+    required: false,
+    type: EFormFieldType.autocomplete,
+    gridWidth: 6,
+    options: caseCategoryOptions,
+  },
+  {
     name: 'oldPayment',
     type: EFormFieldType.input,
     gridWidth: 6,
@@ -200,6 +208,12 @@ export const formFields = ({
   },
   {
     name: 'warningPrice',
+    type: EFormFieldType.input,
+    gridWidth: 6,
+    format: /^[\d 0-9.]{0,24}$/,
+  },
+  {
+    name: 'opposingPartyExpense',
     type: EFormFieldType.input,
     gridWidth: 6,
     format: /^[\d 0-9.]{0,24}$/,

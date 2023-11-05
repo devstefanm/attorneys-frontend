@@ -2,19 +2,18 @@ import * as React from 'react';
 import { ErrorBoundary } from '../../../components/ErrorBoundary';
 import { useAuth } from '../../../store/contexts/AuthContext';
 import {
-  Box,
   Button,
   IconButton,
   InputAdornment,
   Stack,
   TextField,
-  Typography,
 } from '@mui/material';
 import useLoginMutation from '../../../hooks/mutations/auth/useLoginMutation';
 import { useNavigate } from 'react-router-dom';
 import { EAuthActionType } from '../../../store/reducers/authReducer';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
+import { SnackbarNotification } from '../../../components/SnackbarNotification';
 
 type Props = {};
 
@@ -22,10 +21,14 @@ const Login = (_props: Props) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const {
-    state: { loginCredentials, showPassword },
+    state: { loginCredentials, showPassword, openErrorSnackbar },
     dispatch: updateLoginState,
   } = useAuth();
-  const postLogin = useLoginMutation(navigate);
+  const {
+    mutateAsync: postLogin,
+    isError,
+    error,
+  } = useLoginMutation(navigate, updateLoginState);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -56,14 +59,13 @@ const Login = (_props: Props) => {
     const identifier = event.currentTarget.email.value;
     const password = event.currentTarget.password.value;
 
-    postLogin.mutate({ identifier, password });
+    postLogin({ identifier, password });
   };
 
   return (
     <ErrorBoundary>
       <React.Suspense>
-        <Stack component="form" className="mx-14 my-22" onSubmit={handleSubmit}>
-          {/* my-10 */}
+        <Stack component="form" className="mx-14 my-10" onSubmit={handleSubmit}>
           <TextField
             margin="normal"
             required
@@ -110,16 +112,22 @@ const Login = (_props: Props) => {
           >
             {t('login')}
           </Button>
-          <Box className="m-4 p-2 rounded-lg border-2">
-            <Typography className="font-bold text-xs mb-4">
-              {t('emailOrUsername')}: "admin.creditexpress@mailinator.com" ili
-              "admin.creditexpress"
-            </Typography>
-            <Typography className="font-bold text-xs mb-4 ">
-              {t('password')}: "!ASDasd123"
-            </Typography>
-          </Box>
         </Stack>
+        {isError && error?.response?.data?.message ? (
+          <SnackbarNotification
+            open={openErrorSnackbar}
+            onClose={() =>
+              updateLoginState({
+                type: EAuthActionType.openErrorSnackbar,
+                payload: false,
+              })
+            }
+            severity="error"
+            content={error?.response?.data?.message}
+          />
+        ) : (
+          ''
+        )}
       </React.Suspense>
     </ErrorBoundary>
   );

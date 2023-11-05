@@ -1,3 +1,4 @@
+import { initialState } from './../contexts/TransactionsContext';
 import { Moment } from 'moment';
 import {
   ETransactionTypeFilter,
@@ -193,6 +194,11 @@ const transactionsReducer = (
       return {
         ...state,
         filterableDate: action.payload as Moment | null,
+      };
+    case ETransactionsActionType.resetTransactionStates:
+      return {
+        ...state,
+        ...initialState,
       };
     default:
       return state;

@@ -3,26 +3,26 @@ import { setupAxios } from '../../../libs/axios/setupAxios';
 import { ILoginApiResponseData, ILoginRequest } from '../../../types/authTypes';
 import { IApiResponse } from '../../../types/universalTypes';
 import { useMutation } from '@tanstack/react-query';
+import { EAuthActionType } from '../../../store/reducers/authReducer';
 
 const login = async (
   loginCredentials: ILoginRequest,
 ): Promise<IApiResponse<ILoginApiResponseData>> => {
   let response: IApiResponse<ILoginApiResponseData>;
 
-  try {
-    response = await setupAxios({
-      method: 'post',
-      url: 'auth/login',
-      data: loginCredentials,
-    });
-  } catch {
-    response = { data: { error: 500, message: 'Connection problem' } };
-  }
+  response = await setupAxios({
+    method: 'post',
+    url: 'auth/login',
+    data: loginCredentials,
+  });
 
   return response;
 };
 
-const useLoginMutation = (navigate: NavigateFunction) => {
+const useLoginMutation = (
+  navigate: NavigateFunction,
+  updateLoginState: React.Dispatch<any>,
+) => {
   return useMutation(
     (loginCredentials: ILoginRequest) => login(loginCredentials),
     {
@@ -34,8 +34,18 @@ const useLoginMutation = (navigate: NavigateFunction) => {
         navigate('/cases');
         return response.data.message;
       },
-      onError: (error) => {
-        return { error: error, message: 'Connection problem' };
+      onError: (error: any) => {
+        console.error(error);
+        if (error?.response?.data?.message) {
+          updateLoginState({
+            type: EAuthActionType.openErrorSnackbar,
+            payload: true,
+          });
+        }
+        return {
+          error,
+          message: error?.response?.data?.message || 'Error has occured',
+        };
       },
     },
   );

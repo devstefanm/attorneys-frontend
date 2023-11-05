@@ -13,7 +13,7 @@ interface ITransactionsStateProviderProps {
   children: React.ReactNode;
 }
 
-const initialState: ITransactionsState = {
+export const initialState: ITransactionsState = {
   sortable: {
     sort: '',
     sortBy: '',

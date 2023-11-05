@@ -16,3 +16,8 @@ export interface ILoginRequest {
   identifier: string;
   password: string;
 }
+
+export interface IChangePasswordCredentials {
+  newPassword: string;
+  newRepeatedPassword: string;
+}

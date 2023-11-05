@@ -13,6 +13,8 @@ import AddCourtModal from '../features/courts/AddCourtModal';
 import AddCityModal from '../features/cities/AddCityModal';
 import { EditCityModal } from '../features/cities/EditCityModal';
 import { EditCourtModal } from '../features/courts/EditCourtModal';
+import { useTransactions } from '../store/contexts/TransactionsContext';
+import { ETransactionsActionType } from '../types/transactionsTypes';
 
 type Props = IPagesProps & {};
 
@@ -28,6 +30,8 @@ const CourtsAndCities = (_props: Props) => {
     state: { addCityModalOpen, editCityModalOpen },
     dispatch: updateCitiesState,
   } = useCities();
+
+  const { dispatch: updateTransactionsState } = useTransactions();
 
   const handleAddCourtModalClose = () => {
     updateCourtsState({
@@ -68,6 +72,12 @@ const CourtsAndCities = (_props: Props) => {
       type: ECitiesActionType.resetCityFormData,
     });
   };
+
+  React.useEffect(() => {
+    updateTransactionsState({
+      type: ETransactionsActionType.resetTransactionStates,
+    });
+  }, []);
 
   return (
     <ErrorBoundary>

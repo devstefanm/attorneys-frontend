@@ -35,6 +35,7 @@ import {
   mapApiResponseToAutocompleteOptions,
 } from './helpers/casesHelpers';
 import {
+  ECaseCategory,
   ECasesActionType,
   IAddCaseForm,
   ICaseResponseObject,
@@ -101,6 +102,13 @@ const EditCaseForm = () => {
   const { data: employersOptions } = useGetEmployersNamesQuery({
     search: editCaseAutocompleteValues.employer,
   });
+
+  const caseCategoryOptions = [
+    { id: ECaseCategory.withdrawn, name: t('entities.withdrawn') },
+    { id: ECaseCategory.combined, name: t('entities.combined') },
+    { id: ECaseCategory.obsolete, name: t('entities.obsolete') },
+    { id: ECaseCategory.with_payment, name: t('entities.withPayment') },
+  ];
 
   const handleChange =
     (editName: string, type: EFormFieldType, format?: RegExp) =>
@@ -441,6 +449,7 @@ const EditCaseForm = () => {
                 packagesOptions,
                 ssnNumbersOptions,
                 employersOptions,
+                caseCategoryOptions,
               }).map(
                 (field) =>
                   (typeof field.condition !== 'boolean' ||

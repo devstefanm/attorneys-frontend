@@ -40,6 +40,7 @@ export enum ETransactionsActionType {
   filterableDate = 'FILTERABLE_DATE',
   exportFileType = 'EXPORT_FILE_TYPE',
   downloadFile = 'DOWNLOAD_FILE',
+  resetTransactionStates = 'RESET_TRANSACTION_STATES',
 }
 
 export type TransactionsTableName =

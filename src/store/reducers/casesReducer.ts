@@ -1,4 +1,5 @@
 import {
+  ECaseCategory,
   ECasesActionType,
   EState,
   IAddCaseAutocompleteValues,
@@ -51,7 +52,8 @@ export interface ICasesState {
   casesFileForUpload: File | null;
   openSuccessSnackbar: boolean;
   openErrorSnackbar: boolean;
-  filterableMultiselect: string[];
+  hasObjection: boolean;
+  caseCategory: ECaseCategory;
 }
 
 interface ICasesAction {
@@ -61,6 +63,7 @@ interface ICasesAction {
     | ITablePageable
     | ITableSearchable
     | EState
+    | ECaseCategory
     | boolean
     | IAddNewEntityStateUpdate
     | IAddEntityAutocompleteInputChange
@@ -208,8 +211,10 @@ const casesReducer = (
       return { ...state, openErrorSnackbar: action.payload as boolean };
     case ECasesActionType.openSuccessSnackbar:
       return { ...state, openSuccessSnackbar: action.payload as boolean };
-    case ECasesActionType.filterableMultiselect:
-      return { ...state, filterableMultiselect: action.payload as string[] };
+    case ECasesActionType.hasObjection:
+      return { ...state, hasObjection: action.payload as boolean };
+    case ECasesActionType.caseCategory:
+      return { ...state, caseCategory: action.payload as ECaseCategory };
     default:
       return state;
   }

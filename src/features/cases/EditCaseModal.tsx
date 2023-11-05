@@ -10,6 +10,10 @@ import { ECasesActionType } from '../../types/casesTypes';
 import useDeleteCaseMutation from '../../hooks/mutations/cases/useDeleteCaseMutation';
 import { SnackbarNotification } from '../../components/SnackbarNotification';
 import * as React from 'react';
+import { useTransactions } from '../../store/contexts/TransactionsContext';
+import { ETableActionType } from '../../types/universalTypes';
+import { useNavigate } from 'react-router-dom';
+import { ETransactionTypeFilter } from '../../types/transactionsTypes';
 
 type Props = {
   open: boolean;
@@ -20,6 +24,7 @@ const EditCaseModal = (props: Props) => {
   const { open, onClose } = props;
 
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const {
     state: {
@@ -32,9 +37,12 @@ const EditCaseModal = (props: Props) => {
       editCaseModalOpen,
       exportCasesDialogOpen,
       importCasesDialogOpen,
+      editCaseForm,
     },
     dispatch: updateCasesState,
   } = useCases();
+
+  const { dispatch: updateTransactionsState } = useTransactions();
 
   const onConfirmationDialogClose = () => {
     updateCasesState({
@@ -42,6 +50,22 @@ const EditCaseModal = (props: Props) => {
       payload: false,
     });
     onClose();
+  };
+
+  const handleTransactionsRedirect = () => {
+    updateTransactionsState({
+      type: ETableActionType.searchable,
+      payload: {
+        key: 'caseNumber',
+        value: editCaseForm.caseNumber,
+      },
+    });
+    updateTransactionsState({
+      type: ETableActionType.filterable,
+      payload: ETransactionTypeFilter.all,
+    });
+
+    navigate('/transactions');
   };
 
   const {
@@ -103,6 +127,9 @@ const EditCaseModal = (props: Props) => {
         }
         isLoading={isEditLoading}
         hasCloseIconButton={true}
+        hasSecondExtraButton={true}
+        secondExtraButtonText="allTransactions"
+        onSecondExtraButtonClick={handleTransactionsRedirect}
         extraButtonText="delete"
         hasExtraButton={true}
         onExtraButtonClick={() =>

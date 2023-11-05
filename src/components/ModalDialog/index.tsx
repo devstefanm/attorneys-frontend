@@ -16,6 +16,9 @@ type Props = {
   extraButtonText?: string;
   onClose: () => void;
   onExtraButtonClick?: any;
+  secondExtraButtonText?: string;
+  hasSecondExtraButton?: boolean;
+  onSecondExtraButtonClick?: any;
   onSubmit?: any;
   children: React.ReactNode;
 };
@@ -35,6 +38,9 @@ const ModalDialog = (props: Props) => {
     onSubmit,
     onClose,
     onExtraButtonClick,
+    hasSecondExtraButton,
+    secondExtraButtonText,
+    onSecondExtraButtonClick,
   } = props;
 
   return (
@@ -73,6 +79,9 @@ const ModalDialog = (props: Props) => {
                   hasActionButton={hasActionButton}
                   hasExtraButton={hasExtraButton}
                   onExtraButtonClick={onExtraButtonClick}
+                  hasSecondExtraButton={hasSecondExtraButton}
+                  secondExtraButtonText={secondExtraButtonText}
+                  onSecondExtraButtonClick={onSecondExtraButtonClick}
                 />
               )}
             </Stack>

@@ -161,4 +161,14 @@ export const checklist: IFormField[] = [
     type: EFormFieldType.checkbox,
     gridWidth: 4,
   },
+  {
+    name: 'caseCategory',
+    type: EFormFieldType.checkbox,
+    gridWidth: 4,
+  },
+  {
+    name: 'opposingPartyExpense',
+    type: EFormFieldType.checkbox,
+    gridWidth: 4,
+  },
 ];

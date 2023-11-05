@@ -8,6 +8,8 @@ import { Box, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ELawyersActionType } from '../types/lawyersTypes';
 import { EditLawyerModal } from '../features/lawyers/EditLawyerModal';
+import { useTransactions } from '../store/contexts/TransactionsContext';
+import { ETransactionsActionType } from '../types/transactionsTypes';
 
 type Props = IPagesProps & {};
 
@@ -17,6 +19,8 @@ const Lawyers = (_props: Props) => {
     state: { addLawyerModalOpen, editLawyerModalOpen },
     dispatch: updateLawyersState,
   } = useLawyers();
+
+  const { dispatch: updateTransactionsState } = useTransactions();
 
   const handleAddLawyerModalClose = () => {
     updateLawyersState({
@@ -37,6 +41,12 @@ const Lawyers = (_props: Props) => {
       type: ELawyersActionType.resetLawyerFormData,
     });
   };
+
+  React.useEffect(() => {
+    updateTransactionsState({
+      type: ETransactionsActionType.resetTransactionStates,
+    });
+  }, []);
 
   return (
     <ErrorBoundary>

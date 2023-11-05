@@ -2,7 +2,6 @@ import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 import { AuthStateProvider } from '../../store/contexts/AuthContext';
 import { CasesStateProvider } from '../../store/contexts/CasesContext';
-import { TransactionsStateProvider } from '../../store/contexts/TransactionsContext';
 import { ExecutorsStateProvider } from '../../store/contexts/ExecutorsContext';
 import { LawyersStateProvider } from '../../store/contexts/LawyersContext';
 import { SSNNumbersStateProvider } from '../../store/contexts/SSNNumbersContext';
@@ -62,6 +61,12 @@ const CourtsAndCities = lazy(() =>
   })),
 );
 
+const ChangePassword = lazy(() =>
+  import('../../pages/ChangePassword').then(({ ChangePassword }) => ({
+    default: ChangePassword,
+  })),
+);
+
 // HOC
 export const AuthWithProvider = () => (
   <AuthStateProvider>
@@ -73,12 +78,6 @@ export const CasesWithProvider = ({ pageLabel }: IPagesProps) => (
   <CasesStateProvider>
     <Cases pageLabel={pageLabel} />
   </CasesStateProvider>
-);
-
-export const TransactionsWithProvider = ({ pageLabel }: IPagesProps) => (
-  <TransactionsStateProvider>
-    <Transactions pageLabel={pageLabel} />
-  </TransactionsStateProvider>
 );
 
 export const ExecutorsWithProvider = ({ pageLabel }: IPagesProps) => (
@@ -121,6 +120,12 @@ export const CourtsAndCitiesWithProviders = ({ pageLabel }: IPagesProps) => (
   </CourtsStateProvider>
 );
 
+export const ChangePasswordWithProviders = ({ pageLabel }: IPagesProps) => (
+  <AuthStateProvider>
+    <ChangePassword pageLabel={pageLabel} />
+  </AuthStateProvider>
+);
+
 export const routes = (isAuth: boolean, role: string | null) => [
   {
     path: '/',
@@ -143,7 +148,7 @@ export const routes = (isAuth: boolean, role: string | null) => [
     path: 'transactions',
     element:
       isAuth && role !== 'visitor' ? (
-        <TransactionsWithProvider pageLabel="entities.transactions" />
+        <Transactions pageLabel="entities.transactions" />
       ) : (
         <Navigate to="/auth" />
       ),
@@ -189,6 +194,15 @@ export const routes = (isAuth: boolean, role: string | null) => [
     element:
       isAuth && role !== 'visitor' ? (
         <CourtsAndCitiesWithProviders pageLabel="entities.courtsAndCities" />
+      ) : (
+        <Navigate to="/auth" />
+      ),
+  },
+  {
+    path: 'change-password',
+    element:
+      isAuth && role !== 'visitor' ? (
+        <ChangePasswordWithProviders pageLabel="changePassword" />
       ) : (
         <Navigate to="/auth" />
       ),

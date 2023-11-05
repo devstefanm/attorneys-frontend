@@ -13,6 +13,8 @@ import AddClientModal from '../features/clients/AddClientModal';
 import AddEmployerModal from '../features/employers/AddEmployerModal';
 import { EditClientModal } from '../features/clients/EditClientModal';
 import { EditEmployerModal } from '../features/employers/EditEmployerModal';
+import { useTransactions } from '../store/contexts/TransactionsContext';
+import { ETransactionsActionType } from '../types/transactionsTypes';
 
 type Props = IPagesProps & {};
 
@@ -28,6 +30,8 @@ const ClientsAndEmployers = (_props: Props) => {
     state: { addEmployerModalOpen, editEmployerModalOpen },
     dispatch: updateEmployersState,
   } = useEmployers();
+
+  const { dispatch: updateTransactionsState } = useTransactions();
 
   const handleAddClientModalClose = () => {
     updateClientsState({
@@ -68,6 +72,12 @@ const ClientsAndEmployers = (_props: Props) => {
       type: EEmployersActionType.resetEmployerFormData,
     });
   };
+
+  React.useEffect(() => {
+    updateTransactionsState({
+      type: ETransactionsActionType.resetTransactionStates,
+    });
+  }, []);
 
   return (
     <ErrorBoundary>

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { setupAxios } from '../../../libs/axios/setupAxios';
 import {
+  ECaseCategory,
   EState,
   ICaseApiResponseData,
   ICasesListApiResponse,
@@ -20,6 +21,7 @@ const getCasesList = async (
     size = 25,
     filter = 'active',
     clientsFilter = 9999,
+    caseCategory,
   } = queryParams;
 
   let response: IApiResponse<ICasesListApiResponse>;
@@ -36,6 +38,7 @@ const getCasesList = async (
         size,
         filter: filter === EState.all ? '' : filter,
         clientsFilter: clientsFilter === 9999 ? '' : clientsFilter,
+        caseCategory: caseCategory === ECaseCategory.all ? '' : caseCategory,
       },
       withCredentials: true,
     });

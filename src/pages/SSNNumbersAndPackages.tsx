@@ -13,6 +13,8 @@ import AddSSNNumberModal from '../features/ssnNumbers/AddSSNNumberModal';
 import AddPackageModal from '../features/packages/AddPackageModal';
 import { EditPackageModal } from '../features/packages/EditPackageModal';
 import { EditSSNNumberModal } from '../features/ssnNumbers/EditSSNNumberModal';
+import { useTransactions } from '../store/contexts/TransactionsContext';
+import { ETransactionsActionType } from '../types/transactionsTypes';
 
 type Props = IPagesProps & {};
 
@@ -28,6 +30,8 @@ const SSNNumbersAndPackages = (_props: Props) => {
     state: { addPackageModalOpen, editPackageModalOpen },
     dispatch: updatePackagesState,
   } = usePackages();
+
+  const { dispatch: updateTransactionsState } = useTransactions();
 
   const handleAddSSNNumberModalClose = () => {
     updateSSNNumbersState({
@@ -68,6 +72,12 @@ const SSNNumbersAndPackages = (_props: Props) => {
       type: EPackagesActionType.resetPackageFormData,
     });
   };
+
+  React.useEffect(() => {
+    updateTransactionsState({
+      type: ETransactionsActionType.resetTransactionStates,
+    });
+  }, []);
 
   return (
     <ErrorBoundary>

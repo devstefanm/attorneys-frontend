@@ -95,7 +95,7 @@ export interface ILongNamesApiResponse {
 }
 
 export interface IAutocompleteOption<T> {
-  id: number | null;
+  id: number | string | null;
   name: T;
 }
 

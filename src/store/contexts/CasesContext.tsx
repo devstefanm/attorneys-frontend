@@ -7,7 +7,7 @@ import {
   editCasesInitialFormData,
   initialCasesExportChecklistValues,
 } from './data/casesInitialData';
-import { EState } from '../../types/casesTypes';
+import { ECaseCategory, EState } from '../../types/casesTypes';
 
 interface ICasesStateProviderProps {
   children: React.ReactNode;
@@ -44,7 +44,8 @@ const initialState: ICasesState = {
   casesFileForUpload: null,
   openSuccessSnackbar: false,
   openErrorSnackbar: false,
-  filterableMultiselect: [''],
+  hasObjection: false,
+  caseCategory: ECaseCategory.all,
 };
 
 export const CasesContext = React.createContext<{

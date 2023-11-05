@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import { IOption } from '../../../components/FilterComponent';
 import {
   IAddCaseForm,
@@ -12,6 +13,7 @@ import { IAutocompleteOption } from '../../../types/universalTypes';
 import {
   camelToSnake,
   reverseDateFormat,
+  snakeToCamel,
   transformDateFormat,
 } from '../../../utils/transformData';
 
@@ -95,18 +97,21 @@ export const mapAddCaseFormToRequestData = ({
   lawyerHandOverDate,
   comment,
   limitationObjection: limitation_objection,
+  caseCategory,
+  opposingPartyExpense,
 }: IAddCaseForm): ICaseRequestData => {
   let city_id = null,
     client_id = null,
     court_id = null,
-    executor_ids: (number | null)[] = [],
+    executor_ids: (number | string | null)[] = [],
     lawyer_id = null,
     ssn_number_id = null,
     package_id = null,
     closing_date = null,
     employer_id = null,
     entering_date = null,
-    lawyer_hand_over_date = null;
+    lawyer_hand_over_date = null,
+    case_category = null;
 
   if (typeof city !== 'string') city_id = city.id;
   if (typeof client !== 'string') client_id = client.id;
@@ -119,6 +124,7 @@ export const mapAddCaseFormToRequestData = ({
   if (typeof ssnNumber !== 'string') ssn_number_id = ssnNumber.id;
   if (typeof packageGroup !== 'string') package_id = packageGroup.id;
   if (typeof employer !== 'string') employer_id = employer?.id;
+  if (typeof caseCategory !== 'string') case_category = caseCategory?.id;
 
   if (closingDate) closing_date = transformDateFormat(closingDate);
   if (enteringDate) entering_date = transformDateFormat(enteringDate);
@@ -164,6 +170,10 @@ export const mapAddCaseFormToRequestData = ({
       lawyer_hand_over_date,
       comment,
       limitation_objection,
+      case_category,
+      opposing_party_expense: opposingPartyExpense
+        ? Number(opposingPartyExpense)
+        : null,
     };
   }
 
@@ -199,6 +209,10 @@ export const mapAddCaseFormToRequestData = ({
     lawyer_hand_over_date,
     comment,
     limitation_objection,
+    case_category,
+    opposing_party_expense: opposingPartyExpense
+      ? Number(opposingPartyExpense)
+      : null,
   };
 };
 
@@ -245,6 +259,8 @@ export const mapCaseApiResponseToEditCaseForm = (
     legal_fee,
     payment,
     withdrawal,
+    case_category,
+    opposing_party_expense,
   } = data;
 
   if (is_legal) {
@@ -306,6 +322,15 @@ export const mapCaseApiResponseToEditCaseForm = (
         payments: payment || null,
         withdrawals: withdrawal || null,
       },
+      caseCategory: case_category
+        ? {
+            id: case_category,
+            name: i18next.t(`entities.${snakeToCamel(case_category)}`),
+          }
+        : '',
+      opposingPartyExpense: opposing_party_expense
+        ? opposing_party_expense.toString()
+        : '',
     };
   }
 
@@ -370,6 +395,15 @@ export const mapCaseApiResponseToEditCaseForm = (
       payments: payment || null,
       withdrawals: withdrawal || null,
     },
+    caseCategory: case_category
+      ? {
+          id: case_category,
+          name: i18next.t(`entities.${snakeToCamel(case_category)}`),
+        }
+      : '',
+    opposingPartyExpense: opposing_party_expense
+      ? opposing_party_expense.toString()
+      : '',
   };
 };
 
@@ -408,6 +442,8 @@ export const mapEditCaseFormToRequestData = ({
   lawyerHandOverDate,
   comment,
   limitationObjection,
+  caseCategory,
+  opposingPartyExpense,
 }: IEditedCaseFormData): Partial<ICaseRequestData> => {
   const requestData: Partial<ICaseRequestData> = {};
 
@@ -472,6 +508,14 @@ export const mapEditCaseFormToRequestData = ({
     }
   }
 
+  if (caseCategory !== undefined) {
+    if (typeof caseCategory !== 'string') {
+      requestData.case_category = caseCategory.id || null;
+    } else if (caseCategory === '') {
+      requestData.case_category = caseCategory;
+    }
+  }
+
   if (closingDate !== undefined)
     requestData.closing_date = closingDate
       ? transformDateFormat(closingDate)
@@ -532,7 +576,8 @@ export const mapEditCaseFormToRequestData = ({
   if (ourTaxes !== undefined) requestData.our_taxes = Number(ourTaxes) || null;
   if (warningPrice !== undefined)
     requestData.warning_price = Number(warningPrice) || null;
-
+  if (opposingPartyExpense !== undefined)
+    requestData.opposing_party_expense = Number(opposingPartyExpense) || null;
   return requestData;
 };
 

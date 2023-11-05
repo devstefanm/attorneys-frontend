@@ -5,6 +5,7 @@ import {
   FolderShared,
   Gavel,
   Handshake,
+  LockReset,
   Policy,
 } from '@mui/icons-material';
 import { INavItem } from '../../types/universalTypes';
@@ -51,5 +52,11 @@ export const navItems: INavItem[] = [
     icon: <AccountBalance />,
     name: 'entities.courtsAndCities',
     path: '/courts-and-cities',
+  },
+  {
+    id: 8,
+    icon: <LockReset />,
+    name: 'changePassword',
+    path: '/change-password',
   },
 ];

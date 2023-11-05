@@ -10,10 +10,13 @@ type Props = {
   isLoading?: boolean;
   actionButtonText?: string;
   extraButtonText?: string;
+  secondExtraButtonText?: string;
   hasActionButton?: boolean;
   hasCancelButton?: boolean;
   hasExtraButton?: boolean;
+  hasSecondExtraButton?: boolean;
   onExtraButtonClick?: any;
+  onSecondExtraButtonClick?: any;
 };
 
 const ActionBar = (props: Props) => {
@@ -26,7 +29,10 @@ const ActionBar = (props: Props) => {
     hasActionButton,
     hasCancelButton = true,
     hasExtraButton = false,
+    hasSecondExtraButton = false,
+    secondExtraButtonText = 'allTransactions',
     onExtraButtonClick,
+    onSecondExtraButtonClick,
   } = props;
 
   const { t } = useTranslation();
@@ -38,14 +44,27 @@ const ActionBar = (props: Props) => {
           hasExtraButton ? 'justify-between' : 'justify-end'
         } my-3 mx-5`}
       >
-        {hasExtraButton && (
-          <Button
-            className="text-base"
-            color="error"
-            onClick={onExtraButtonClick}
-          >
-            {t(extraButtonText)}
-          </Button>
+        {hasExtraButton ? (
+          <Box>
+            <Button
+              className="text-base"
+              color="error"
+              onClick={onExtraButtonClick}
+            >
+              {t(extraButtonText)}
+            </Button>
+            {hasSecondExtraButton && (
+              <Button
+                className="ml-4 text-base"
+                color="secondary"
+                onClick={onSecondExtraButtonClick}
+              >
+                {t(secondExtraButtonText)}
+              </Button>
+            )}
+          </Box>
+        ) : (
+          ''
         )}
         <Box>
           {hasCancelButton && (

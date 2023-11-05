@@ -8,6 +8,8 @@ import { Box, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { EExecutorsActionType } from '../types/executorsTypes';
 import { EditExecutorModal } from '../features/executors/EditExecutorModal';
+import { ETransactionsActionType } from '../types/transactionsTypes';
+import { useTransactions } from '../store/contexts/TransactionsContext';
 
 type Props = IPagesProps & {};
 
@@ -17,6 +19,8 @@ const Executors = (_props: Props) => {
     state: { addExecutorModalOpen, editExecutorModalOpen },
     dispatch: updateExecutorsState,
   } = useExecutors();
+
+  const { dispatch: updateTransactionsState } = useTransactions();
 
   const handleAddExecutorModalClose = () => {
     updateExecutorsState({
@@ -37,6 +41,12 @@ const Executors = (_props: Props) => {
       type: EExecutorsActionType.resetExecutorFormData,
     });
   };
+
+  React.useEffect(() => {
+    updateTransactionsState({
+      type: ETransactionsActionType.resetTransactionStates,
+    });
+  }, []);
 
   return (
     <ErrorBoundary>

@@ -37,6 +37,7 @@ i18n
           all: 'All',
           delete: 'Delete',
           clear: 'Clear',
+          allTransactions: 'All transactions',
 
           // Pagination
           rowsPerPage: 'Rows per page',
@@ -72,6 +73,9 @@ i18n
           message: 'Message',
           selectAll: 'Select All',
           unselectAll: 'Unselect All',
+          newPassword: 'New password',
+          repeatNewPassword: 'Repeat new password',
+          changePassword: 'Change the password',
 
           // Files
           exportCSV: 'Export CSV file',
@@ -243,8 +247,18 @@ i18n
             limitationObjection: 'Limitation of Objection',
             current_debt: 'Current debt',
             hasObjection: 'With Limitation of Objection',
+            hasObjectionOnly: 'With Limitation of Objection only',
             hasPayments: 'With payments',
             hasObjectionPayments: 'With objection / payments',
+            caseCategory: 'Case category',
+            caseCategories: 'Case categories',
+            category: 'Category',
+            categories: 'Categories',
+            withdrawn: 'Withdrawn',
+            combined: 'Combined',
+            obsolete: 'Obsolete',
+            withPayment: 'With payment',
+            opposingPartyExpense: 'Opposing party expense',
 
             // Transactions
             transactions: 'Transactions',
@@ -281,6 +295,7 @@ i18n
           },
 
           messages: {
+            passwordChanged: 'Password successfully changed.',
             retrieveCaseSuccess: 'Case retrieved successfully.',
             retrieveCitiesSuccess: 'City retrieved successfully.',
             retrieveClientsSuccess: 'Client retrieved successfully.',
@@ -376,6 +391,15 @@ i18n
               'Wrong format of lawyer handover date.',
             paymentDateWrongFormat: 'Wrong format of payment date.',
             wrongType: "Transaction type misspelled or doesn't exist.",
+            newPasswordTooShort:
+              'New password must be at least 6 characters long.',
+            passwordChangeFailed: 'Password change failed. Please try again.',
+            passwordComplexity:
+              'New password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
+            newPasswordSameAsOld:
+              'New password cannot be the same as the old password.',
+            wrongEmailOrUsername: 'Wrong email or username.',
+            wrongPassword: 'Wrong password.',
             // Add more common error messages here
           },
         },
@@ -403,6 +427,7 @@ i18n
           all: 'Svi',
           delete: 'Obriši',
           clear: 'Očisti',
+          allTransactions: 'Sve transakcije',
 
           // Pagination
           rowsPerPage: 'Broj redova po strani',
@@ -438,6 +463,9 @@ i18n
           message: 'Poruka',
           selectAll: 'Čekiraj sve',
           unselectAll: 'Odčekiraj sve',
+          newPassword: 'Nova lozinka',
+          repeatNewPassword: 'Ponovi novu lozinku',
+          changePassword: 'Promeni lozinku',
 
           // Files
           exportCSV: 'Izvezi CSV datoteku',
@@ -609,8 +637,18 @@ i18n
             limitationObjection: 'Prigovor zastarelosti',
             current_debt: 'Trenutno dugovanje',
             hasObjection: 'Sa prigovorom zastarelosti',
+            hasObjectionOnly: 'Samo sa prigovorom zastarelosti',
             hasPayments: 'Sa uplatama',
             hasObjectionPayments: 'Sa zastarom / uplatama',
+            caseCategory: 'Kategorija predmeta',
+            caseCategories: 'Kategorije predmeta',
+            category: 'Kategorija',
+            categories: 'Kategorije',
+            withdrawn: 'Povučeni',
+            combined: 'Kombinovani',
+            obsolete: 'Zastareli',
+            withPayment: 'Sa uplatom',
+            opposingPartyExpense: 'Trošak protivničke strane',
 
             // Transactions
             transactions: 'Transakcije',
@@ -647,6 +685,7 @@ i18n
           },
 
           messages: {
+            passwordChanged: 'Lozinka uspešno promenjena.',
             retrieveCaseSuccess: 'Predmet uspešno pronađen.',
             retrieveCitiesSuccess: 'Grad uspešno pronađen.',
             retrieveClientsSuccess: 'Klijent uspešno pronađen.',
@@ -745,6 +784,16 @@ i18n
             paymentDateWrongFormat: 'Pogrešan format datuma uplate.',
             wrongType:
               'Tip transakcije ne postoji ili ima grešku pri upisivanju.',
+            newPasswordTooShort:
+              'Nova lozinka mora imati najmanje 6 karaktera.',
+            passwordChangeFailed:
+              'Promena lozinke nije uspela. Pokušajte ponovo.',
+            passwordComplexity:
+              'Nova lozinka mora sadržati najmanje jedno veliko slovo, jedno malo slovo, jedan broj i jedan specijalni karakter.',
+            newPasswordSameAsOld:
+              'Nova lozinka ne sme biti ista kao trenutna lozinka.',
+            wrongEmailOrUsername: 'Pogrešan email ili korisničko ime.',
+            wrongPassword: 'Pogrešna lozinka.',
             // Add more common error messages here
           },
         },
