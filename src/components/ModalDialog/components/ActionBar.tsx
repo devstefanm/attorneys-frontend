@@ -44,8 +44,8 @@ const ActionBar = (props: Props) => {
           hasExtraButton ? 'justify-between' : 'justify-end'
         } my-3 mx-5`}
       >
-        {hasExtraButton ? (
-          <Box>
+        <Box>
+          {hasExtraButton && (
             <Button
               className="text-base"
               color="error"
@@ -53,19 +53,17 @@ const ActionBar = (props: Props) => {
             >
               {t(extraButtonText)}
             </Button>
-            {hasSecondExtraButton && (
-              <Button
-                className="ml-4 text-base"
-                color="secondary"
-                onClick={onSecondExtraButtonClick}
-              >
-                {t(secondExtraButtonText)}
-              </Button>
-            )}
-          </Box>
-        ) : (
-          ''
-        )}
+          )}
+          {hasSecondExtraButton && (
+            <Button
+              className="ml-4 text-base"
+              color="secondary"
+              onClick={onSecondExtraButtonClick}
+            >
+              {t(secondExtraButtonText)}
+            </Button>
+          )}
+        </Box>
         <Box>
           {hasCancelButton && (
             <Button className="text-base" color="inherit" onClick={onClose}>

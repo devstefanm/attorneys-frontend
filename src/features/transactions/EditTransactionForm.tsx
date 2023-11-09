@@ -30,9 +30,11 @@ import useGetTransactionQuery from '../../hooks/queries/transactions/useGetTrans
 import useGetCaseNumbersWithNamesQuery from '../../hooks/queries/cases/useGetCaseNumbersWithNamesQuery';
 import { mapApiResponseToAutocompleteOptions } from './helpers/transactionsHelpers';
 import debounce from 'lodash.debounce';
+import useValidateUser from '../../hooks/utils/useValidateUser';
 
 const EditTransactionForm = () => {
   const { t } = useTranslation();
+  const { role } = useValidateUser();
   const {
     state: {
       editTransactionForm,
@@ -159,6 +161,7 @@ const EditTransactionForm = () => {
               required={required}
               control={
                 <Checkbox
+                  disabled={role?.toLowerCase() === 'visitor'}
                   className={formFieldClassName}
                   name={name}
                   size={size ?? 'small'}
@@ -175,6 +178,7 @@ const EditTransactionForm = () => {
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <TextField
+              disabled={role?.toLowerCase() === 'visitor'}
               required={required}
               fullWidth
               className={formFieldClassName}
@@ -191,6 +195,7 @@ const EditTransactionForm = () => {
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <Autocomplete
+              disabled={role?.toLowerCase() === 'visitor'}
               fullWidth
               clearIcon={false}
               className={formFieldClassName}
@@ -244,6 +249,7 @@ const EditTransactionForm = () => {
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <LocalizationProvider dateAdapter={AdapterMoment}>
               <DatePicker
+                disabled={role?.toLowerCase() === 'visitor'}
                 localeText={{ clearButtonLabel: t('clear') }}
                 label={t(`entities.${name}`)}
                 // @ts-ignore

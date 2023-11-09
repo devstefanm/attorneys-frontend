@@ -44,9 +44,11 @@ import debounce from 'lodash.debounce';
 import useGetEmployersNamesQuery from '../../hooks/queries/employers/useGetEmployersNamesQuery';
 import { DynamicAutocompletes } from '../../components/DynamicAutocompletes';
 import useGetCaseByCaseIdQuery from '../../hooks/queries/cases/useGetCaseByCaseIdQuery';
+import useValidateUser from '../../hooks/utils/useValidateUser';
 
 const EditCaseForm = () => {
   const { t } = useTranslation();
+  const { role } = useValidateUser();
   const {
     state: {
       isLegalEntity,
@@ -216,6 +218,7 @@ const EditCaseForm = () => {
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <FormControlLabel
+              disabled={role?.toLowerCase() === 'visitor'}
               required={required}
               className={formFieldClassName}
               value={isLegalEntity}
@@ -233,6 +236,7 @@ const EditCaseForm = () => {
               required={required}
               control={
                 <Checkbox
+                  disabled={role?.toLowerCase() === 'visitor'}
                   className={formFieldClassName}
                   name={name}
                   size={size ?? 'small'}
@@ -249,6 +253,7 @@ const EditCaseForm = () => {
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <TextField
+              disabled={role?.toLowerCase() === 'visitor'}
               required={required}
               fullWidth
               className={formFieldClassName}
@@ -265,6 +270,7 @@ const EditCaseForm = () => {
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <Autocomplete
+              disabled={role?.toLowerCase() === 'visitor'}
               isOptionEqualToValue={(option, value) => option.id === value.id}
               fullWidth
               clearIcon={false}
@@ -312,6 +318,7 @@ const EditCaseForm = () => {
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <LocalizationProvider dateAdapter={AdapterMoment}>
               <DatePicker
+                disabled={role?.toLowerCase() === 'visitor'}
                 localeText={{ clearButtonLabel: t('clear') }}
                 label={t(`entities.${name}`)}
                 // @ts-ignore
@@ -337,6 +344,7 @@ const EditCaseForm = () => {
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <DynamicInputs
+              disabled={role?.toLowerCase() === 'visitor'}
               limit={name === 'phoneNumbers' ? 4 : 2}
               label={t(`entities.${name}`)}
               inputProps={{
@@ -354,6 +362,7 @@ const EditCaseForm = () => {
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <DynamicAutocompletes
+              disabled={role?.toLowerCase() === 'visitor'}
               limit={name === 'phoneNumbers' ? 4 : 2}
               options={options}
               label={t(`entities.${name}`)}
@@ -377,6 +386,7 @@ const EditCaseForm = () => {
         return (
           <Grid className={gridClassName} item xs={gridWidth || 12} key={name}>
             <TextField
+              disabled={role?.toLowerCase() === 'visitor'}
               required={required}
               fullWidth
               multiline

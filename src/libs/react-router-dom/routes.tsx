@@ -137,21 +137,19 @@ export const routes = (isAuth: boolean, role: string | null) => [
   },
   {
     path: 'cases',
-    element:
-      isAuth && role !== 'visitor' ? (
-        <CasesWithProvider pageLabel="entities.cases" />
-      ) : (
-        <Navigate to="/auth" />
-      ),
+    element: isAuth ? (
+      <CasesWithProvider pageLabel="entities.cases" />
+    ) : (
+      <Navigate to="/auth" />
+    ),
   },
   {
     path: 'transactions',
-    element:
-      isAuth && role !== 'visitor' ? (
-        <Transactions pageLabel="entities.transactions" />
-      ) : (
-        <Navigate to="/auth" />
-      ),
+    element: isAuth ? (
+      <Transactions pageLabel="entities.transactions" />
+    ) : (
+      <Navigate to="/auth" />
+    ),
   },
   {
     path: 'lawyers',

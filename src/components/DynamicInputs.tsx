@@ -11,6 +11,7 @@ type Props = {
     label: string;
     fullWidth?: boolean;
   };
+  disabled?: boolean;
   onValuesChange?: (values: string[]) => void;
 };
 
@@ -19,6 +20,7 @@ const DynamicInputs: React.FC<Props> = ({
   values,
   inputProps,
   limit,
+  disabled = false,
   onValuesChange,
 }) => {
   const [inputFields, setInputFields] = React.useState<string[]>(
@@ -52,18 +54,19 @@ const DynamicInputs: React.FC<Props> = ({
   };
 
   return (
-    <Box className="my-3">
+    <Box className="mt-3 mb-6">
       <Divider textAlign="left">{label}</Divider>
       {inputFields.map((field, index) => (
         <Box className="flex my-3" key={index}>
           <TextField
             {...inputProps}
+            disabled={disabled}
             label={`${inputProps?.label} ${index + 1}`}
             variant="outlined"
             value={field}
             onChange={(event) => handleInputChange(index, event.target.value)}
           />
-          {index > 0 ? (
+          {!disabled && index > 0 ? (
             <IconButton onClick={() => removeInputField(index)}>
               <Remove />
             </IconButton>
@@ -73,7 +76,7 @@ const DynamicInputs: React.FC<Props> = ({
         </Box>
       ))}
 
-      {inputFields.length < (limit || 4) && (
+      {!disabled && inputFields.length < (limit || 4) && (
         <Box className="flex justify-center">
           <IconButton onClick={addInputField}>
             <Add />

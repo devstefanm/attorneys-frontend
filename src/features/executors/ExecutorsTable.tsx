@@ -12,6 +12,7 @@ import useGetExecutorsListQuery from '../../hooks/queries/executors/useGetExecut
 import { useExecutors } from '../../store/contexts/ExecutorsContext';
 import { mapSearchToQueryParam } from '../../utils/transformData';
 import { mapExecutorsToBorderColors } from './helpers/executorsHelpers';
+import { Box, CircularProgress } from '@mui/material';
 
 const executorsTableHeaders: IExecutorsTableHeader = {
   name: 'name',
@@ -137,7 +138,9 @@ const ExecutorsTable = () => {
       onRowClick={handleRowClick}
     />
   ) : (
-    <>Loading...</>
+    <Box className="flex justify-center items-center h-[80vh]">
+      <CircularProgress />
+    </Box>
   );
 };
 

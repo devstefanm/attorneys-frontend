@@ -4,6 +4,7 @@ import { ErrorBoundary } from '../../ErrorBoundary';
 import { useTranslation } from 'react-i18next';
 import * as React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import useValidateUser from '../../../hooks/utils/useValidateUser';
 
 type Props = {
   navItems: INavItem[];
@@ -12,6 +13,7 @@ type Props = {
 const NavItems = (props: Props) => {
   const { navItems } = props;
 
+  const { role } = useValidateUser();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,17 +21,37 @@ const NavItems = (props: Props) => {
   return (
     <ErrorBoundary>
       <React.Suspense>
-        {navItems.map((item) => (
-          <ListItemButton
-            className="max-h-12"
-            selected={location.pathname === item.path}
-            onClick={() => navigate(item.path)}
-            key={item.id}
-          >
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText className="[&>span]:text-sm" primary={t(item.name)} />
-          </ListItemButton>
-        ))}
+        {navItems.map((item) =>
+          role?.toLowerCase() === 'visitor' ? (
+            item.condition === true && (
+              <ListItemButton
+                className="max-h-12"
+                selected={location.pathname === item.path}
+                onClick={() => navigate(item.path)}
+                key={item.id}
+              >
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText
+                  className="[&>span]:text-sm"
+                  primary={t(item.name)}
+                />
+              </ListItemButton>
+            )
+          ) : (
+            <ListItemButton
+              className="max-h-12"
+              selected={location.pathname === item.path}
+              onClick={() => navigate(item.path)}
+              key={item.id}
+            >
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText
+                className="[&>span]:text-sm"
+                primary={t(item.name)}
+              />
+            </ListItemButton>
+          ),
+        )}
       </React.Suspense>
     </ErrorBoundary>
   );

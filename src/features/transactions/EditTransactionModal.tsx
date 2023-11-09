@@ -10,6 +10,7 @@ import { ETransactionsActionType } from '../../types/transactionsTypes';
 import useDeleteTransactionMutation from '../../hooks/mutations/transactions/useDeleteTransactionMutation';
 import { SnackbarNotification } from '../../components/SnackbarNotification';
 import * as React from 'react';
+import useValidateUser from '../../hooks/utils/useValidateUser';
 
 type Props = {
   open: boolean;
@@ -20,6 +21,7 @@ const EditTransactionModal = (props: Props) => {
   const { open, onClose } = props;
 
   const { t } = useTranslation();
+  const { role } = useValidateUser();
 
   const {
     state: {
@@ -93,10 +95,14 @@ const EditTransactionModal = (props: Props) => {
     <ErrorBoundary>
       <ModalDialog
         open={open}
-        header={t('entities.editTransaction')}
+        header={
+          role?.toLowerCase() !== 'visitor'
+            ? t('entities.editTransaction')
+            : t('entities.viewTransaction')
+        }
         children={<EditTransactionForm />}
         onClose={onClose}
-        hasActionButton={true}
+        hasActionButton={role?.toLowerCase() !== 'visitor'}
         actionButtonText="submit"
         hasCancelButton={true}
         onSubmit={() =>
@@ -107,7 +113,7 @@ const EditTransactionModal = (props: Props) => {
         isLoading={isEditLoading}
         hasCloseIconButton={true}
         extraButtonText="delete"
-        hasExtraButton={true}
+        hasExtraButton={role?.toLowerCase() !== 'visitor'}
         onExtraButtonClick={() =>
           updateTransactionsState({
             type: ETransactionsActionType.confirmationDialogOpen,

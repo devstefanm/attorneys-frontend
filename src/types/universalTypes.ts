@@ -7,6 +7,7 @@ export interface INavItem {
   icon: JSX.Element;
   name: string;
   path: string;
+  condition: boolean;
 }
 
 export type SortingDirection = 'asc' | 'desc' | '';

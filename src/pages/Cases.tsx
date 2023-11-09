@@ -15,11 +15,14 @@ import { ImportCasesDialog } from '../features/cases/ImportCasesDialog';
 import { useTransactions } from '../store/contexts/TransactionsContext';
 import { ETransactionsActionType } from '../types/transactionsTypes';
 import { CaseCategoryFilter } from '../features/cases/CaseCategoryFilter';
+import useValidateUser from '../hooks/utils/useValidateUser';
 
 type Props = IPagesProps & {};
 
 const Cases = (_props: Props) => {
   const { t } = useTranslation();
+  const { role } = useValidateUser();
+
   const {
     state: {
       addCaseModalOpen,
@@ -106,40 +109,44 @@ const Cases = (_props: Props) => {
               label={t(`entities.hasObjectionOnly`)}
             />
           </Box>
-          <Box>
-            <Button
-              color="success"
-              onClick={() =>
-                updateCasesState({
-                  type: ECasesActionType.importCasesDialogOpen,
-                  payload: !importCasesDialogOpen,
-                })
-              }
-            >
-              {t('entities.importCases')}
-            </Button>
-            <Button
-              color="info"
-              onClick={() =>
-                updateCasesState({
-                  type: ECasesActionType.exportCasesDialogOpen,
-                  payload: !exportCasesDialogOpen,
-                })
-              }
-            >
-              {t('entities.exportCases')}
-            </Button>
-            <Button
-              onClick={() =>
-                updateCasesState({
-                  type: ECasesActionType.addCaseModalOpen,
-                  payload: !addCaseModalOpen,
-                })
-              }
-            >
-              {t('entities.addNewCase')}
-            </Button>
-          </Box>
+          {role?.toLowerCase() !== 'visitor' ? (
+            <Box>
+              <Button
+                color="success"
+                onClick={() =>
+                  updateCasesState({
+                    type: ECasesActionType.importCasesDialogOpen,
+                    payload: !importCasesDialogOpen,
+                  })
+                }
+              >
+                {t('entities.importCases')}
+              </Button>
+              <Button
+                color="info"
+                onClick={() =>
+                  updateCasesState({
+                    type: ECasesActionType.exportCasesDialogOpen,
+                    payload: !exportCasesDialogOpen,
+                  })
+                }
+              >
+                {t('entities.exportCases')}
+              </Button>
+              <Button
+                onClick={() =>
+                  updateCasesState({
+                    type: ECasesActionType.addCaseModalOpen,
+                    payload: !addCaseModalOpen,
+                  })
+                }
+              >
+                {t('entities.addNewCase')}
+              </Button>
+            </Box>
+          ) : (
+            ''
+          )}
         </Box>
         <CasesTable />
         <AddCaseModal

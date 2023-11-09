@@ -15,6 +15,7 @@ import {
   transformDateFormat,
 } from '../../utils/transformData';
 import { mapTypeToBorderColor } from './helpers/transactionsHelpers';
+import { Box, CircularProgress } from '@mui/material';
 
 const transactionsTableHeaders: ITransactionsTableHeader = {
   debtorsName: 'debtorsName',
@@ -165,7 +166,9 @@ const TransactionsTable = () => {
       onRowClick={handleRowClick}
     />
   ) : (
-    <>Loading...</>
+    <Box className="flex justify-center items-center h-[80vh]">
+      <CircularProgress />
+    </Box>
   );
 };
 

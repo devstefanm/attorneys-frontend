@@ -26,6 +26,7 @@ type Props = {
   limit?: number;
   name?: string;
   actionType?: ECasesActionType;
+  disabled?: boolean;
   onValuesChange?: (values: IAutocompleteOption<string>[]) => void;
   updateState?: React.Dispatch<any>;
 };
@@ -39,6 +40,7 @@ const DynamicAutocompletes: React.FC<Props> = ({
   name,
   actionType,
   limit,
+  disabled = false,
   onValuesChange,
   updateState,
 }) => {
@@ -122,12 +124,13 @@ const DynamicAutocompletes: React.FC<Props> = ({
   };
 
   return (
-    <Box className="my-3">
+    <Box className="mt-3 mb-6">
       <Divider textAlign="left">{label}</Divider>
       {autocompleteFields.map((field, index) => (
         <Box className="flex my-3" key={index}>
           <Autocomplete
             {...autocompleteProps}
+            disabled={disabled}
             clearIcon={false}
             isOptionEqualToValue={(option, value) => option.id === value.id}
             options={options ?? []}
@@ -166,7 +169,7 @@ const DynamicAutocompletes: React.FC<Props> = ({
               />
             )}
           />
-          {index > 0 ? (
+          {!disabled && index > 0 ? (
             <IconButton onClick={() => removeAutocompleteField(index)}>
               <Remove />
             </IconButton>
@@ -176,7 +179,7 @@ const DynamicAutocompletes: React.FC<Props> = ({
         </Box>
       ))}
 
-      {autocompleteFields.length < (limit || 4) && (
+      {!disabled && autocompleteFields.length < (limit || 4) && (
         <Box className="flex justify-center">
           <IconButton onClick={addAutocompleteField}>
             <Add />

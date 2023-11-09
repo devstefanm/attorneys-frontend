@@ -12,6 +12,7 @@ import useGetCitiesListQuery from '../../hooks/queries/cities/useGetCitiesListQu
 import { useCities } from '../../store/contexts/CitiesContext';
 import { mapSearchToQueryParam } from '../../utils/transformData';
 import { mapCitiesToBorderColors } from './helpers/citiesHelpers';
+import { Box, CircularProgress } from '@mui/material';
 
 const citiesTableHeaders: ICitiesTableHeader = {
   city: 'city',
@@ -123,7 +124,9 @@ const CitiesTable = () => {
       onRowClick={handleRowClick}
     />
   ) : (
-    <>Loading...</>
+    <Box className="flex justify-center items-center h-[80vh]">
+      <CircularProgress />
+    </Box>
   );
 };
 

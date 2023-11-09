@@ -12,11 +12,14 @@ import { EditTransactionModal } from '../features/transactions/EditTransactionMo
 import { ImportTransactionsDialog } from '../features/transactions/ImportTransactionsDialog';
 import { TransactionsDateFilter } from '../features/transactions/TransactionsDateFilter';
 import { ExportTransactionsDialog } from '../features/transactions/ExportTransactionsDialog';
+import useValidateUser from '../hooks/utils/useValidateUser';
 
 type Props = IPagesProps & {};
 
 const Transactions = (_props: Props) => {
   const { t } = useTranslation();
+  const { role } = useValidateUser();
+
   const {
     state: {
       addTransactionModalOpen,
@@ -85,40 +88,44 @@ const Transactions = (_props: Props) => {
               ''
             )}
           </>
-          <Box>
-            <Button
-              color="success"
-              onClick={() =>
-                updateTransactionsState({
-                  type: ETransactionsActionType.importTransactionsDialogOpen,
-                  payload: !importTransactionsDialogOpen,
-                })
-              }
-            >
-              {t('entities.importTransactions')}
-            </Button>
-            <Button
-              color="info"
-              onClick={() =>
-                updateTransactionsState({
-                  type: ETransactionsActionType.exportTransactionsDialogOpen,
-                  payload: !exportTransactionsDialogOpen,
-                })
-              }
-            >
-              {t('entities.exportTransactions')}
-            </Button>
-            <Button
-              onClick={() =>
-                updateTransactionsState({
-                  type: ETransactionsActionType.addTransactionModalOpen,
-                  payload: !addTransactionModalOpen,
-                })
-              }
-            >
-              {t('entities.addNewTransaction')}
-            </Button>
-          </Box>
+          {role?.toLowerCase() !== 'visitor' ? (
+            <Box>
+              <Button
+                color="success"
+                onClick={() =>
+                  updateTransactionsState({
+                    type: ETransactionsActionType.importTransactionsDialogOpen,
+                    payload: !importTransactionsDialogOpen,
+                  })
+                }
+              >
+                {t('entities.importTransactions')}
+              </Button>
+              <Button
+                color="info"
+                onClick={() =>
+                  updateTransactionsState({
+                    type: ETransactionsActionType.exportTransactionsDialogOpen,
+                    payload: !exportTransactionsDialogOpen,
+                  })
+                }
+              >
+                {t('entities.exportTransactions')}
+              </Button>
+              <Button
+                onClick={() =>
+                  updateTransactionsState({
+                    type: ETransactionsActionType.addTransactionModalOpen,
+                    payload: !addTransactionModalOpen,
+                  })
+                }
+              >
+                {t('entities.addNewTransaction')}
+              </Button>
+            </Box>
+          ) : (
+            ''
+          )}
         </Box>
         <TransactionsTable />
         <AddTransactionModal

@@ -12,6 +12,7 @@ import useGetCourtsListQuery from '../../hooks/queries/courts/useGetCourtsListQu
 import { useCourts } from '../../store/contexts/CourtsContext';
 import { mapSearchToQueryParam } from '../../utils/transformData';
 import { mapCourtsToBorderColors } from './helpers/courtsHelpers';
+import { Box, CircularProgress } from '@mui/material';
 
 const courtsTableHeaders: ICourtsTableHeader = {
   court: 'court',
@@ -105,7 +106,9 @@ const CourtsTable = () => {
       onRowClick={handleRowClick}
     />
   ) : (
-    <>Loading...</>
+    <Box className="flex justify-center items-center h-[80vh]">
+      <CircularProgress />
+    </Box>
   );
 };
 

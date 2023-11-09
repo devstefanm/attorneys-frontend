@@ -14,6 +14,7 @@ import { useTransactions } from '../../store/contexts/TransactionsContext';
 import { ETableActionType } from '../../types/universalTypes';
 import { useNavigate } from 'react-router-dom';
 import { ETransactionTypeFilter } from '../../types/transactionsTypes';
+import useValidateUser from '../../hooks/utils/useValidateUser';
 
 type Props = {
   open: boolean;
@@ -24,6 +25,7 @@ const EditCaseModal = (props: Props) => {
   const { open, onClose } = props;
 
   const { t } = useTranslation();
+  const { role } = useValidateUser();
   const navigate = useNavigate();
 
   const {
@@ -116,10 +118,14 @@ const EditCaseModal = (props: Props) => {
     <ErrorBoundary>
       <ModalDialog
         open={open}
-        header={t('entities.editCase')}
+        header={
+          role?.toLowerCase() !== 'visitor'
+            ? t('entities.editCase')
+            : t('entities.viewCase')
+        }
         children={<EditCaseForm />}
         onClose={onClose}
-        hasActionButton={true}
+        hasActionButton={role?.toLowerCase() !== 'visitor'}
         actionButtonText="submit"
         hasCancelButton={true}
         onSubmit={() =>
@@ -131,7 +137,7 @@ const EditCaseModal = (props: Props) => {
         secondExtraButtonText="allTransactions"
         onSecondExtraButtonClick={handleTransactionsRedirect}
         extraButtonText="delete"
-        hasExtraButton={true}
+        hasExtraButton={role?.toLowerCase() !== 'visitor'}
         onExtraButtonClick={() =>
           updateCasesState({
             type: ECasesActionType.confirmationDialogOpen,

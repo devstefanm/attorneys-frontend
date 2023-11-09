@@ -12,6 +12,7 @@ import useGetEmployersListQuery from '../../hooks/queries/employers/useGetEmploy
 import { useEmployers } from '../../store/contexts/EmployersContext';
 import { mapSearchToQueryParam } from '../../utils/transformData';
 import { mapEmployersToBorderColors } from './helpers/employersHelpers';
+import { Box, CircularProgress } from '@mui/material';
 
 const employersTableHeaders: IEmployersTableHeader = {
   employer: 'employer',
@@ -107,7 +108,9 @@ const EmployersTable = () => {
       onRowClick={handleRowClick}
     />
   ) : (
-    <>Loading...</>
+    <Box className="flex justify-center items-center h-[80vh]">
+      <CircularProgress />
+    </Box>
   );
 };
 

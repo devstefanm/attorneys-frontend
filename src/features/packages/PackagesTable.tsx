@@ -12,6 +12,7 @@ import useGetPackagesListQuery from '../../hooks/queries/packages/useGetPackages
 import { usePackages } from '../../store/contexts/PackagesContext';
 import { mapSearchToQueryParam } from '../../utils/transformData';
 import { mapPackagesToBorderColors } from './helpers/packagesHelpers';
+import { Box, CircularProgress } from '@mui/material';
 
 const packagesTableHeaders: IPackagesTableHeader = {
   packageName: 'packageName',
@@ -105,7 +106,9 @@ const PackagesTable = () => {
       onRowClick={handleRowClick}
     />
   ) : (
-    <>Loading...</>
+    <Box className="flex justify-center items-center h-[80vh]">
+      <CircularProgress />
+    </Box>
   );
 };
 

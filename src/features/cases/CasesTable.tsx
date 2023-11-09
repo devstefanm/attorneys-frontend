@@ -12,6 +12,7 @@ import useGetCasesListQuery from '../../hooks/queries/cases/useGetCasesListQuery
 import { useCases } from '../../store/contexts/CasesContext';
 import { mapSearchToQueryParam } from '../../utils/transformData';
 import { mapStatusToBorderColor } from './helpers/casesHelpers';
+import { Box, CircularProgress } from '@mui/material';
 
 const casesFirstRowHeaders: ICasesTableHeader = {
   name: 'name',
@@ -195,7 +196,9 @@ const CasesTable = () => {
       onRowClick={handleRowClick}
     />
   ) : (
-    <>Loading...</>
+    <Box className="flex justify-center items-center h-[80vh]">
+      <CircularProgress />
+    </Box>
   );
 };
 

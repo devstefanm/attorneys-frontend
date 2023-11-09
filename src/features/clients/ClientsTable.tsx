@@ -12,6 +12,7 @@ import useGetClientsListQuery from '../../hooks/queries/clients/useGetClientsLis
 import { useClients } from '../../store/contexts/ClientsContext';
 import { mapSearchToQueryParam } from '../../utils/transformData';
 import { mapClientsToBorderColors } from './helpers/clientsHelpers';
+import { Box, CircularProgress } from '@mui/material';
 
 const clientsTableHeaders: IClientsTableHeader = {
   client: 'client',
@@ -105,7 +106,9 @@ const ClientsTable = () => {
       onRowClick={handleRowClick}
     />
   ) : (
-    <>Loading...</>
+    <Box className="flex justify-center items-center h-[80vh]">
+      <CircularProgress />
+    </Box>
   );
 };
 

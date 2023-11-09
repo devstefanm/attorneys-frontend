@@ -12,6 +12,7 @@ import useGetLawyersListQuery from '../../hooks/queries/lawyers/useGetLawyersLis
 import { useLawyers } from '../../store/contexts/LawyersContext';
 import { mapSearchToQueryParam } from '../../utils/transformData';
 import { mapLawyersToBorderColors } from './helpers/lawyersHelpers';
+import { Box, CircularProgress } from '@mui/material';
 
 const lawyersTableHeaders: ILawyersTableHeader = {
   name: 'name',
@@ -159,7 +160,9 @@ const LawyersTable = () => {
       onRowClick={handleRowClick}
     />
   ) : (
-    <>Loading...</>
+    <Box className="flex justify-center items-center h-[80vh]">
+      <CircularProgress />
+    </Box>
   );
 };
 

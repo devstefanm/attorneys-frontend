@@ -12,6 +12,7 @@ import useGetSSNNumbersListQuery from '../../hooks/queries/ssnNumbers/useGetSSNN
 import { useSSNNumbers } from '../../store/contexts/SSNNumbersContext';
 import { mapSearchToQueryParam } from '../../utils/transformData';
 import { mapSSNNumbersToBorderColors } from './helpers/ssnNumbersHelpers';
+import { Box, CircularProgress } from '@mui/material';
 
 const ssnNumbersTableHeaders: ISSNNumbersTableHeader = {
   ssn: 'ssn',
@@ -105,7 +106,9 @@ const SSNNumbersTable = () => {
       onRowClick={handleRowClick}
     />
   ) : (
-    <>Loading...</>
+    <Box className="flex justify-center items-center h-[80vh]">
+      <CircularProgress />
+    </Box>
   );
 };
 
